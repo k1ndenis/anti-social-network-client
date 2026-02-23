@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { get, set } from "idb-keyval"
 import dataPictures from "../../../data/pictures.json";
 import { PictureList } from "./PictureList";
+import { CurrentPicture } from "./CurrentPicture";
 
 export const MyPictures = () => {
   const [pictures, setPictures] = useState(dataPictures);
+  const [currentPictureId, setCurrentPictureId] = useState(5);
 
   useEffect(() => {
     const loadPictures = async () => {
@@ -31,11 +33,19 @@ export const MyPictures = () => {
 
   return (
     <>
-      <PictureList
-        pictures={pictures}
-        onAddPicture={onAddPicture}
-        onDeletePicture={onDeletePicture}
-      />
+      {currentPictureId ? 
+        <CurrentPicture
+          pictures={pictures}
+          currentPictureId={currentPictureId}
+          setCurrentPictureId={setCurrentPictureId}
+        /> : 
+        <PictureList
+          pictures={pictures}
+          onAddPicture={onAddPicture}
+          onDeletePicture={onDeletePicture}
+          setCurrentPictureId={setCurrentPictureId}
+        />
+      }
     </>
   )
 }

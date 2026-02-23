@@ -4,6 +4,7 @@
   background: #FAF8EF;
   border-radius: 8px;
   margin: 1rem;
+  font-family: 'Clear Sans', sans-serif;
 }
 
 .grid-container {
@@ -12,7 +13,7 @@
   justify-content: center;
   align-items: center;
   width: fit-content;
-  gap: 2px;
+  gap: 1vw;
   padding: 32px;
   margin: 1rem auto;
   background: #bbada0;
@@ -21,20 +22,23 @@
 .grid-row {
   display: flex;
   flex-direction: row;
-  gap: 2px;
+  gap: 1vw;
 }
 
 .grid-cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
   width: 7rem;
   height: 7rem;
+  font-size: 53px;
+  border-radius: 4px;
+  gap: 10px
 }
 
 @media (max-width: 720px) {
   .grid-cell {
+    font-size: 28px;
     width: 12vw;
     height: 12vw;
   }
