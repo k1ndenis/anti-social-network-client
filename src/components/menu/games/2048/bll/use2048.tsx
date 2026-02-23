@@ -10,17 +10,25 @@ const emptyGrid = [
 export const use2048 = () => {
   const [grid, setGrid] = useState(emptyGrid);
   const [gameIsOn, setGameIsOn] = useState(false);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
 
   const touchStart = useRef({ x: 0, y: 0});
 
   const mergeTiles = (tiles) => {
+    let addedScore = 0;
     tiles.forEach((el, i) => {
       if (i > 0 && el === tiles[i - 1]) {
-        tiles[i - 1] = tiles[i - 1] + el;
+        const sum = tiles[i - 1] * 2;
+        addedScore += sum;
+        tiles[i - 1] = sum;
         tiles[i] = 0;
       }
     })
-    return tiles.filter(tile => tile !== 0)
+    return {
+      mergedTiles: tiles.filter(tile => tile !== 0),
+      addedScore
+    }
   }
 
   const spawnNewValue = (newGrid) => {
@@ -79,93 +87,99 @@ export const use2048 = () => {
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
       }
+      let isMoved = false;
+      let totalAddedScore = 0;
+      const newGrid = grid.map(row => [...row]);
+      switch (e.key) {
+        case 'ArrowUp': {
+          for (let col = 0; col < 4; col++) {
+            const column = [];
+            for (let row = 0; row < 4; row++) {
+              if (newGrid[row][col] !== 0) column.push(newGrid[row][col]);
+            };
 
-      setGrid(prevGrid => {
-        let newGrid = prevGrid.map(row => [...row]);
-        switch (e.key) {
-          case 'ArrowUp': {
-            let isMoved = false;
+            const { mergedTiles, addedScore } = mergeTiles(column);
+            totalAddedScore += addedScore;
+
+            const finalColumn = [...mergedTiles];
+            while (finalColumn.length < 4) finalColumn.push(0);
+
+            for (let row = 0; row < 4; row++) {
+              if (newGrid[row][col] !== finalColumn[row]) isMoved = true;
+              newGrid[row][col] = finalColumn[row];
+            };
+          }
+          break;
+        };
+        case 'ArrowDown': {
+          for (let col = 0; col < 4; col++) {
+            const column = [];
+            for (let row = 3; row >= 0; row--) {
+              if (newGrid[row][col] !== 0) column.push(newGrid[row][col]);
+            };
+
+            const { mergedTiles, addedScore } = mergeTiles(column);
+            totalAddedScore += addedScore;
+
+            const finalColumn = [...mergedTiles];
+            while (finalColumn.length < 4) finalColumn.push(0);
+
+            for (let row = 3, k = 0; row >= 0; row--, k++) {
+              if (newGrid[row][col] !== finalColumn[k]) isMoved = true;
+              newGrid[row][col] = finalColumn[k];
+            };
+          }
+          break;
+        };
+        case 'ArrowLeft': {
+          for (let row = 0; row < 4; row ++) {
+            const currentRow = [];
             for (let col = 0; col < 4; col++) {
-              let column = [];
-              for (let row = 0; row < 4; row++) {
-                if (newGrid[row][col] !== 0) column.push(newGrid[row][col]);
-              };
+              if (newGrid[row][col] !== 0) currentRow.push(newGrid[row][col]);
+            };
 
-              column = mergeTiles(column);
+            const { mergedTiles, addedScore } = mergeTiles(currentRow);
+            totalAddedScore += addedScore;
 
-              while (column.length < 4) column.push(0);
+            const finalRow = [...mergedTiles];
+            while (finalRow.length < 4) finalRow.push(0);
 
-              for (let row = 0; row < 4; row++) {
-                if (newGrid[row][col] !== column[row]) isMoved = true;
-                newGrid[row][col] = column[row];
-              };
-            }
-            if (isMoved) newGrid = spawnNewValue(newGrid);
-            break;
-          };
-          case 'ArrowDown': {
-            let isMoved = false;
             for (let col = 0; col < 4; col++) {
-              let column = [];
-              for (let row = 3; row >= 0; row--) {
-                if (newGrid[row][col] !== 0) column.push(newGrid[row][col]);
-              };
+              if (newGrid[row][col] !== finalRow[col]) isMoved = true;
+              newGrid[row][col] = finalRow[col];
+            };
+          }
+          break;
+        };
+        case 'ArrowRight': {
+          for (let row = 0; row < 4; row ++) {
+            const currentRow = [];
+            for (let col = 3; col >= 0; col--) {
+              if (newGrid[row][col] !== 0) currentRow.push(newGrid[row][col]);
+            };
 
-              column = mergeTiles(column);
+            const { mergedTiles, addedScore } = mergeTiles(currentRow);
+            totalAddedScore += addedScore;
 
-              while (column.length < 4) column.push(0);
+            const finalRow = [...mergedTiles];
+            while (finalRow.length < 4) finalRow.push(0);
 
-              for (let row = 3, k = 0; row >= 0; row--, k++) {
-                if (newGrid[row][col] !== column[k]) isMoved = true;
-                newGrid[row][col] = column[k];
-              };
-            }
-            if (isMoved) newGrid = spawnNewValue(newGrid);
-            break;
-          };
-          case 'ArrowLeft': {
-            let isMoved = false;
-            for (let row = 0; row < 4; row ++) {
-              let currentRow = [];
-              for (let col = 0; col < 4; col++) {
-                if (newGrid[row][col] !== 0) currentRow.push(newGrid[row][col]);
-              };
-
-              currentRow = mergeTiles(currentRow);
-
-              while (currentRow.length < 4) currentRow.push(0);
-
-              for (let col = 0; col < 4; col++) {
-                if (newGrid[row][col] !== currentRow[col]) isMoved = true;
-                newGrid[row][col] = currentRow[col];
-              };
-            }
-            if (isMoved) newGrid = spawnNewValue(newGrid);
-            break;
-          };
-          case 'ArrowRight': {
-            let isMoved = false;
-            for (let row = 0; row < 4; row ++) {
-              let currentRow = [];
-              for (let col = 3; col >= 0; col--) {
-                if (newGrid[row][col] !== 0) currentRow.push(newGrid[row][col]);
-              };
-
-              currentRow = mergeTiles(currentRow);
-
-              while (currentRow.length < 4) currentRow.push(0);
-
-              for (let col = 3, k = 0; col >= 0; col--, k++) {
-                if (newGrid[row][col] !== currentRow[k]) isMoved = true;
-                newGrid[row][col] = currentRow[k];
-              };
-            }
-            if (isMoved) newGrid = spawnNewValue(newGrid);
-            break;
-          };
-        }
-        return newGrid;
-      })
+            for (let col = 3, k = 0; col >= 0; col--, k++) {
+              if (newGrid[row][col] !== finalRow[k]) isMoved = true;
+              newGrid[row][col] = finalRow[k];
+            };
+          }
+          break;
+        };
+      }
+      if (isMoved) {
+        setGrid(spawnNewValue(newGrid));
+        setCurrentScore(prev => {
+          const newScore = prev + totalAddedScore;
+          setBestScore(prev => Math.max(prev, newScore));
+          return newScore;
+        })
+      }
     }
 
     window.addEventListener('keydown', handleKeyDown);
@@ -178,7 +192,7 @@ export const use2048 = () => {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     }
-  }, [gameIsOn]);
+  }, [gameIsOn, grid]);
 
   return {
     grid,
@@ -188,6 +202,9 @@ export const use2048 = () => {
       spawnNewValue(newGrid);
       setGrid(newGrid);
       setGameIsOn(true);
-    }
+      setCurrentScore(0);
+    },
+    currentScore: currentScore,
+    bestScore: bestScore
   }
 }

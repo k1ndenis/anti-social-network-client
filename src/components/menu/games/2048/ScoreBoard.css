@@ -1,0 +1,22 @@
+.score-board {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  position: relative;
+  box-sizing: border-box;
+  gap: 25px
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20vw;
+  height: auto;
+  background-color: #8c7063;
+  border-radius: 8px;
+}
+
+.score-text {
+  color: #b9b0b0
+}

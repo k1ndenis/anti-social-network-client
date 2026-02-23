@@ -1,15 +1,17 @@
 import './The2048.css'
 import { use2048 } from './bll/use2048'
-import { StartGameBtn } from './StartGameBtn'
 import { CELLS_STYLES } from './constants/gameStyles'
+import { Header } from './Header'
 
 export const The2048 = () => {
-  const { grid, startGame } = use2048()
+  const { grid, startGame, currentScore, bestScore } = use2048()
 
   return (
     <div className='game-2048-container'>
-      <StartGameBtn
+      <Header
         startGame={startGame}
+        currentScore={currentScore}
+        bestScore={bestScore}
       />
       <div className="grid-container">
         {grid.map((row, rowIndex) => (
