@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { set } from "idb-keyval"
+import './AuthPage.css'
 
 export const SignUpForm = (props) => {
   const [currentLogin, setCurrentLogin] = useState("");
@@ -32,21 +33,28 @@ export const SignUpForm = (props) => {
 
   const form = (
     <form
+      className="auth-form-container"
       onSubmit={(e) => handleSignUp(e, currentLogin, currentPassword)}
     >
+      <h2>Регистрация</h2>
       <input
+        className="auth-input"
         type="text"
         placeholder="Придумайте логин"
         value={currentLogin}
         onChange={loginHandleChange}
       />
       <input
+        className="auth-input"
         type="password"
         placeholder="Придумайте пароль"
         value={currentPassword}
         onChange={passwordHandleChange}
       />
-      <button>
+      <button
+        className="auth-button"
+        type="submit"
+      >
         Зарегистрироваться
       </button>
     </form>
@@ -55,6 +63,11 @@ export const SignUpForm = (props) => {
   return (
     <>
       {form}
+      <button
+        onClick={() => props.setIsReg(false)}
+      >
+        Назад
+      </button>
     </>
   )
 }

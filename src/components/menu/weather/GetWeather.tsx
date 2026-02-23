@@ -22,9 +22,6 @@ export const GetWeather = (props) => {
     try {
       const response = await fetch(url);
       const json = await response.json();
-
-      console.log(json);
-
       if (!response.ok) {
         props.setError(json.message || "Ошибка загрузки");
         props.setData(null);
