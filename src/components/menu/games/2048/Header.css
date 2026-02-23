@@ -25,3 +25,7 @@
   background: #8f7a66;
   width: fit-content;
 }
+
+.header-right-2048 button:active {
+  transform: scale(0.98);
+}

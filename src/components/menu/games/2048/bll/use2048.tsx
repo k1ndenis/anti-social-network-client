@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
+import { get, set } from "idb-keyval"
 
 const emptyGrid = [
       [0, 0, 0, 0],
@@ -12,6 +13,16 @@ export const use2048 = () => {
   const [gameIsOn, setGameIsOn] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+
+  useEffect(() => {
+    const loadBestScore = async () => {
+      const savedScore = await get("best-score-2048");
+      if (savedScore) {
+        setBestScore(savedScore);
+      }
+    };
+    loadBestScore();
+  }, []);
 
   const touchStart = useRef({ x: 0, y: 0});
 
@@ -176,7 +187,11 @@ export const use2048 = () => {
         setGrid(spawnNewValue(newGrid));
         setCurrentScore(prev => {
           const newScore = prev + totalAddedScore;
-          setBestScore(prev => Math.max(prev, newScore));
+          setBestScore(prevBest => {
+            const updatedBestScore = Math.max(prevBest, newScore);
+            if (updatedBestScore > prevBest) set( "best-score-2048", updatedBestScore);
+            return updatedBestScore;
+          })
           return newScore;
         })
       }
