@@ -46,6 +46,10 @@ export const use2048 = () => {
   }
 
   useEffect(() => {
+    const handleTouchMove = (e) => {
+      if (gameIsOn) e.preventDefault();
+    }
+
     const handleTouchStart = (e) => {
       touchStart.current = {
         x: e.touches[0].clientX,
@@ -72,7 +76,7 @@ export const use2048 = () => {
 
     const handleKeyDown = (e) => {
       if (!gameIsOn) return;
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'touchstart', 'touchend'].includes(e.key)) {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
       }
 
@@ -166,10 +170,12 @@ export const use2048 = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('touchend', handleTouchEnd);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     }
   }, [gameIsOn]);
