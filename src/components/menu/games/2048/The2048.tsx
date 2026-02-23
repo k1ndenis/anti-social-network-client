@@ -4,7 +4,7 @@ import { CELLS_STYLES } from './constants/gameStyles'
 import { Header } from './Header'
 
 export const The2048 = () => {
-  const { grid, startGame, currentScore, bestScore } = use2048()
+  const { grid, startGame, currentScore, bestScore, gameOver } = use2048()
 
   return (
     <div className='game-2048-container'>
@@ -13,7 +13,22 @@ export const The2048 = () => {
         currentScore={currentScore}
         bestScore={bestScore}
       />
-      <div className="grid-container">
+      {gameOver
+        ? 
+          <div className='game-over-2048'>
+            <div>Игра окончена!</div>
+            <button
+              onClick={startGame}
+            >
+              Повторить
+            </button>
+          </div>
+        : null
+      }
+      <div 
+        className="grid-container"
+        style={gameOver ? {opacity: 0.5} : null}
+      >
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className='grid-row'>
             {row.map((value, colIndex) => (

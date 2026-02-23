@@ -1,17 +1,16 @@
 .score-board {
   display: flex;
   flex-direction: row;
-  justify-content: end;
   position: relative;
   box-sizing: border-box;
-  gap: 25px
+  gap: 10px
 }
 
 .score {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20vw;
+  width: 14vw;
   height: auto;
   background-color: #8c7063;
   border-radius: 8px;
@@ -21,8 +20,9 @@
   color: #b9b0b0
 }
 
-@media (min-width: 720px) {
+@media (max-width: 720px) {
   .score {
+    width: 22vw;
     font-size: 1.125rem;
     line-height: 1.75rem;
     font-weight: 600;

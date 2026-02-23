@@ -13,6 +13,7 @@ export const use2048 = () => {
   const [gameIsOn, setGameIsOn] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const loadBestScore = async () => {
@@ -62,6 +63,38 @@ export const use2048 = () => {
     const newValue = Math.random() < 0.1 ? 4 : 2;
     newGrid[emptyTiles[coords].colInd][emptyTiles[coords].rowInd] = newValue;
     return newGrid;
+  }
+
+  const checkGameOver = (newGrid) => {
+    let hasEmptyCells = false;
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        if (newGrid[r][c] === 0) {
+          hasEmptyCells = true;
+          break;
+        }
+      }
+      if (hasEmptyCells) break;
+    }
+
+    if (hasEmptyCells) return false;
+
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 3; c++) {
+        if (newGrid[r][c] === newGrid[r][c + 1]) {
+          return false;
+        }
+      }
+    }
+
+    for (let c = 0; c < 4; c++) {
+      for (let r = 0; r < 3; r++) {
+        if (newGrid[r][c] === newGrid[r + 1][c]) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   useEffect(() => {
@@ -184,7 +217,8 @@ export const use2048 = () => {
         };
       }
       if (isMoved) {
-        setGrid(spawnNewValue(newGrid));
+        const updatedGrid = spawnNewValue(newGrid);
+        setGrid(updatedGrid);
         setCurrentScore(prev => {
           const newScore = prev + totalAddedScore;
           setBestScore(prevBest => {
@@ -194,6 +228,10 @@ export const use2048 = () => {
           })
           return newScore;
         })
+        if (checkGameOver(updatedGrid)) {
+          setGameOver(true);
+          setGameIsOn(false);
+        }
       }
     }
 
@@ -218,8 +256,10 @@ export const use2048 = () => {
       setGrid(newGrid);
       setGameIsOn(true);
       setCurrentScore(0);
+      setGameOver(false);
     },
-    currentScore: currentScore,
-    bestScore: bestScore
+    currentScore,
+    bestScore,
+    gameOver
   }
 }
