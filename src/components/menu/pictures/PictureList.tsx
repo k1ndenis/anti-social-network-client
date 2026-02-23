@@ -2,7 +2,7 @@ import "./PictureList.css"
 import { PictureUploader } from "./PictureUploader"
 
 export const PictureList = (props) => {
-  const { pictures, onAddPicture, onDeletePicture, setCurrentPictureId } = props;
+  const { pictures, onAddPicture, onDeletePicture, setCurrentPictureInd } = props;
 
   const pictureList = (
       <ul>
@@ -13,10 +13,10 @@ export const PictureList = (props) => {
             />
           </div>
         </li>
-      {pictures.map((picture) => (
+      {pictures.map((picture, index) => (
         <li key={picture.id}>
           <div className="card">
-            <img src={picture.url} onClick={() => setCurrentPictureId(picture.id)} />
+            <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
             <button
               onClick={() => {
                 if (confirm("Подтвердите действие")) {

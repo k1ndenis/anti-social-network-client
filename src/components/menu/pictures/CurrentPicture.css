@@ -11,7 +11,7 @@
   display: block;
 }
 
-.current-picture button {
+.hide-current-picture-button {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -21,4 +21,27 @@
   color: white;
   border: none;
   line-height: 1;
+}
+
+.past-picture-button,
+.next-picture-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.past-picture-button:hover,
+.next-picture-button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.past-picture-button {
+  left: 4%;
+}
+
+.next-picture-button {
+  right: 4%;
 }

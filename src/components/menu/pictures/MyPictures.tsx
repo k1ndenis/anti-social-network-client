@@ -6,7 +6,7 @@ import { CurrentPicture } from "./CurrentPicture";
 
 export const MyPictures = () => {
   const [pictures, setPictures] = useState(dataPictures);
-  const [currentPictureId, setCurrentPictureId] = useState(5);
+  const [currentPictureInd, setCurrentPictureInd] = useState(null);
 
   useEffect(() => {
     const loadPictures = async () => {
@@ -33,17 +33,17 @@ export const MyPictures = () => {
 
   return (
     <>
-      {currentPictureId ? 
+      {currentPictureInd !== null ? 
         <CurrentPicture
           pictures={pictures}
-          currentPictureId={currentPictureId}
-          setCurrentPictureId={setCurrentPictureId}
+          currentPictureInd={currentPictureInd}
+          setCurrentPictureInd={setCurrentPictureInd}
         /> : 
         <PictureList
           pictures={pictures}
           onAddPicture={onAddPicture}
           onDeletePicture={onDeletePicture}
-          setCurrentPictureId={setCurrentPictureId}
+          setCurrentPictureInd={setCurrentPictureInd}
         />
       }
     </>
