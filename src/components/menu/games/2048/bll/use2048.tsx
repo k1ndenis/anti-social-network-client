@@ -70,7 +70,7 @@ export const use2048 = (): Use2048Return => {
     if (emptyTiles.length === 0) return newGrid;
 
     const coords = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
-    newGrid[coords.rowInd][coords.colInd] = Math.random() < 0.1 ? 4 : 2;
+    newGrid[coords.colInd][coords.rowInd] = Math.random() < 0.1 ? 4 : 2;
     return newGrid;
   }
 
