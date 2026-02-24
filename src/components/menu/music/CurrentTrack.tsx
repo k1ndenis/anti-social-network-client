@@ -1,8 +1,21 @@
+import type { Track } from "./types/track"
 import "./CurrentTrack.css"
 
-export const CurrentTrack = (props) => {
+interface CurrentTrackProps {
+  tracks: Track[];
+  currentTrackId: number | null;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-  if (!props.currentTrackId) {
+export const CurrentTrack = ({
+  tracks,
+  currentTrackId,
+  isPlaying,
+  setIsPlaying
+}: CurrentTrackProps) => {
+
+  if (!currentTrackId) {
     return (
       <>
         <div className="current-track">
@@ -14,11 +27,22 @@ export const CurrentTrack = (props) => {
     )
   }
 
-  const currentTrack = props.tracks.find(track => track.id === props.currentTrackId);
+  const currentTrack = tracks.find(track => track.id === currentTrackId);
 
-  const currentTrackDisplay = (
-    <div className="current-track">
-      {props.isPlaying
+  if (!currentTrack) {
+    return (
+      <div className="current-track">
+        <div className="scroll-wrapper-container">
+          <span>Трек не найден</span>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <div className="current-track">
+      {isPlaying
         ? (
           <div className="scroll-wrapper-container">
             <div className="scroll-wrapper">
@@ -42,15 +66,10 @@ export const CurrentTrack = (props) => {
         <audio src={currentTrack.url} 
           controls 
           autoPlay 
-          onPlay={() => props.setIsPlaying(true)}
-          onPause={() => props.setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
         />
       </div>
-  )
-
-  return (
-    <>
-      {currentTrackDisplay}
     </>
   )
 }

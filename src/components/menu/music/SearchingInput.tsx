@@ -1,14 +1,19 @@
 import "./SearchingInput.css"
 
-export const SearchingInput = (props) => {
+interface SearchingInputProps {
+  currentValue: string;
+  setCurrentValue: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const SearchingInput = ({ currentValue, setCurrentValue }: SearchingInputProps) => {
 
   return (
     <input
       className="searching-input"
       type="text"
       placeholder="Поиск трека"
-      value={props.currentValue}
-      onChange={(e) => props.setCurrentValue(e.target.value)}
+      value={currentValue}
+      onChange={(e) => setCurrentValue(e.target.value)}
     />
   )
 } 

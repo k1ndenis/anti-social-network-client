@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import type { Track } from "../types/track";
 
 export const SORT_MODES = {
   AUTHOR_ASC: 1,
@@ -7,7 +8,7 @@ export const SORT_MODES = {
   TITLE_DESC: 4
 };
 
-export const useTrackProcessor = (tracks, searchValue) => {
+export const useTrackProcessor = (tracks: Track[], searchValue: string) => {
   const [sorting, setSorting] = useState(SORT_MODES.AUTHOR_ASC);
   
   const processedTracks = useMemo(() => {

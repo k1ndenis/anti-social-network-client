@@ -1,20 +1,26 @@
 import { useState } from "react";
+import type { Track } from './types/track'
 import "./AudioUploader.css"
 
-export const AudioUploader = (props) => {
+interface AudioUploaderProps {
+  onAddTrack: (track: Track) => void;
+  setUploader: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const [file, setFile] = useState(null);
+export const AudioUploader = ({ onAddTrack, setUploader }: AudioUploaderProps) => {
 
-  const handleFileChange = (e) => {
-    const currentFile = e.target.files[0]
+  const [author, setAuthor] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentFile = e.target.files?.[0]
     if (currentFile) {
       setFile(currentFile)
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!file) return alert("Выберите файл");
@@ -23,21 +29,22 @@ export const AudioUploader = (props) => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        const newTrack = {
+        if (reader.result) {
+          const newTrack = {
           id: Date.now(),
           author: author,
           title: title,
-          url: reader.result
+          url: reader.result as string
         }
-        props.onAddTrack(newTrack);
+        onAddTrack(newTrack);
+        }
       }
       reader.readAsDataURL(file)
     }
     setAuthor("");
     setTitle("")
     setFile(null);
-    e.target.reset();
-    props.setUploader(false);
+    setUploader(false);
   }
 
   return (
@@ -48,7 +55,7 @@ export const AudioUploader = (props) => {
       >
         <button 
           className="hide-upload-form-button"
-          onClick={() => props.setUploader(false)}
+          onClick={() => setUploader(false)}
         >
           x
         </button>

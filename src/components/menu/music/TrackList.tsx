@@ -1,14 +1,33 @@
 import { SortingButtons } from "./SortingButtons";
 import { useTrackProcessor } from "./bll/useTrackProcessor";
+import type { Track } from "./types/track";
 import "./TrackList.css"
 
-export const TrackList = (props) => {
+interface TrackListProps {
+  tracks: Track[];
+  currentSearchingValue: string;
+  currentTrackId: number | null;
+  setCurrentTrackId: React.Dispatch<React.SetStateAction<number | null>>;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
+  onDeleteTrack: (id: number) => void
+}
+
+export const TrackList = ({
+  tracks,
+  currentSearchingValue,
+  currentTrackId,
+  setCurrentTrackId,
+  isPlaying,
+  setIsPlaying,
+  onDeleteTrack
+}: TrackListProps) => {
   const { processedTracks, sorting, setSorting } = useTrackProcessor(
-    props.tracks,
-    props.currentSearchingValue
+    tracks,
+    currentSearchingValue
   )
 
-  if (props.tracks.length === 0) return (
+  if (tracks.length === 0) return (
     <ul className="tracklist">
       <li>Список треков пуст</li>
     </ul>
@@ -22,19 +41,19 @@ export const TrackList = (props) => {
       />
       <ul className="tracklist">
         {processedTracks.map((track) => (
-          <div 
+          <li 
             className="track-container"
             key={track.id}
-            onClick={props.currentTrackId === track.id
+            onClick={currentTrackId === track.id
                 ? () => {
-                  props.setCurrentTrackId(null);
-                  props.setIsPlaying(false);
+                  setCurrentTrackId(null);
+                  setIsPlaying(false);
                 } 
-                : () => props.setCurrentTrackId(track.id)}
+                : () => setCurrentTrackId(track.id)}
           >
             <div className="track-row">
               <button className="tracklist-buttons">
-                {props.isPlaying && props.currentTrackId === track.id ? "⏸" : "▶"}
+                {isPlaying && currentTrackId === track.id ? "⏸" : "▶"}
               </button>
               <li>
                 {track.author} - {track.title}
@@ -44,14 +63,14 @@ export const TrackList = (props) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   if (confirm("Подтвердите действие")) {
-                    props.onDeleteTrack(track.id);
+                    onDeleteTrack(track.id);
                   }
                 }}
               >
                 x
               </button>
             </div>
-          </div>
+          </li>
         )
         )}
       </ul>

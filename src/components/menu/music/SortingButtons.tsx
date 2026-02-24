@@ -1,6 +1,11 @@
 import { SORT_MODES } from "./bll/useTrackProcessor";
 import "./SortingButtons.css"
 
+interface SortingButtonsProps {
+  sorting: number;
+  setSorting: React.Dispatch<React.SetStateAction<number>>
+}
+
 const { 
   AUTHOR_ASC,
   AUTHOR_DESC,
@@ -8,8 +13,7 @@ const {
   TITLE_DESC
 } = SORT_MODES;
 
-export const SortingButtons = (props) => {
-  const { sorting, setSorting } = props
+export const SortingButtons = ({ sorting, setSorting }: SortingButtonsProps) => {
 
   return (
     <div className="music-sorting-buttons">
