@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { get, set } from "idb-keyval"
 import { SignUpForm } from "./SignUpForm";
 import { LoginForm } from "./LoginForm";
-import { Menu } from "../menu/Menu";
+import { Menu } from "./../menu/Menu";
 import type { User } from './types/user'
 import './AuthPage.css'
 

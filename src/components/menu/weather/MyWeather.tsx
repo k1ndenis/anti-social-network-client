@@ -2,27 +2,34 @@ import { useState } from "react";
 import { GetWeather } from "./GetWeather";
 import { WeatherDisplay } from "./WeatherDisplay";
 
+export interface WeatherData {
+  name: string;
+  main: {
+    temp: number;
+  };
+  weather: {
+    description: string;
+    icon: string
+  }[];
+}
+
 export const MyWeather = () => {
-  const [data, setData] = useState(null);
-  const [city, setCity] = useState(() => {
+  const [data, setData] = useState<WeatherData | null>(null);
+  const [city, setCity] = useState<string>(() => {
     return localStorage.getItem("weatherCity") || ""
   });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <>
       <WeatherDisplay
         data={data}
-        loading={loading}
         error={error}
       />
       <GetWeather
-        data={data}
         setData={setData}
         city={city}
         setCity={setCity}
-        setLoading={setLoading}
         setError={setError}
       />
     </>

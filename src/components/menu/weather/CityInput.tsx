@@ -1,9 +1,15 @@
 import "./CityInpit.css"
 
-export const CityInput = (props) => {
+interface CityInpitProps {
+  fetchData: () => void;
+  city: string;
+  setCity: React.Dispatch<React.SetStateAction<string>>
+}
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") props.fetchData();
+export const CityInput = ({ fetchData, city, setCity }: CityInpitProps) => {
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") fetchData();
   }
 
   return (
@@ -12,12 +18,12 @@ export const CityInput = (props) => {
         className="city-input"
         type="text"
         placeholder="Введите название города..."
-        value={props.city}
-        onChange={(e) => props.setCity(e.target.value)}
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
         onKeyDown={handleKeyDown}
       />
       <button
-        onClick={props.fetchData}
+        onClick={fetchData}
       >
         Узнать погоду
       </button>

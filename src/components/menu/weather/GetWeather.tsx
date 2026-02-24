@@ -1,7 +1,19 @@
-import { useEffect } from "react";
+import type { WeatherData } from "./MyWeather";
 import { CityInput } from "./CityInput";
 
-export const GetWeather = (props) => {
+interface GetWeatherProps {
+  city: string;
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  setData: (json: WeatherData | null) => void;
+}
+
+export const GetWeather = ({
+  city,
+  setCity,
+  setError,
+  setData
+}: GetWeatherProps) => {
 
   const API_KEY = "9fe668fe853fc4dd8a6fe164ff909381";
   const API_URL =
@@ -9,43 +21,37 @@ export const GetWeather = (props) => {
   API_KEY +
   "&units=metric&lang=ru";
 
-  const fetchData = async () => {
-    if (!props.city) return;
+  const fetchData = async (): Promise<void> => {
+    if (!city) return;
 
-    props.setLoading(true);
-    props.setError(null);
-    localStorage.setItem("weatherCity", props.city);
-    props.setCity("");
+    setError(null);
+    localStorage.setItem("weatherCity", city);
+    setCity("");
 
-    const url = `${API_URL}&q=${props.city}`;
+    const url = `${API_URL}&q=${city}`;
     
     try {
       const response = await fetch(url);
       const json = await response.json();
       if (!response.ok) {
-        props.setError(json.message || "Ошибка загрузки");
-        props.setData(null);
+        setError(json.message || "Ошибка загрузки");
+        setData(null);
       } else {
-        props.setData(json);
+        setData(json);
+        console.log(json)
       }
     } catch (error) {
-      props.setError("Сетевая ошибка");
+      setError("Сетевая ошибка");
       console.error("Ошибка при загрузке: ", error);
-    } finally {
-      props.setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [])
 
   return (
     <>
       <CityInput
         fetchData={fetchData}
-        city={props.city}
-        setCity={props.setCity}
+        city={city}
+        setCity={setCity}
       />
     </>
   )

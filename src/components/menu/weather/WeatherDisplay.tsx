@@ -1,16 +1,22 @@
+import type { WeatherData } from "./MyWeather";
 import "./WeatherDisplay.css"
 
-export const WeatherDisplay = (props) => {
+interface WeatherDisplayProps {
+  error: string | null;
+  data: WeatherData | null
+}
 
-  if (props.error) {
+export const WeatherDisplay = ({ error, data }: WeatherDisplayProps) => {
+
+  if (error) {
     return (
       <div>
-        Ошибка: {props.error}
+        Ошибка: {error}
       </div>
     )
   }
 
-  if (!props.data || props.data.cod === "404") {
+  if (!data) {
     return (
       <div>
         Город не найден
@@ -18,7 +24,7 @@ export const WeatherDisplay = (props) => {
     )
   }
 
-  const { name, main, weather } = props.data;
+  const { name, main, weather } = data;
   const temperature = main.temp;
   const description = weather[0].description;
   const icon = weather[0].icon;
