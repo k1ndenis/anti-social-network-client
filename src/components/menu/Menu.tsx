@@ -6,7 +6,13 @@ import { MyWeather } from "./weather/MyWeather";
 import { MyPictures } from "./pictures/MyPictures";
 import { MyGames } from "./games/MyGames";
 
-const MENU_DATA = [
+interface MenuItemStyle {
+  id: number,
+  title: string,
+  item: React.ReactElement
+}
+
+const MENU_DATA: MenuItemStyle[] = [
   {
     id: 1,
     title: "Музыка",
