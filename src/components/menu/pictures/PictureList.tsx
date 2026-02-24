@@ -1,8 +1,15 @@
-import "./PictureList.css"
 import { PictureUploader } from "./PictureUploader"
+import type { Picture } from "./types/picture";
+import "./PictureList.css"
 
-export const PictureList = (props) => {
-  const { pictures, onAddPicture, onDeletePicture, setCurrentPictureInd } = props;
+interface PictureListProps {
+  pictures: Picture[];
+  onAddPicture: (picture: Picture) => void;
+  onDeletePicture: (id: string) => void;
+  setCurrentPictureInd: React.Dispatch<React.SetStateAction<number | null>>
+}
+
+export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurrentPictureInd }: PictureListProps) => {
 
   const pictureList = (
       <ul>

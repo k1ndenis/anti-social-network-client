@@ -1,14 +1,21 @@
+
+import type { Picture } from './types/picture';
 import './CurrentPicture.css'
 
-export const CurrentPicture = (props) => {
-  const { pictures, currentPictureInd, setCurrentPictureInd } = props;
+interface CurrentPictureProps {
+  pictures: Picture[];
+  currentPictureInd: number | null;
+  setCurrentPictureInd: React.Dispatch<React.SetStateAction<number | null>>
+}
 
-  const togglePicture = (direction) => {
-    if (direction === "past") {
+export const CurrentPicture = ({ pictures, currentPictureInd, setCurrentPictureInd }: CurrentPictureProps) => {
+
+  const togglePicture = (direction: string) => {
+    if (direction === "past" && currentPictureInd) {
       const pastInd = currentPictureInd - 1;
       if (pastInd >= 0) setCurrentPictureInd(pastInd);
     }
-    if (direction === "next") {
+    if (direction === "next" && currentPictureInd) {
       const nextInd = currentPictureInd + 1;
       if (nextInd < pictures.length) setCurrentPictureInd(nextInd);
     }
@@ -16,7 +23,7 @@ export const CurrentPicture = (props) => {
 
   return (
     <div className="current-picture">
-      <img src={pictures[currentPictureInd].url} />
+      {currentPictureInd ? <img src={pictures[currentPictureInd].url} /> : null}
       <button
         className="hide-current-picture-button"
         onClick={() => setCurrentPictureInd(null)}

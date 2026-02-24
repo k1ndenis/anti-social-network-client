@@ -3,13 +3,14 @@ import { get, set } from "idb-keyval"
 import dataPictures from "../../../data/pictures.json";
 import { PictureList } from "./PictureList";
 import { CurrentPicture } from "./CurrentPicture";
+import type { Picture } from "./types/picture";
 
 export const MyPictures = () => {
-  const [pictures, setPictures] = useState(dataPictures);
-  const [currentPictureInd, setCurrentPictureInd] = useState(null);
+  const [pictures, setPictures] = useState<Picture[]>(dataPictures);
+  const [currentPictureInd, setCurrentPictureInd] = useState<number | null>(null);
 
   useEffect(() => {
-    const loadPictures = async () => {
+    const loadPictures = async (): Promise<void> => {
       const savedPictures = await get("pictures");
       if (savedPictures) {
         setPictures(savedPictures);
@@ -18,14 +19,14 @@ export const MyPictures = () => {
     loadPictures()
   }, []);
 
-  const onAddPicture = async (newPicture) => {
+  const onAddPicture = async (newPicture: Picture): Promise<void> => {
     const updatedPictures = [...pictures];
     updatedPictures.unshift(newPicture);
     setPictures(updatedPictures);
     await set("pictures", updatedPictures);
   }
 
-  const onDeletePicture = async (id) => {
+  const onDeletePicture = async (id: string): Promise<void> => {
     const updatedPictures = pictures.filter(picture => picture.id !== id);
     setPictures(updatedPictures);
     await set("pictures", updatedPictures);

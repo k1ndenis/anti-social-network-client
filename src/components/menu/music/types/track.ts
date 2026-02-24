@@ -1,5 +1,5 @@
 export type Track = {
-  id: number,
+  id: string,
   author: string,
   title: string,
   url: string

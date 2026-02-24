@@ -31,7 +31,7 @@ export const AudioUploader = ({ onAddTrack, setUploader }: AudioUploaderProps) =
       reader.onloadend = () => {
         if (reader.result) {
           const newTrack = {
-          id: Date.now(),
+          id: crypto.randomUUID(),
           author: author,
           title: title,
           url: reader.result as string

@@ -1,16 +1,22 @@
-export const PictureUploader = (props) => {
+import type { Picture } from "./types/picture"
 
-  const handleFileChange = (e) => {
-    const currentFile = e.target.files[0];
+interface PictureUploaderProps {
+  onAddPicture: (picture: Picture) => void
+}
+
+export const PictureUploader = ({ onAddPicture }: PictureUploaderProps) => {
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentFile = e.target.files?.[0];
     if (currentFile) {
       const reader = new FileReader();
 
       reader.onloadend = () => {
         const newPicture = {
-          id: Date.now(),
-          url: reader.result
+          id: crypto.randomUUID(),
+          url: reader.result as string
         }
-        props.onAddPicture(newPicture);
+        onAddPicture(newPicture);
       }
       reader.readAsDataURL(currentFile);
     }

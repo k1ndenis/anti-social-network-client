@@ -6,11 +6,11 @@ import "./TrackList.css"
 interface TrackListProps {
   tracks: Track[];
   currentSearchingValue: string;
-  currentTrackId: number | null;
-  setCurrentTrackId: React.Dispatch<React.SetStateAction<number | null>>;
+  currentTrackId: string | null;
+  setCurrentTrackId: React.Dispatch<React.SetStateAction<string | null>>;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
-  onDeleteTrack: (id: number) => void
+  onDeleteTrack: (id: string) => void
 }
 
 export const TrackList = ({

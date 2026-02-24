@@ -11,7 +11,7 @@ import "./MyMusic.css"
 export const MyMusic = () => {
   const [tracks, setTracks] = useState<Track[]>(dataTracks);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentTrackId, setCurrentTrackId] = useState<number | null>(null);
+  const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
   const [currentSearchingValue, setCurrentSearchingValue] = useState<string>("");
   const [uploader, setUploader] = useState<boolean>(false);
 
@@ -32,7 +32,7 @@ export const MyMusic = () => {
     await set("tracks", updatedTracks);
   }
 
-  const onDeleteTrack = async (id: number): Promise<void> => {
+  const onDeleteTrack = async (id: string): Promise<void> => {
     const updatedTracks = tracks.filter(track => track.id !== id);
     setTracks(updatedTracks);
     await set("tracks", updatedTracks);

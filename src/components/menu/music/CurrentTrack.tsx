@@ -3,7 +3,7 @@ import "./CurrentTrack.css"
 
 interface CurrentTrackProps {
   tracks: Track[];
-  currentTrackId: number | null;
+  currentTrackId: string | null;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
 }
