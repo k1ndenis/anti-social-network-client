@@ -14,6 +14,7 @@ export const use2048 = () => {
   const [currentScore, setCurrentScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [gameWin, setGameWin] = useState(false);
 
   useEffect(() => {
     const loadBestScore = async () => {
@@ -35,6 +36,7 @@ export const use2048 = () => {
         addedScore += sum;
         tiles[i - 1] = sum;
         tiles[i] = 0;
+        if (sum === 2048) setGameWin(true);
       }
     })
     return {
@@ -257,9 +259,12 @@ export const use2048 = () => {
       setGameIsOn(true);
       setCurrentScore(0);
       setGameOver(false);
+      setGameWin(false);
     },
     currentScore,
     bestScore,
-    gameOver
+    gameOver,
+    gameWin,
+    setGameWin
   }
 }
