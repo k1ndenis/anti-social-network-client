@@ -1,9 +1,13 @@
 import { ScoreBoard } from "./ScoreBoard"
-import { StartGameBtn } from "./StartGameBtn";
 import './Header.css'
 
-export const Header = (props) => {
-  const { currentScore, bestScore, startGame } = props;
+interface HeaderProps {
+  currentScore: number;
+  bestScore: number;
+  startGame: () => void;
+}
+
+export const Header = ({ currentScore, bestScore, startGame }: HeaderProps) => {
 
   return (
     <div className="header-2048">
@@ -17,9 +21,11 @@ export const Header = (props) => {
           currentScore={currentScore}
           bestScore={bestScore}
         />
-        <StartGameBtn
-          startGame={startGame}
-        />
+        <button
+          onClick={startGame}
+        >
+          Новая игра
+        </button>
       </div>
     </div>
   )

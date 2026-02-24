@@ -1,7 +1,14 @@
+import type { SetStateAction } from 'react';
 import './GaneOverDisplay.css'
 
-export const GameOverDisplay = (props) => {
-  const { gameOver, gameWin, setGameWin, startGame } = props;
+interface GameOverDisplayProps {
+  gameOver: boolean;
+  gameWin: boolean;
+  setGameWin: React.Dispatch<SetStateAction<boolean>>;
+  startGame: () => void;
+}
+
+export const GameOverDisplay = ({ gameOver, gameWin, setGameWin, startGame }: GameOverDisplayProps) => {
 
   return (
     <>
@@ -11,11 +18,11 @@ export const GameOverDisplay = (props) => {
               className='game-over-2048'
             >
               <div>
-                {gameOver ? "Игра окончена!" : null}
-                {gameWin ? "Победа!" : null}
+                {gameOver && "Игра окончена!"}
+                {gameWin && "Победа!"}
               </div>
               <div className='game-over-buttons'>
-                {gameWin ? <button onClick={() => setGameWin(false)}>Продолжить</button> : null}
+                {gameWin && <button onClick={() => setGameWin(false)}>Продолжить</button>}
                 <button
                   onClick={startGame}
                 >

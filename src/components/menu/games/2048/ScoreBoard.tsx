@@ -1,8 +1,11 @@
 import './ScoreBoard.css'
 
-export const ScoreBoard = (props) => {
-  const { currentScore, bestScore } = props;
+interface ScoreBoardProps {
+  currentScore: number;
+  bestScore: number;
+}
 
+export const ScoreBoard = ({ currentScore, bestScore }: ScoreBoardProps) => {
 
   return (
     <div className="score-board">

@@ -1,17 +1,28 @@
-export const ToggleQuestion = (props) => {
-  const {
-    questions,
-    currentQuestion,
-    setCurrentQuestion,
-    val,
-    solvedCells
-  } = props;
+import type { Question  } from "./types/question";
+
+interface ToggleQuestionProps {
+  questions: Question[];
+  currentQuestion: number;
+  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  val: number;
+  row: string;
+  solvedCells: string[];
+}
+
+export const ToggleQuestion = ({
+  questions,
+  currentQuestion,
+  setCurrentQuestion,
+  val,
+  row,
+  solvedCells
+}: ToggleQuestionProps) => {
   const length = questions.length
 
   const toggleQuestion = () => {
     let nextIndex = (currentQuestion + val + length) % length;
     let attempts = 0;
-    const chekSolved = (idx) => {
+    const chekSolved = (idx: number) => {
       return questions[idx].coordinates.every(coord => solvedCells.includes(coord))
     }
     while (chekSolved(nextIndex) && attempts < length) {
@@ -23,7 +34,7 @@ export const ToggleQuestion = (props) => {
 
   return (
     <button onClick={toggleQuestion}>
-      {props.row}
+      {row}
     </button>
   )
 }

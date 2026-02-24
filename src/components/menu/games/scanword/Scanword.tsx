@@ -2,14 +2,17 @@ import { useState } from "react"
 import dataQuestions from "./../../../../data/questions.json"
 import { GridInputs } from "./GridInputs";
 import { CurrentQuestion } from "./CurrentQuestion";
+import type { Question } from "./types/question";
 import './Scanword.css'
 
+const questions: Question[] = dataQuestions as Question[];
+
 export const Scanword = () => {
-  const [questions] = useState(dataQuestions);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [activedCell, setActivedCell] = useState(0);
-  const [currentCells, setCurrentCells] = useState(questions[0].coordinates);
-  const [solvedCells, setSolvedCells] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [activedCell, setActivedCell] = useState<number>(0);
+  const [currentCells, setCurrentCells] = useState<Question['coordinates']>(questions[0].coordinates);
+  const [solvedCells, setSolvedCells] = useState<string[]>([]);
+  const [direction, setDirection] = useState<Question['direction']>("horizontal");
 
   return (
     <div className="scanword-container">
@@ -29,6 +32,8 @@ export const Scanword = () => {
         setCurrentCells={setCurrentCells}
         solvedCells={solvedCells}
         setSolvedCells={setSolvedCells}
+        direction={direction}
+        setDirection={setDirection}
       />
     </div>
   )

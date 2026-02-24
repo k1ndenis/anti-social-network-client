@@ -4,7 +4,7 @@ import { The2048 } from "./2048/The2048";
 import './MyGames.css'
 
 export const MyGames = () => {
-  const [activeGame, setActiveGame] = useState(null);
+  const [activeGame, setActiveGame] = useState<string | null>(null);
 
   return (
     <>

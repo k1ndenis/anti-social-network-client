@@ -1,23 +1,33 @@
 import { useRef, useEffect, useState } from 'react'
 import { get, set } from "idb-keyval"
 
-const emptyGrid = [
+const emptyGrid: number[][] = [
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ];
 
-export const use2048 = () => {
-  const [grid, setGrid] = useState(emptyGrid);
-  const [gameIsOn, setGameIsOn] = useState(false);
-  const [currentScore, setCurrentScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [gameWin, setGameWin] = useState(false);
+interface Use2048Return {
+  grid: number[][];
+  startGame: () => void;
+  currentScore: number;
+  bestScore: number;
+  gameOver: boolean;
+  gameWin: boolean;
+  setGameWin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const use2048 = (): Use2048Return => {
+  const [grid, setGrid] = useState<number[][]>(emptyGrid);
+  const [gameIsOn, setGameIsOn] = useState<boolean>(false);
+  const [currentScore, setCurrentScore] = useState<number>(0);
+  const [bestScore, setBestScore] = useState<number>(0);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [gameWin, setGameWin] = useState<boolean>(false);
 
   useEffect(() => {
-    const loadBestScore = async () => {
+    const loadBestScore = async (): Promise<void> => {
       const savedScore = await get("best-score-2048");
       if (savedScore) {
         setBestScore(savedScore);
@@ -26,13 +36,14 @@ export const use2048 = () => {
     loadBestScore();
   }, []);
 
-  const touchStart = useRef({ x: 0, y: 0});
+  const touchStart = useRef<{ x: number; y: number }>({ x: 0, y: 0});
 
-  const mergeTiles = (tiles) => {
+  const mergeTiles = (tiles: number[]): { mergedTiles: number[]; addedScore: number } => {
     let addedScore = 0;
     tiles.forEach((el, i) => {
       if (i > 0 && el === tiles[i - 1]) {
-        const sum = tiles[i - 1] * 2;
+        const prev = tiles[i - 1] ?? 0;
+        const sum = prev * 2;
         addedScore += sum;
         tiles[i - 1] = sum;
         tiles[i] = 0;
@@ -45,11 +56,12 @@ export const use2048 = () => {
     }
   }
 
-  const spawnNewValue = (newGrid) => {
-    const emptyTiles = [];
+  const spawnNewValue = (newGrid: number[][]): number[][] => {
+    type TileCoords = { colInd: number; rowInd: number }
+    const emptyTiles: TileCoords[] = [];
     for (let c = 0; c < 4; c++) {
       for (let r = 0; r < 4; r++) {
-        if (newGrid[c][r] === 0) {
+        if (newGrid[c]?.[r] === 0) {
           emptyTiles.push({ colInd: c, rowInd: r });
         }
       }
@@ -57,21 +69,16 @@ export const use2048 = () => {
 
     if (emptyTiles.length === 0) return newGrid;
 
-    const getRandomIndex = () => {
-      const randomCoords = Math.floor(Math.random() * emptyTiles.length);
-      return randomCoords;
-    }
-    const coords = getRandomIndex();
-    const newValue = Math.random() < 0.1 ? 4 : 2;
-    newGrid[emptyTiles[coords].colInd][emptyTiles[coords].rowInd] = newValue;
+    const coords = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+    newGrid[coords.rowInd][coords.colInd] = Math.random() < 0.1 ? 4 : 2;
     return newGrid;
   }
 
-  const checkGameOver = (newGrid) => {
+  const checkGameOver = (newGrid: number[][]): boolean => {
     let hasEmptyCells = false;
     for (let r = 0; r < 4; r++) {
       for (let c = 0; c < 4; c++) {
-        if (newGrid[r][c] === 0) {
+        if (newGrid[r]?.[c] === 0) {
           hasEmptyCells = true;
           break;
         }
@@ -83,7 +90,7 @@ export const use2048 = () => {
 
     for (let r = 0; r < 4; r++) {
       for (let c = 0; c < 3; c++) {
-        if (newGrid[r][c] === newGrid[r][c + 1]) {
+        if (newGrid[r]?.[c] === newGrid[r]?.[c + 1]) {
           return false;
         }
       }
@@ -91,7 +98,7 @@ export const use2048 = () => {
 
     for (let c = 0; c < 4; c++) {
       for (let r = 0; r < 3; r++) {
-        if (newGrid[r][c] === newGrid[r + 1][c]) {
+        if (newGrid[r]?.[c] === newGrid[r + 1]?.[c]) {
           return false;
         }
       }
@@ -100,18 +107,18 @@ export const use2048 = () => {
   }
 
   useEffect(() => {
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: TouchEvent) => {
       if (gameIsOn) e.preventDefault();
     }
 
-    const handleTouchStart = (e) => {
+    const handleTouchStart = (e: TouchEvent) => {
       touchStart.current = {
         x: e.touches[0].clientX,
         y: e.touches[0].clientY
       }
     }
 
-    const handleTouchEnd = (e) => {
+    const handleTouchEnd = (e: TouchEvent) => {
       const deltaX = e.changedTouches[0].clientX - touchStart.current.x;
       const deltaY = e.changedTouches[0].clientY - touchStart.current.y;
       const absX = Math.abs(deltaX);
@@ -128,7 +135,7 @@ export const use2048 = () => {
       }
     }
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent | { key: string; preventDefault: () => void }) => {
       if (!gameIsOn) return;
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
@@ -141,7 +148,7 @@ export const use2048 = () => {
           for (let col = 0; col < 4; col++) {
             const column = [];
             for (let row = 0; row < 4; row++) {
-              if (newGrid[row][col] !== 0) column.push(newGrid[row][col]);
+              if (newGrid[row]?.[col] !== 0) column.push(newGrid[row]?.[col]);
             };
 
             const { mergedTiles, addedScore } = mergeTiles(column);
@@ -151,7 +158,7 @@ export const use2048 = () => {
             while (finalColumn.length < 4) finalColumn.push(0);
 
             for (let row = 0; row < 4; row++) {
-              if (newGrid[row][col] !== finalColumn[row]) isMoved = true;
+              if (newGrid[row]?.[col] !== finalColumn[row]) isMoved = true;
               newGrid[row][col] = finalColumn[row];
             };
           }
@@ -161,7 +168,7 @@ export const use2048 = () => {
           for (let col = 0; col < 4; col++) {
             const column = [];
             for (let row = 3; row >= 0; row--) {
-              if (newGrid[row][col] !== 0) column.push(newGrid[row][col]);
+              if (newGrid[row]?.[col] !== 0) column.push(newGrid[row]?.[col]);
             };
 
             const { mergedTiles, addedScore } = mergeTiles(column);
@@ -171,7 +178,7 @@ export const use2048 = () => {
             while (finalColumn.length < 4) finalColumn.push(0);
 
             for (let row = 3, k = 0; row >= 0; row--, k++) {
-              if (newGrid[row][col] !== finalColumn[k]) isMoved = true;
+              if (newGrid[row]?.[col] !== finalColumn[k]) isMoved = true;
               newGrid[row][col] = finalColumn[k];
             };
           }
@@ -181,7 +188,7 @@ export const use2048 = () => {
           for (let row = 0; row < 4; row ++) {
             const currentRow = [];
             for (let col = 0; col < 4; col++) {
-              if (newGrid[row][col] !== 0) currentRow.push(newGrid[row][col]);
+              if (newGrid[row]?.[col] !== 0) currentRow.push(newGrid[row]?.[col]);
             };
 
             const { mergedTiles, addedScore } = mergeTiles(currentRow);
@@ -191,7 +198,7 @@ export const use2048 = () => {
             while (finalRow.length < 4) finalRow.push(0);
 
             for (let col = 0; col < 4; col++) {
-              if (newGrid[row][col] !== finalRow[col]) isMoved = true;
+              if (newGrid[row]?.[col] !== finalRow[col]) isMoved = true;
               newGrid[row][col] = finalRow[col];
             };
           }
@@ -201,7 +208,7 @@ export const use2048 = () => {
           for (let row = 0; row < 4; row ++) {
             const currentRow = [];
             for (let col = 3; col >= 0; col--) {
-              if (newGrid[row][col] !== 0) currentRow.push(newGrid[row][col]);
+              if (newGrid[row]?.[col] !== 0) currentRow.push(newGrid[row]?.[col]);
             };
 
             const { mergedTiles, addedScore } = mergeTiles(currentRow);
@@ -211,7 +218,7 @@ export const use2048 = () => {
             while (finalRow.length < 4) finalRow.push(0);
 
             for (let col = 3, k = 0; col >= 0; col--, k++) {
-              if (newGrid[row][col] !== finalRow[k]) isMoved = true;
+              if (newGrid[row]?.[col] !== finalRow[k]) isMoved = true;
               newGrid[row][col] = finalRow[k];
             };
           }
@@ -251,8 +258,8 @@ export const use2048 = () => {
 
   return {
     grid,
-    startGame: () => {
-      const newGrid = JSON.parse(JSON.stringify(emptyGrid));
+    startGame: (): void => {
+      const newGrid = JSON.parse(JSON.stringify(emptyGrid)) as number[][];
       spawnNewValue(newGrid);
       spawnNewValue(newGrid);
       setGrid(newGrid);

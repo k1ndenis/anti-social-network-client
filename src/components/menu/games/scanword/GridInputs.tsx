@@ -1,22 +1,39 @@
-import {  useEffect, useRef, useState } from "react"
+import React, {  useEffect, useRef, useState } from "react"
+import type { Question } from './types/question'
 import './GridInputs.css'
 
-export const GridInputs = (props) => {
-  const {
-    questions,
-    currentQuestion,
-    setCurrentQuestion,
-    activedCell,
-    setActivedCell,
-    currentCells,
-    setCurrentCells,
-    solvedCells,
-    setSolvedCells
-  } = props
-  const [isSolved, setIsSolved] = useState(false);
-  const [cells, setCells] = useState({});
-  const [direction, setDirection] = useState("horizontal");
-  const inputRefs = useRef([]);
+interface GridInputsProps {
+  questions: Question[];
+  currentQuestion: number;
+  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  activedCell: Question['startPosition'];
+  setActivedCell: React.Dispatch<React.SetStateAction<Question['startPosition']>>;
+  currentCells: Question['coordinates'];
+  setCurrentCells: React.Dispatch<React.SetStateAction<Question['coordinates']>>;
+  solvedCells: string[]
+  setSolvedCells: React.Dispatch<React.SetStateAction<string[]>>;
+  direction: Question['direction'];
+  setDirection: React.Dispatch<React.SetStateAction<Question['direction']>>
+}
+
+type CellsState = Record<string, string>
+
+export const GridInputs = ({
+  questions,
+  currentQuestion,
+  setCurrentQuestion,
+  activedCell,
+  setActivedCell,
+  currentCells,
+  setCurrentCells,
+  solvedCells,
+  setSolvedCells,
+  direction,
+  setDirection
+}: GridInputsProps) => {
+  const [isSolved, setIsSolved] = useState<boolean>(false);
+  const [cells, setCells] = useState<CellsState>({});
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     const currentQ = questions[currentQuestion];
@@ -25,7 +42,7 @@ export const GridInputs = (props) => {
       setActivedCell(currentQ.startPosition);
       setDirection(currentQ.direction);
     }
-  }, [currentQuestion, questions]);
+  }, [currentQuestion, questions, setActivedCell, setCurrentCells, setDirection]);
 
   useEffect(() => {
     if (inputRefs.current[activedCell]) {
@@ -35,11 +52,18 @@ export const GridInputs = (props) => {
 
   if (!questions || questions.length === 0) return <div>Загрузка...</div>;
 
-  const chekWord = (wordIndex, currentCells) => {
+  const chekWord = (wordIndex: number, currentCells: Question['coordinates'] | CellsState) => {
     const targetWord = questions[wordIndex].position;
 
+    const isObject = typeof currentCells === 'object' && !Array.isArray(currentCells);
+
     const isCorrect = Object.entries(targetWord).every(([coord, letter]) => {
-      return currentCells[coord] === letter;
+      if (isObject) {
+        return currentCells[coord] === letter;
+      } else {
+        const index = parseInt(coord, 10);
+        return currentCells[index] === letter;
+      }
     })
 
     if (isCorrect) {
@@ -58,7 +82,7 @@ export const GridInputs = (props) => {
     return false;
   }
 
-  const handleChange = (e, i) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
     const { name, value } = e.target;
     const endPos = questions[currentQuestion].endPosition
     const step = direction === "horizontal" ? 1 : 10;
@@ -81,7 +105,7 @@ export const GridInputs = (props) => {
     const char = value.slice(-1).toUpperCase();
     if (!char) return;
 
-    const updatedCells = { ...cells, [name]: char };
+    const updatedCells: CellsState = { ...cells, [name]: char };
     setCells(updatedCells);
 
     const isSolved = chekWord(currentQuestion, updatedCells);
@@ -100,10 +124,10 @@ export const GridInputs = (props) => {
     }
   }
 
-  const handleKeyDown = (e, i) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, i: number) => {
     if (e.key === 'Backspace') {
       const startPos = questions[currentQuestion].startPosition
-      const name = e.target.name
+      const name = (e.target as HTMLInputElement).name
       if (i > startPos) {
         if (!solvedCells.includes(name)) {
           setCells(prev => ({ ...prev, [name]: "" }));
@@ -129,7 +153,7 @@ export const GridInputs = (props) => {
     }
   }
 
-  const setCellsDisplay = (id) => {
+  const setCellsDisplay = (id: string): React.CSSProperties => {
     if (currentCells.includes(id) && !solvedCells.includes(id)) {
       return { background: "grey", color: "white", boxShadow: "0 0 1rem rgba(172, 172, 172, 0.75)" }
     }

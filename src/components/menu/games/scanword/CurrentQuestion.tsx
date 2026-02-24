@@ -1,26 +1,39 @@
 import { ToggleQuestion } from "./ToggleQuestion"
+import type { Question } from './types/question'
 import './CurrentQuestion.css'
 
-export const CurrentQuestion = (props) => {
+interface CurrentQuestionProps {
+  questions: Question[];
+  currentQuestion: number;
+  setCurrentQuestion: React.Dispatch<React.SetStateAction<number>>;
+  solvedCells: string[]
+}
+
+export const CurrentQuestion = ({ 
+  questions,
+  currentQuestion,
+  setCurrentQuestion,
+  solvedCells 
+}: CurrentQuestionProps) => {
   
   return (
     <div className="current-question-container">
       <ToggleQuestion 
-        questions={props.questions}
-        currentQuestion={props.currentQuestion}
-        setCurrentQuestion={props.setCurrentQuestion}
-        solvedCells={props.solvedCells}
+        questions={questions}
+        currentQuestion={currentQuestion}
+        setCurrentQuestion={setCurrentQuestion}
+        solvedCells={solvedCells}
         val={-1}
         row={"←"}
       />
       <span className="current-question">
-        {props.questions[props.currentQuestion].question}
+        {questions[currentQuestion].question}
       </span>
       <ToggleQuestion 
-        questions={props.questions}
-        currentQuestion={props.currentQuestion}
-        setCurrentQuestion={props.setCurrentQuestion}
-        solvedCells={props.solvedCells}
+        questions={questions}
+        currentQuestion={currentQuestion}
+        setCurrentQuestion={setCurrentQuestion}
+        solvedCells={solvedCells}
         val={1}
         row={"→"}
       />
