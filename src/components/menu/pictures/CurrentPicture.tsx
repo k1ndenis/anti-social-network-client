@@ -23,7 +23,7 @@ export const CurrentPicture = ({ pictures, currentPictureInd, setCurrentPictureI
 
   return (
     <div className="current-picture">
-      {currentPictureInd ? <img src={pictures[currentPictureInd].url} /> : null}
+      {currentPictureInd !== null && <img src={pictures[currentPictureInd].url} />}
       <button
         className="hide-current-picture-button"
         onClick={() => setCurrentPictureInd(null)}
