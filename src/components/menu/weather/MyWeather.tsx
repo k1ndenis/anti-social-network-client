@@ -18,19 +18,16 @@ export const MyWeather = () => {
   const [city, setCity] = useState<string>(() => {
     return localStorage.getItem("weatherCity") || ""
   });
-  const [error, setError] = useState<string | null>(null);
 
   return (
     <>
       <WeatherDisplay
         data={data}
-        error={error}
       />
       <GetWeather
         setData={setData}
         city={city}
         setCity={setCity}
-        setError={setError}
       />
     </>
   )

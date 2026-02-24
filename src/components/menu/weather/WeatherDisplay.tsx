@@ -2,19 +2,10 @@ import type { WeatherData } from "./MyWeather";
 import "./WeatherDisplay.css"
 
 interface WeatherDisplayProps {
-  error: string | null;
   data: WeatherData | null
 }
 
-export const WeatherDisplay = ({ error, data }: WeatherDisplayProps) => {
-
-  if (error) {
-    return (
-      <div>
-        Ошибка: {error}
-      </div>
-    )
-  }
+export const WeatherDisplay = ({ data }: WeatherDisplayProps) => {
 
   if (!data) {
     return (

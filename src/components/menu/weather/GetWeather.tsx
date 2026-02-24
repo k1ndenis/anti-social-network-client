@@ -4,14 +4,12 @@ import { CityInput } from "./CityInput";
 interface GetWeatherProps {
   city: string;
   setCity: React.Dispatch<React.SetStateAction<string>>;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
   setData: (json: WeatherData | null) => void;
 }
 
 export const GetWeather = ({
   city,
   setCity,
-  setError,
   setData
 }: GetWeatherProps) => {
 
@@ -24,24 +22,19 @@ export const GetWeather = ({
   const fetchData = async (): Promise<void> => {
     if (!city) return;
 
-    setError(null);
     localStorage.setItem("weatherCity", city);
     setCity("");
-
     const url = `${API_URL}&q=${city}`;
     
     try {
       const response = await fetch(url);
       const json = await response.json();
       if (!response.ok) {
-        setError(json.message || "Ошибка загрузки");
         setData(null);
       } else {
         setData(json);
-        console.log(json)
       }
     } catch (error) {
-      setError("Сетевая ошибка");
       console.error("Ошибка при загрузке: ", error);
     }
   };
