@@ -2,7 +2,7 @@ import { useTicTacToe } from "./bll/useTicTacToe";
 import './TicTacToe.css';
 
 export const TicTacToe = () => {
-  const { grid } = useTicTacToe();
+  const { grid, handleCellClick } = useTicTacToe();
 
 
   return (
@@ -14,6 +14,7 @@ export const TicTacToe = () => {
               <div
                 key={colIndex}
                 className="grid-tic-cell"
+                onClick={() => handleCellClick(rowIndex, colIndex)}
               >
                 {value}
               </div>
