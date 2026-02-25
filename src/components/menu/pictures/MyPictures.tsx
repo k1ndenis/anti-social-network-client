@@ -5,7 +5,11 @@ import { PictureList } from "./PictureList";
 import { CurrentPicture } from "./CurrentPicture";
 import type { Picture } from "./types/picture";
 
-export const MyPictures = () => {
+interface MyPicturesProps {
+  language: 'ru' | 'en'
+}
+
+export const MyPictures = ({ language }: MyPicturesProps) => {
   const [pictures, setPictures] = useState<Picture[]>(dataPictures);
   const [currentPictureInd, setCurrentPictureInd] = useState<number | null>(null);
 
@@ -45,6 +49,7 @@ export const MyPictures = () => {
           onAddPicture={onAddPicture}
           onDeletePicture={onDeletePicture}
           setCurrentPictureInd={setCurrentPictureInd}
+          language={language}
         />
       }
     </>

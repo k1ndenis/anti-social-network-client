@@ -7,9 +7,10 @@ type LoginFormProps = {
   users: User[];
   setLoggedUser: React.Dispatch<React.SetStateAction<User | null>>;
   setIsLogining: React.Dispatch<React.SetStateAction<boolean>>;
+  language: 'ru' | 'en'
 }
 
-export const LoginForm = ({ users, setLoggedUser, setIsLogining }: LoginFormProps) => {
+export const LoginForm = ({ users, setLoggedUser, setIsLogining, language }: LoginFormProps) => {
   const [currentLogin, setCurrentLogin] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
 
@@ -38,18 +39,18 @@ export const LoginForm = ({ users, setLoggedUser, setIsLogining }: LoginFormProp
         className="auth-form-container"
         onSubmit={handleLogin}
       >
-        <h2>Вход</h2>
+        <h2>{language === 'ru' ? "Вход" :  "Login"}</h2>
         <input
           className="auth-input"
           type="text"
-          placeholder="Введите логин"
+          placeholder={language === 'ru' ? "Введите логин" :  "Enter username"}
           value={currentLogin}
           onChange={loginHandleChange}
         />
         <input
           className="auth-input"
           type="password"
-          placeholder="Введите пароль"
+          placeholder={language === 'ru' ? "Введите пароль" :  "Enter password"}
           value={currentPassword}
           onChange={passwordHandleChange}
         />
@@ -57,13 +58,13 @@ export const LoginForm = ({ users, setLoggedUser, setIsLogining }: LoginFormProp
           className="auth-button"
           type="submit"
         >
-          Войти
+          {language === 'ru' ? "Войти" :  "Log In"}
         </button>
       </form>
       <button
         onClick={() => setIsLogining(false)}
       >
-        Назад
+        {language === 'ru' ? "Назад" :  "Back"}
       </button>
     </>
   )

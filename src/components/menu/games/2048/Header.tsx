@@ -5,9 +5,10 @@ interface HeaderProps {
   currentScore: number;
   bestScore: number;
   startGame: () => void;
+  language: 'ru' | 'en'
 }
 
-export const Header = ({ currentScore, bestScore, startGame }: HeaderProps) => {
+export const Header = ({ currentScore, bestScore, startGame, language }: HeaderProps) => {
 
   return (
     <div className="header-2048">
@@ -20,11 +21,12 @@ export const Header = ({ currentScore, bestScore, startGame }: HeaderProps) => {
         <ScoreBoard
           currentScore={currentScore}
           bestScore={bestScore}
+          language={language}
         />
         <button
           onClick={startGame}
         >
-          Новая игра
+          {language === 'ru' ? "Новая игра" : "New Game"}
         </button>
       </div>
     </div>

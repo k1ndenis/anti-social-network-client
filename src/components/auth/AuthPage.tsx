@@ -6,7 +6,11 @@ import { Menu } from "./../menu/Menu";
 import type { User } from './types/user'
 import './AuthPage.css'
 
-export const AuthPage = () => {
+interface AuthPageProps {
+  language: 'ru' | 'en'
+}
+
+export const AuthPage = ({ language }: AuthPageProps) => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLogining, setIsLogining] = useState(false);
   const [isReg, setIsReg] = useState(false);
@@ -36,6 +40,7 @@ export const AuthPage = () => {
   if (loggedUser) return (
     <Menu
       handleLogout={handleLogout}
+      language={language}
     />
   )
 
@@ -44,12 +49,12 @@ export const AuthPage = () => {
       <button
         onClick={() => setIsLogining(true)}
       >
-        Войти
+        {language === 'ru' ? "Войти" : "Login"}
       </button>
       <button
         onClick={() => setIsReg(true)}
       >
-        Зарегистрироваться
+        {language === 'ru' ? "Зарегистрироваться" : "Sign Up"}
       </button>
     </div>
   )
@@ -59,6 +64,7 @@ export const AuthPage = () => {
       setLoggedUser={setLoggedUser}
       users={users}
       setIsLogining={setIsLogining}
+      language={language}
     />
   )
 
@@ -68,6 +74,7 @@ export const AuthPage = () => {
       users={users}
       setUsers={setUsers}
       setIsReg={setIsReg}
+      language={language}
     />
   )
 }

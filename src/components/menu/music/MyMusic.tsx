@@ -8,7 +8,11 @@ import { TrackList } from "./TrackList";
 import type { Track } from "./types/track";
 import "./MyMusic.css"
 
-export const MyMusic = () => {
+interface MyMusicProps {
+  language: 'ru' | 'en'
+}
+
+export const MyMusic = ({ language }: MyMusicProps) => {
   const [tracks, setTracks] = useState<Track[]>(dataTracks);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
@@ -44,12 +48,13 @@ export const MyMusic = () => {
         <AudioUploader
           onAddTrack={onAddTrack}
           setUploader={setUploader}
+          language={language}
         />
       ) : (
         <button
           onClick={() => setUploader(true)}
         >
-          Загрузить свой трек
+          {language == 'ru' ? "Загрузить свой трек" : "Upload your track"}
         </button>
       )
     )
@@ -62,11 +67,13 @@ export const MyMusic = () => {
         tracks={tracks}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
+        language={language}
       />
     </div>
     <SearchingInput
       currentValue={currentSearchingValue}
       setCurrentValue={setCurrentSearchingValue}
+      language={language}
     />
     <TrackList
       tracks={tracks}
@@ -76,6 +83,7 @@ export const MyMusic = () => {
       isPlaying={isPlaying}
       setIsPlaying={setIsPlaying}
       onDeleteTrack={onDeleteTrack}
+      language={language}
     />
     {getAudioUploader}
   </div>

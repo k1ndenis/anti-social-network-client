@@ -3,10 +3,11 @@ import "./CityInpit.css"
 interface CityInpitProps {
   fetchData: () => void;
   city: string;
-  setCity: React.Dispatch<React.SetStateAction<string>>
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+  language: 'ru' | 'en'
 }
 
-export const CityInput = ({ fetchData, city, setCity }: CityInpitProps) => {
+export const CityInput = ({ fetchData, city, setCity, language }: CityInpitProps) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") fetchData();
@@ -17,7 +18,7 @@ export const CityInput = ({ fetchData, city, setCity }: CityInpitProps) => {
       <input
         className="city-input"
         type="text"
-        placeholder="Введите название города..."
+        placeholder={language === 'ru' ? "Введите название города..." : "Enter city name..."}
         value={city}
         onChange={(e) => setCity(e.target.value)}
         onKeyDown={handleKeyDown}
@@ -25,7 +26,7 @@ export const CityInput = ({ fetchData, city, setCity }: CityInpitProps) => {
       <button
         onClick={fetchData}
       >
-        Узнать погоду
+        {language === 'ru' ? "Узнать погоду" : "Get weather"}
       </button>
     </div>
   )

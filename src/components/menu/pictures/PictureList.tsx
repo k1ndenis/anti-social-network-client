@@ -6,15 +6,18 @@ interface PictureListProps {
   pictures: Picture[];
   onAddPicture: (picture: Picture) => void;
   onDeletePicture: (id: string) => void;
-  setCurrentPictureInd: React.Dispatch<React.SetStateAction<number | null>>
+  setCurrentPictureInd: React.Dispatch<React.SetStateAction<number | null>>;
+  language: 'ru' | 'en'
 }
 
-export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurrentPictureInd }: PictureListProps) => {
+export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurrentPictureInd, language }: PictureListProps) => {
+
+  const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
 
   const pictureList = (
-      <ul>
+      <ul className="picture-list-ul">
         <li>
-          <div className="add-button-container">
+          <div className="picture-add-button-container">
             <PictureUploader
               onAddPicture={onAddPicture}
             />
@@ -22,11 +25,11 @@ export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurren
         </li>
       {pictures.map((picture, index) => (
         <li key={picture.id}>
-          <div className="card">
+          <div className="picture-card">
             <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
             <button
               onClick={() => {
-                if (confirm("Подтвердите действие")) {
+                if (confirm(confirmMessage)) {
                   onDeletePicture(picture.id)}
                 }
               }

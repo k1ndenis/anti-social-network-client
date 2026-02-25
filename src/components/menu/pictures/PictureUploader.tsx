@@ -33,7 +33,7 @@ export const PictureUploader = ({ onAddPicture }: PictureUploaderProps) => {
       </label>
       <input
         id="file-upload"
-        className="add-picture-input"
+        className="picture-add-picture-input"
         type="file"
         accept="image/*"
         onChange={handleFileChange}

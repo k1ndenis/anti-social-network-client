@@ -1,18 +1,22 @@
 import { useState } from "react";
 import './MyGames.css';
-import { Scanword } from "./scanword/Scanword";
+import { Crossword } from "./crossword/Crossword";
 import { The2048 } from "./2048/The2048";
 import { TicTacToe } from "./tic-tac-toe/TicTacToe";
 
-export const MyGames = () => {
+interface MyGamesProps {
+  language: 'ru' | 'en'
+}
+
+export const MyGames = ({ language }: MyGamesProps) => {
   const [activeGame, setActiveGame] = useState<string | null>(null);
 
   return (
     <>
       <button
-        onClick={() => setActiveGame("scanword")}
+        onClick={() => setActiveGame("Crossword")}
       >
-        Сканворд
+        {language === 'ru' ? "Кроссворд" : "Crossword"}
       </button>
       <button
         onClick={() => setActiveGame("2048")}
@@ -22,18 +26,18 @@ export const MyGames = () => {
       <button
         onClick={() => setActiveGame("tictactoe")}
       >
-        Крестики-нолики
+        {language === 'ru' ? "Крестики-нолики" : "Tic-Tac-Toe"}
       </button>
       <div className="game-container">
-        {activeGame === "scanword" && <Scanword />}
-        {activeGame === "2048" && <The2048 />}
+        {activeGame === "Crossword" && <Crossword />}
+        {activeGame === "2048" && <The2048 language={language} />}
         {activeGame === "tictactoe" && <TicTacToe />}
         {activeGame && (
           <button 
             onClick={() => setActiveGame(null)}
             className="exit-button"
           >
-            Выйти из игры
+            {language === 'ru' ? "Выйти из игры" : "Quit Game"}
           </button>
         )}
       </div>

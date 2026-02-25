@@ -6,9 +6,10 @@ interface GameOverDisplayProps {
   gameWin: boolean;
   setGameWin: React.Dispatch<SetStateAction<boolean>>;
   startGame: () => void;
+  language: 'ru' | 'en'
 }
 
-export const GameOverDisplay = ({ gameOver, gameWin, setGameWin, startGame }: GameOverDisplayProps) => {
+export const GameOverDisplay = ({ gameOver, gameWin, setGameWin, startGame, language }: GameOverDisplayProps) => {
 
   return (
     <>
@@ -18,15 +19,15 @@ export const GameOverDisplay = ({ gameOver, gameWin, setGameWin, startGame }: Ga
               className='game-over-2048'
             >
               <div>
-                {gameOver && "Игра окончена!"}
-                {gameWin && "Победа!"}
+                {gameOver && <>{language === 'ru' ? "Игра окончена!" : "Game Over"}</>}
+                {gameWin && <>{language === 'ru' ? "Победа!" : "Victory!"}</>}
               </div>
               <div className='game-over-buttons'>
-                {gameWin && <button onClick={() => setGameWin(false)}>Продолжить</button>}
+                {gameWin && <button onClick={() => setGameWin(false)}>{language === 'ru' ? "Продолжить" : "Continue"}</button>}
                 <button
                   onClick={startGame}
                 >
-                  Повторить
+                  {language === 'ru' ? "Повторить" : "Restart"}
                 </button>
               </div>
             </div>

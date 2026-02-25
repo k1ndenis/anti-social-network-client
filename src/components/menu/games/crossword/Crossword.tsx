@@ -1,13 +1,13 @@
 import { useState } from "react"
-import dataQuestions from "./../../../../data/questions.json"
+import dataQuestions from "../../../../data/questions.json"
 import { GridInputs } from "./GridInputs";
 import { CurrentQuestion } from "./CurrentQuestion";
 import type { Question } from "./types/question";
-import './Scanword.css'
+import './Crossword.css'
 
 const questions: Question[] = dataQuestions as Question[];
 
-export const Scanword = () => {
+export const Crossword = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [activedCell, setActivedCell] = useState<number>(0);
   const [currentCells, setCurrentCells] = useState<Question['coordinates']>(questions[0].coordinates);
@@ -15,7 +15,7 @@ export const Scanword = () => {
   const [direction, setDirection] = useState<Question['direction']>("horizontal");
 
   return (
-    <div className="scanword-container">
+    <div className="crossword-container">
       <CurrentQuestion
         questions={questions}
         currentQuestion={currentQuestion}

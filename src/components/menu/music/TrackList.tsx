@@ -9,8 +9,9 @@ interface TrackListProps {
   currentTrackId: string | null;
   setCurrentTrackId: React.Dispatch<React.SetStateAction<string | null>>;
   isPlaying: boolean;
-  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
-  onDeleteTrack: (id: string) => void
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  onDeleteTrack: (id: string) => void;
+  language: 'ru' | 'en'
 }
 
 export const TrackList = ({
@@ -20,7 +21,8 @@ export const TrackList = ({
   setCurrentTrackId,
   isPlaying,
   setIsPlaying,
-  onDeleteTrack
+  onDeleteTrack,
+  language
 }: TrackListProps) => {
   const { processedTracks, sorting, setSorting } = useTrackProcessor(
     tracks,
@@ -29,15 +31,18 @@ export const TrackList = ({
 
   if (tracks.length === 0) return (
     <ul className="tracklist">
-      <li>Список треков пуст</li>
+      <li>{language == 'ru' ? "Список треков пуст" : "Track list is empty"}</li>
     </ul>
   )
+
+  const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
 
   return (
     <>
       <SortingButtons
         sorting={sorting}
         setSorting={setSorting}
+        language={language}
       />
       <ul className="tracklist">
         {processedTracks.map((track) => (
@@ -62,7 +67,7 @@ export const TrackList = ({
                 className="tracklist-buttons"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (confirm("Подтвердите действие")) {
+                  if (confirm(confirmMessage)) {
                     onDeleteTrack(track.id);
                   }
                 }}

@@ -13,7 +13,11 @@ export interface WeatherData {
   }[];
 }
 
-export const MyWeather = () => {
+interface MyWeatherProps {
+  language: 'ru' | 'en'
+}
+
+export const MyWeather = ({ language }: MyWeatherProps) => {
   const [data, setData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean>(false);
@@ -27,6 +31,7 @@ export const MyWeather = () => {
         data={data}
         loading={loading}
         error={error}
+        language={language}
       />
       <GetWeather
         setData={setData}
@@ -34,6 +39,7 @@ export const MyWeather = () => {
         setCity={setCity}
         setLoading={setLoading}
         setError={setError}
+        language={language}
       />
     </>
   )

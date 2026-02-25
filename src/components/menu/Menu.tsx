@@ -6,56 +6,44 @@ import { MyWeather } from "./weather/MyWeather";
 import { MyPictures } from "./pictures/MyPictures";
 import { MyGames } from "./games/MyGames";
 
-interface MenuItemStyle {
-  id: number,
-  title: string,
-  item: React.ReactElement
+interface MenuProps {
+  handleLogout: () => void
+  language: 'ru' | 'en'
 }
 
-const MENU_DATA: MenuItemStyle[] = [
-  {
-    id: 1,
-    title: "Музыка",
-    item: <MyMusic />
-  },
-  {
-    id: 2,
-    title: "Картинки",
-    item: <MyPictures />
-  },
-  {
-    id: 3,
-    title: "Видео",
-    item: <MyVideos />
-  },
-  {
-    id: 4,
-    title: "Погода",
-    item: <MyWeather />
-  },
-  {
-    id: 5,
-    title: "Игры",
-    item: <MyGames />
-  }
-]
-
-export const Menu = (props) => {
-
-  const [menuItem, setMenuItem] = useState<number | null>(null);
+export const Menu = ({ handleLogout, language }: MenuProps) => {
+  const [menuItem, setMenuItem] = useState<string>("");
 
   const menuList = (
-    MENU_DATA.map((item) => 
+    <>
       <button
-        key={item.id}
-        onClick={() => setMenuItem(item.id)}
+        onClick={() => setMenuItem("Music")}
       >
-        {item.title}
+        {language === 'ru' ? "Музыка" : "Music"}
       </button>
-    )
+      <button
+        onClick={() => setMenuItem("Pictures")}
+      >
+        {language === 'ru' ? "Картинки" : "Pictures"}
+      </button>
+      <button
+        onClick={() => setMenuItem("Videos")}
+      >
+        {language === 'ru' ? "Видео" : "Videos"}
+      </button>
+      <button
+        onClick={() => setMenuItem("Weather")}
+      >
+        {language === 'ru' ? "Погода" : "Weather"}
+      </button>
+      <button
+        onClick={() => setMenuItem("Games")}
+      >
+        {language === 'ru' ? "Игры" : "Games"}
+      </button>
+    </>
   )
-
-  const currentMenuItem = MENU_DATA.find(item => item.id === menuItem);
+  
 
   return ( 
     <>
@@ -63,23 +51,27 @@ export const Menu = (props) => {
       {menuItem ? (
         <>
           <button
-            onClick={() => setMenuItem(null)}
+            onClick={() => setMenuItem("")}
           >
-            В меню
+            {language === 'ru' ? "В меню" : "Back to Menu"}
           </button>
-          {currentMenuItem?.item}
+          {menuItem === "Music" && <MyMusic language={language} />}
+          {menuItem === "Pictures" && <MyPictures language={language} />}
+          {menuItem === "Videos" && <MyVideos />}
+          {menuItem === "Weather" && <MyWeather language={language} />}
+          {menuItem === "Games" && <MyGames language={language} />}
           <button
-            onClick={() => setMenuItem(null)}
+            onClick={() => setMenuItem("")}
           >
-            В меню
+            {language === 'ru' ? "В меню" : "Back to Menu"}
           </button>
         </>
       ) : menuList}
     </div>
     <button
-      onClick={props.handleLogout}
+      onClick={handleLogout}
     >
-      Выйти
+      {language === 'ru' ? "Выйти" : "Log Out"}
     </button>
     </>
   )

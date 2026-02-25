@@ -5,14 +5,16 @@ interface CurrentTrackProps {
   tracks: Track[];
   currentTrackId: string | null;
   isPlaying: boolean;
-  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  language: 'ru' | 'en'
 }
 
 export const CurrentTrack = ({
   tracks,
   currentTrackId,
   isPlaying,
-  setIsPlaying
+  setIsPlaying,
+  language
 }: CurrentTrackProps) => {
 
   if (!currentTrackId) {
@@ -20,7 +22,7 @@ export const CurrentTrack = ({
       <>
         <div className="current-track">
           <div className="scroll-wrapper-container">
-            <span>Выберите трек</span>
+            <span>{language === 'ru' ? "Выберите трек" : "Choose track"}</span>
           </div>
         </div>
       </>
@@ -33,7 +35,7 @@ export const CurrentTrack = ({
     return (
       <div className="current-track">
         <div className="scroll-wrapper-container">
-          <span>Трек не найден</span>
+          <span>{language === 'ru' ? "Трек не найден" : "Track not found"}</span>
         </div>
       </div>
     )

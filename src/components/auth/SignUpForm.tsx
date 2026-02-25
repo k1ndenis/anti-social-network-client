@@ -8,9 +8,10 @@ type SignUpFormProps = {
   setUsers: React.Dispatch<SetStateAction<User[]>>;
   setLoggedUser: React.Dispatch<SetStateAction<User | null>>;
   setIsReg: React.Dispatch<SetStateAction<boolean>>;
+  language: 'ru' | 'en'
 }
 
-export const SignUpForm = ({ users, setUsers, setLoggedUser, setIsReg }: SignUpFormProps) => {
+export const SignUpForm = ({ users, setUsers, setLoggedUser, setIsReg, language }: SignUpFormProps) => {
   const [currentLogin, setCurrentLogin] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
 
@@ -46,18 +47,18 @@ export const SignUpForm = ({ users, setUsers, setLoggedUser, setIsReg }: SignUpF
         className="auth-form-container"
         onSubmit={handleSignUp}
       >
-        <h2>Регистрация</h2>
+        <h2>{language === 'ru' ? "Регистрация" :  "Sign-up"}</h2>
         <input
           className="auth-input"
           type="text"
-          placeholder="Придумайте логин"
+          placeholder={language === 'ru' ? "Придумайте логин" :  "Choose a username"}
           value={currentLogin}
           onChange={loginHandleChange}
         />
         <input
           className="auth-input"
           type="password"
-          placeholder="Придумайте пароль"
+          placeholder={language === 'ru' ? "Придумайте пароль" :  "Choose a password"}
           value={currentPassword}
           onChange={passwordHandleChange}
         />
@@ -65,13 +66,13 @@ export const SignUpForm = ({ users, setUsers, setLoggedUser, setIsReg }: SignUpF
           className="auth-button"
           type="submit"
         >
-          Зарегистрироваться
+          {language === 'ru' ? "Зарегистрироваться" :  "Sign Up"}
         </button>
       </form>
       <button
         onClick={() => setIsReg(false)}
       >
-        Назад
+        {language === 'ru' ? "Назад" :  "Back"}
       </button>
     </>
   )

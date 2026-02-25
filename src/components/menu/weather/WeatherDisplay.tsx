@@ -4,10 +4,11 @@ import "./WeatherDisplay.css"
 interface WeatherDisplayProps {
   data: WeatherData | null;
   loading: boolean;
-  error: boolean
+  error: boolean;
+  language: 'ru' | 'en'
 }
 
-export const WeatherDisplay = ({ data, loading, error }: WeatherDisplayProps) => {
+export const WeatherDisplay = ({ data, loading, error, language }: WeatherDisplayProps) => {
 
   if (loading) {
     return (
@@ -20,7 +21,7 @@ export const WeatherDisplay = ({ data, loading, error }: WeatherDisplayProps) =>
   if (error) {
     return (
       <div className="weather-info">
-        Произошла ошибка
+        {language === 'ru' ? "Произошла ошибка" : "An error occurred"}
       </div>
     )
   }
@@ -28,7 +29,7 @@ export const WeatherDisplay = ({ data, loading, error }: WeatherDisplayProps) =>
   if (!data) {
     return (
       <div className="weather-info">
-        Город не найден
+        {language === 'ru' ? "Город не найден" : "City not found"}
       </div>
     )
   }
@@ -46,8 +47,8 @@ export const WeatherDisplay = ({ data, loading, error }: WeatherDisplayProps) =>
         src={`http://openweathermap.org/img/wn/${icon}.png`}
         alt={description}
       />
-      <p>Температура: {temperature}</p>
-      <p>Описание: {description}</p>
+      <p>{language === 'ru' ? "Температура" : "Temperature"}: {temperature}</p>
+      <p>{language === 'ru' ? "Описание" : "Description"}: {description}</p>
     </div>
   )
 

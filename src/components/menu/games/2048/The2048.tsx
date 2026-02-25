@@ -4,12 +4,16 @@ import { CELLS_STYLES } from './constants/gameStyles'
 import { Header } from './Header'
 import { GameOverDisplay } from './GameOverDisplay'
 
-export const The2048 = () => {
+interface The2048Props {
+  language: 'ru' | 'en'
+}
+
+export const The2048 = ({ language }: The2048Props) => {
   const { grid, startGame, currentScore, bestScore, gameOver, gameWin, setGameWin } = use2048()
 
   return (
     <div className='game-2048-container'>
-      <Header startGame={startGame} currentScore={currentScore} bestScore={bestScore}/>
+      <Header startGame={startGame} currentScore={currentScore} bestScore={bestScore} language={language}/>
 
       <div className="grid-2048-container">
         <GameOverDisplay
@@ -17,6 +21,7 @@ export const The2048 = () => {
           startGame={startGame}
           gameWin={gameWin}
           setGameWin={setGameWin}
+          language={language}
         />
 
         <div 

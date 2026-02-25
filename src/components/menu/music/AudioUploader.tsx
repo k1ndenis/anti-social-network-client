@@ -5,9 +5,10 @@ import "./AudioUploader.css"
 interface AudioUploaderProps {
   onAddTrack: (track: Track) => void;
   setUploader: React.Dispatch<React.SetStateAction<boolean>>;
+  language: 'ru' | 'en'
 }
 
-export const AudioUploader = ({ onAddTrack, setUploader }: AudioUploaderProps) => {
+export const AudioUploader = ({ onAddTrack, setUploader, language }: AudioUploaderProps) => {
 
   const [author, setAuthor] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -23,7 +24,9 @@ export const AudioUploader = ({ onAddTrack, setUploader }: AudioUploaderProps) =
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!file) return alert("Выберите файл");
+    if (!file) return (
+      language === 'ru' ? alert("Выберите файл") : alert("Choose file")
+    )
     
     if (file) {
       const reader = new FileReader();
@@ -59,17 +62,17 @@ export const AudioUploader = ({ onAddTrack, setUploader }: AudioUploaderProps) =
         >
           x
         </button>
-        Загрузить трек
+        {language === 'ru' ? "Загрузить трек" : "Upload track"}
         <input
           type="text"
-          placeholder="Имя автора"
+          placeholder={language === 'ru' ? "Имя автора" : "Author name"}
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           required
         />
         <input
           type="text"
-          placeholder="Название песни"
+          placeholder={language === 'ru' ? "Название песни" : "Track title"}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
@@ -83,7 +86,7 @@ export const AudioUploader = ({ onAddTrack, setUploader }: AudioUploaderProps) =
         <button
           type="submit"
         >
-          Добавить трек
+          {language === 'ru' ? "Добавить трек" : "Add track"}
         </button>
       </form>
     </>

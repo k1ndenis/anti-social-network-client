@@ -3,7 +3,8 @@ import "./SortingButtons.css"
 
 interface SortingButtonsProps {
   sorting: number;
-  setSorting: React.Dispatch<React.SetStateAction<number>>
+  setSorting: React.Dispatch<React.SetStateAction<number>>;
+  language: 'ru' | 'en'
 }
 
 const { 
@@ -13,19 +14,19 @@ const {
   TITLE_DESC
 } = SORT_MODES;
 
-export const SortingButtons = ({ sorting, setSorting }: SortingButtonsProps) => {
+export const SortingButtons = ({ sorting, setSorting, language }: SortingButtonsProps) => {
 
   return (
     <div className="music-sorting-buttons">
       <button
         onClick={() => sorting === AUTHOR_ASC ? setSorting(AUTHOR_DESC) : setSorting(AUTHOR_ASC)}
       >
-        Автор {sorting === AUTHOR_ASC ? "↑" : "↓"}
+        {language === 'ru' ? "Автор" : "Author"} {sorting === AUTHOR_ASC ? "↑" : "↓"}
       </button>
       <button
         onClick={() => sorting === TITLE_ASC ? setSorting(TITLE_DESC) : setSorting(TITLE_ASC)}
       >
-        Название {sorting === TITLE_ASC ? "↑" : "↓"}
+        {language === 'ru' ? "Название" : "Title"} {sorting === TITLE_ASC ? "↑" : "↓"}
       </button>
     </div>
   )
