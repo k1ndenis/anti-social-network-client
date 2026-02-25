@@ -11,7 +11,7 @@ export const The2048 = () => {
     <div className='game-2048-container'>
       <Header startGame={startGame} currentScore={currentScore} bestScore={bestScore}/>
 
-      <div className="grid-container">
+      <div className="grid-2048-container">
         <GameOverDisplay
           gameOver={gameOver}
           startGame={startGame}
@@ -20,15 +20,15 @@ export const The2048 = () => {
         />
 
         <div 
-          className="grid"
+          className="grid-2048"
           style={gameOver || gameWin ? { opacity: 0.5 } : undefined}
         >
           {grid.map((row, rowIndex) => (
-            <div key={rowIndex} className='grid-row'>
+            <div key={rowIndex} className='grid-2048-row'>
               {row.map((value, colIndex) => (
                 <div 
                   key={`${rowIndex}-${colIndex}`}
-                  className='grid-cell'
+                  className='grid-2048-cell'
                   style={CELLS_STYLES[value] || { background: "#3c3a32", color: "#f9f6f2", fontSize: "35px" }}  
                 >
                   {value !== 0 ? value : ""}
