@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com');
+
 :root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -13,18 +16,19 @@
 }
 
 body {
-  justify-content: center;
   margin: 0;
   display: flex;
-  place-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  font-family: cursive;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  margin-bottom: 0.5em;
 }
 
 button {
@@ -36,11 +40,14 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s;
 }
+
 button:hover {
   border-color: #8b8b8b;
+  background-color: #2a2a2a;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;

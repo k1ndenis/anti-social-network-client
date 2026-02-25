@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com');
+
 .game-2048-container {
   display: flex;
   flex-direction: column;
@@ -5,7 +7,9 @@
   background: #FAF8EF;
   border-radius: 8px;
   margin: 1rem;
-  font-family: 'Clear Sans', sans-serif;
+  font-family: 'Open Sans', 'Clear Sans', sans-serif;
+  font-weight: 700;
+  color: #776e65;
 }
 
 .grid-2048-container {
@@ -22,6 +26,7 @@
   padding: 32px;
   margin: 1rem auto;
   background: #bbada0;
+  border-radius: 6px;
 }
 
 .grid-2048-row {
@@ -38,12 +43,18 @@
   height: 10vw;
   font-size: clamp(20px, 5vw, 60px);
   border-radius: 4px;
-  gap: 10px
+  background: rgba(238, 228, 218, 0.35);
 }
 
 @media (min-width: 720px) {
   .grid-2048-cell {
-    width: 6vw;
-    height: 6vw;
+    width: 100px;
+    height: 100px;
+  }
+  .grid-2048 {
+    gap: 12px;
+  }
+  .grid-2048-row {
+    gap: 12px;
   }
 }
