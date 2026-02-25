@@ -1,12 +1,16 @@
 import { useTicTacToe } from "./bll/useTicTacToe";
+import { StatusDisplay } from "./StatusDisplay";
 import './TicTacToe.css';
 
 export const TicTacToe = () => {
-  const { grid, handleCellClick } = useTicTacToe();
+  const { grid, handleCellClick, turn } = useTicTacToe();
 
 
   return (
     <>
+      <StatusDisplay
+        turn={turn}
+      />
       <div className="grid-tic">
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="grid-tic-row">

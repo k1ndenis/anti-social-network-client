@@ -8,7 +8,9 @@ const emptyGrid: string[][] = [
 
 interface useTicTacToeReturn {
   grid: string[][];
-  handleCellClick: (rowInd: number, colInd: number) => void
+  handleCellClick: (rowInd: number, colInd: number) => void;
+  turn: 'X' | "0";
+  
 }
 
 export const useTicTacToe = (): useTicTacToeReturn => {
@@ -26,6 +28,7 @@ export const useTicTacToe = (): useTicTacToeReturn => {
 
   return {
     grid,
-    handleCellClick
+    handleCellClick,
+    turn
   }
 }
