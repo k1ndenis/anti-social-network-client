@@ -15,6 +15,7 @@ export interface WeatherData {
 
 export const MyWeather = () => {
   const [data, setData] = useState<WeatherData | null>(null);
+  const [loading, setLoading] = useState(false);
   const [city, setCity] = useState<string>(() => {
     return localStorage.getItem("weatherCity") || ""
   });
@@ -23,11 +24,13 @@ export const MyWeather = () => {
     <>
       <WeatherDisplay
         data={data}
+        loading={loading}
       />
       <GetWeather
         setData={setData}
         city={city}
         setCity={setCity}
+        setLoading={setLoading}
       />
     </>
   )

@@ -5,12 +5,14 @@ interface GetWeatherProps {
   city: string;
   setCity: React.Dispatch<React.SetStateAction<string>>;
   setData: (json: WeatherData | null) => void;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const GetWeather = ({
   city,
   setCity,
-  setData
+  setData,
+  setLoading
 }: GetWeatherProps) => {
 
   const API_KEY = "9fe668fe853fc4dd8a6fe164ff909381";
@@ -21,7 +23,7 @@ export const GetWeather = ({
 
   const fetchData = async (): Promise<void> => {
     if (!city) return;
-
+    setLoading(true);
     localStorage.setItem("weatherCity", city);
     setCity("");
     const url = `${API_URL}&q=${city}`;
@@ -33,6 +35,7 @@ export const GetWeather = ({
         setData(null);
       } else {
         setData(json);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Ошибка при загрузке: ", error);

@@ -2,14 +2,23 @@ import type { WeatherData } from "./MyWeather";
 import "./WeatherDisplay.css"
 
 interface WeatherDisplayProps {
-  data: WeatherData | null
+  data: WeatherData | null;
+  loading: boolean
 }
 
-export const WeatherDisplay = ({ data }: WeatherDisplayProps) => {
+export const WeatherDisplay = ({ data, loading }: WeatherDisplayProps) => {
+
+  if (loading) {
+    return (
+      <div className="weather-info">
+        Загрузка...
+      </div>
+    )
+  }
 
   if (!data) {
     return (
-      <div>
+      <div className="weather-info">
         Город не найден
       </div>
     )
