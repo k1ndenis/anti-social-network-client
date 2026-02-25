@@ -3,15 +3,24 @@ import "./WeatherDisplay.css"
 
 interface WeatherDisplayProps {
   data: WeatherData | null;
-  loading: boolean
+  loading: boolean;
+  error: boolean
 }
 
-export const WeatherDisplay = ({ data, loading }: WeatherDisplayProps) => {
+export const WeatherDisplay = ({ data, loading, error }: WeatherDisplayProps) => {
 
   if (loading) {
     return (
       <div className="weather-info">
-        Загрузка...
+        <img className="loading-gif" src="/images/loading.gif" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="weather-info">
+        Произошла ошибка
       </div>
     )
   }
@@ -33,6 +42,7 @@ export const WeatherDisplay = ({ data, loading }: WeatherDisplayProps) => {
     <div className="weather-info">
       <h1>{name}</h1>
       <img
+        className="weather-icon"
         src={`http://openweathermap.org/img/wn/${icon}.png`}
         alt={description}
       />

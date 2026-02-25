@@ -13,6 +13,10 @@
   margin-bottom: 25px;
 }
 
-.weather-info img {
+.weather-icon {
   width: 10%
+}
+
+.loading-gif {
+  width: 20px;
 }
