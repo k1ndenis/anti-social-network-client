@@ -31,7 +31,7 @@ export const MyGames = ({ language }: MyGamesProps) => {
       <div className="game-container">
         {activeGame === "Crossword" && <Crossword />}
         {activeGame === "2048" && <The2048 language={language} />}
-        {activeGame === "tictactoe" && <TicTacToe />}
+        {activeGame === "tictactoe" && <TicTacToe language={language} />}
         {activeGame && (
           <button 
             onClick={() => setActiveGame(null)}

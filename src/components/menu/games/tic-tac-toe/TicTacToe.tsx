@@ -2,18 +2,23 @@ import { useTicTacToe } from "./bll/useTicTacToe";
 import { StatusDisplay } from "./StatusDisplay";
 import './TicTacToe.css';
 
-export const TicTacToe = () => {
+interface TicTacToeProps {
+  language: 'ru' | 'en'
+}
+
+export const TicTacToe = ({ language }: TicTacToeProps) => {
   const { grid, handleCellClick, isStarted, turn, winner, startGame, isDraw } = useTicTacToe();
 
   return (
     <>
       <div className="tic-header">
-        <button className="tic-new-game-button" onClick={startGame}>Новая игра</button>
+        <button className="tic-new-game-button" onClick={startGame}>{language === 'ru' ? "Новая игра" : "New Game"}</button>
         <StatusDisplay
-        isStarted={isStarted}
+          isStarted={isStarted}
           turn={turn}
           winner={winner}
           isDraw={isDraw}
+          language={language}
         />
       </div>
       <div className="grid-tic">

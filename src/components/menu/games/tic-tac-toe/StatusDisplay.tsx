@@ -4,16 +4,17 @@ interface StatusDisplayProps {
   isStarted: boolean;
   turn: 'X' | '0';
   winner: string;
-  isDraw: boolean
+  isDraw: boolean;
+  language: 'ru' | 'en'
 }
 
-export const StatusDisplay = ({ isStarted, turn, winner, isDraw }: StatusDisplayProps) => {
+export const StatusDisplay = ({ isStarted, turn, winner, isDraw, language }: StatusDisplayProps) => {
 
   return (
     <div className="tic-status-display">
-      {winner && <div>Победил {winner}</div>}
-      {isDraw && <div>Ничья</div>}
-      {isStarted && <div>Ход: {turn}</div>}
+      {winner && <div>{language === 'ru' ? "Победил" : "Winner:"} {winner}</div>}
+      {isDraw && <div>{language === 'ru' ? "Ничья" : "Draw:"} </div>}
+      {isStarted && <div>{language === 'ru' ? "Ход:" : "Turn: "} {turn}</div>}
     </div>
   )
 }
