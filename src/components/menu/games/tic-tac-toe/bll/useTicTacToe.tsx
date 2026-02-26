@@ -9,10 +9,11 @@ const emptyGrid: string[][] = [
 interface useTicTacToeReturn {
   grid: string[][];
   handleCellClick: (rowInd: number, colInd: number) => void;
+  isStarted: boolean;
   turn: 'X' | "0";
   winner: string;
   startGame: () => void;
-  isStarted: boolean
+  isDraw: boolean
 }
 
 export const useTicTacToe = (): useTicTacToeReturn => {
@@ -20,6 +21,7 @@ export const useTicTacToe = (): useTicTacToeReturn => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [turn, setTurn] = useState<'X' | '0'>('X');
   const [winner, setWinner] = useState<string>('');
+  const [isDraw, setIsDraw] = useState<boolean>(false);
 
   const checkGameOver = (grid: string[][]) => {
     let result = '';
@@ -29,6 +31,7 @@ export const useTicTacToe = (): useTicTacToeReturn => {
         values.push(grid[r][c]);
       }
     }
+
     const checkingCoords = [
       [0, 1, 2],
       [3, 4, 5],
@@ -44,7 +47,13 @@ export const useTicTacToe = (): useTicTacToeReturn => {
       if (coordsValues.every(val => val === 'X')) result = 'X';
       if (coordsValues.every(val => val === '0')) result = '0';
     })
-    return result;
+    if (result) {
+      return result;
+    } else {
+      if (values.every(val => val !== '')) {
+        setIsDraw(true);
+      }
+    }
   }
 
   const handleCellClick = (rowInd: number, colInd: number) => {
@@ -67,14 +76,16 @@ export const useTicTacToe = (): useTicTacToeReturn => {
   return {
     grid,
     handleCellClick,
+    isStarted,
     turn,
     winner,
+    isDraw,
     startGame: (): void => {
       const newGrid = JSON.parse(JSON.stringify(emptyGrid)) as string[][];
       setGrid(newGrid);
       setWinner('');
+      setIsDraw(false);
       setIsStarted(true);
-    },
-    isStarted
+    }
   }
 }
