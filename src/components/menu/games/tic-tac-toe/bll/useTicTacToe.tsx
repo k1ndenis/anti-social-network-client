@@ -52,6 +52,7 @@ export const useTicTacToe = (): useTicTacToeReturn => {
     } else {
       if (values.every(val => val !== '')) {
         setIsDraw(true);
+        setIsStarted(false);
       }
     }
   }

@@ -7,13 +7,15 @@ export const TicTacToe = () => {
 
   return (
     <>
-      <button onClick={startGame}>Новая игра</button>
-      <StatusDisplay
-      isStarted={isStarted}
-        turn={turn}
-        winner={winner}
-        isDraw={isDraw}
-      />
+      <div className="tic-header">
+        <button className="tic-new-game-button" onClick={startGame}>Новая игра</button>
+        <StatusDisplay
+        isStarted={isStarted}
+          turn={turn}
+          winner={winner}
+          isDraw={isDraw}
+        />
+      </div>
       <div className="grid-tic">
         {grid.map((row, rowIndex) => (
           <div key={rowIndex} className="grid-tic-row">
@@ -22,6 +24,7 @@ export const TicTacToe = () => {
                 key={colIndex}
                 className="grid-tic-cell"
                 onClick={() => handleCellClick(rowIndex, colIndex)}
+                data-text={value}
               >
                 {value}
               </div>

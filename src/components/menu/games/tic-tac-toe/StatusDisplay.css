@@ -1,0 +1,15 @@
+.tic-status-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vw;
+  background: rgb(110, 110, 110);
+  border-radius: 12px;
+}
+
+@media (max-width: 720px) {
+  .tic-status-display {
+    width: 25vw;
+  }
+
+}
