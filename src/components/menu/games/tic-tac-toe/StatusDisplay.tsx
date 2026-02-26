@@ -1,12 +1,13 @@
 interface StatusDisplayProps {
-  turn: 'X' | '0'
+  turn: 'X' | '0';
+  winner: string
 }
 
-export const StatusDisplay = ({ turn }: StatusDisplayProps) => {
+export const StatusDisplay = ({ turn, winner }: StatusDisplayProps) => {
 
   return (
     <>
-      <div>Ход: {turn}</div>
+      {winner ? <div>Победил {winner}</div> : <div>Ход: {turn}</div>}
     </>
   )
 }
