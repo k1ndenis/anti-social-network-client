@@ -13,8 +13,11 @@ interface PictureListProps {
 export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurrentPictureInd, language }: PictureListProps) => {
 
   const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
+  
+  if (!pictures) return;
 
-  const pictureList = (
+  return (
+    <>
       <ul className="picture-list-ul">
         <li>
           <div className="picture-add-button-container">
@@ -23,28 +26,23 @@ export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurren
             />
           </div>
         </li>
-      {pictures.map((picture, index) => (
-        <li key={picture.id}>
-          <div className="picture-card">
-            <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
-            <button
-              onClick={() => {
-                if (confirm(confirmMessage)) {
-                  onDeletePicture(picture.id)}
+        {pictures.map((picture, index) => (
+          <li key={picture.id}>
+            <div className="picture-card">
+              <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
+              <button
+                onClick={() => {
+                  if (confirm(confirmMessage)) {
+                    onDeletePicture(picture.id)}
+                  }
                 }
-              }
-            >
-              x
-            </button>
-          </div>
-        </li>
-      ))}
-    </ul>
-  )
-
-  return (
-    <>
-      {pictureList}
+              >
+                x
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
