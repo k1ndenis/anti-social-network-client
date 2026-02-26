@@ -11,6 +11,12 @@ export const use2048 = (): Use2048Return => {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [gameWin, setGameWin] = useState<boolean>(false);
 
+  const gridRef = useRef(grid);
+  const scoreRef = useRef(currentScore);
+
+  gridRef.current = grid;
+  scoreRef.current = currentScore;
+
   useEffect(() => {
     const loadBestScore = async (): Promise<void> => {
       const savedScore = await get("best-score-2048");
@@ -24,6 +30,7 @@ export const use2048 = (): Use2048Return => {
   const touchStart = useRef<{ x: number; y: number }>({ x: 0, y: 0});
 
   useEffect(() => {
+    if (!gameIsOn) return;
     const handleTouchMove = (e: TouchEvent) => {
       if (gameIsOn) e.preventDefault();
     }
@@ -53,13 +60,13 @@ export const use2048 = (): Use2048Return => {
     }
 
     const handleKeyDown = (e: KeyboardEvent | { key: string; preventDefault: () => void }) => {
-      if (!gameIsOn) return;
       if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
         e.preventDefault();
       }
+      const currentGrid = gridRef.current;
       let isMoved = false;
       let totalAddedScore = 0;
-      const newGrid = grid.map(row => [...row]);
+      const newGrid = currentGrid.map(row => [...row]);
       switch (e.key) {
         case 'ArrowUp': {
           for (let col = 0; col < 4; col++) {
@@ -145,14 +152,12 @@ export const use2048 = (): Use2048Return => {
       if (isMoved) {
         const updatedGrid = spawnNewValue(newGrid);
         setGrid(updatedGrid);
-        setCurrentScore(prev => {
-          const newScore = prev + totalAddedScore;
-          setBestScore(prevBest => {
-            const updatedBestScore = Math.max(prevBest, newScore);
-            if (updatedBestScore > prevBest) set( "best-score-2048", updatedBestScore);
-            return updatedBestScore;
-          })
-          return newScore;
+        const newScore = scoreRef.current + totalAddedScore;
+        setCurrentScore(newScore);
+        setBestScore(prevBest => {
+          const updatedBestScore = Math.max(prevBest, newScore);
+          if (updatedBestScore > prevBest) set( "best-score-2048", updatedBestScore);
+          return updatedBestScore;
         })
         if (checkGameOver(updatedGrid)) {
           setGameOver(true);
@@ -171,7 +176,7 @@ export const use2048 = (): Use2048Return => {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     }
-  }, [gameIsOn, grid]);
+  }, [gameIsOn]);
 
   return {
     grid,
