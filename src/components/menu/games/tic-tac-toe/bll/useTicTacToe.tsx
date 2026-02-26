@@ -33,6 +33,9 @@ export const useTicTacToe = (): useTicTacToeReturn => {
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
       [0, 4, 8],
       [2, 4, 6]
     ]
@@ -47,14 +50,16 @@ export const useTicTacToe = (): useTicTacToeReturn => {
   const handleCellClick = (rowInd: number, colInd: number) => {
     if (!isStarted) return;
     if (grid[rowInd][colInd]) return;
-    const updatedGrid = [...grid];
+    const updatedGrid = grid.map(row => [...row]);
     updatedGrid[rowInd][colInd] = turn;
-    if (turn === 'X') setTurn('0');
-    if (turn === '0') setTurn('X');
+    if (!winner) {
+      if (turn === 'X') setTurn('0');
+      if (turn === '0') setTurn('X');
+    }
     setGrid(updatedGrid);
-    const winner = checkGameOver(grid);
-    if (winner) {
-      setWinner(winner);
+    const currentWinner = checkGameOver(updatedGrid);
+    if (currentWinner) {
+      setWinner(currentWinner);
       setIsStarted(false);
     }
   }
