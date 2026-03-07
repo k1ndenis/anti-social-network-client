@@ -1,0 +1,16 @@
+.city-input-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 10px;
+  background: #333333;
+  border-radius: 12px;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.city-input {
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 12px;
+}

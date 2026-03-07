@@ -1,0 +1,72 @@
+.track-upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #333333;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.track-upload-form {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.track-upload-form input[type="text"] {
+  background: rgb(117, 117, 117);
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.track-upload-form input[type="text"]:focus {
+  border-color: #747474;
+  box-shadow: 0 0 0 2px rgba(65, 65, 65, 0.2);
+}
+
+.track-upload-form input[type="file"] {
+  padding: 10px;
+  background: #8f8f8f;
+  border: 1px dashed #bbb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.track-upload-form button {
+  padding: 14px;
+  background-color: #3f3e3e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 10px;
+}
+
+.track-upload-form button:hover {
+  background-color: #000000;
+}
+
+.track-upload-form button:active {
+  transform: scale(0.98);
+}
+
+.hide-upload-form-button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 10;
+  opacity: 0.75;
+}
+
+.hide-upload-form-button:hover {
+  transform: scale(0.9);
+}

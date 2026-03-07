@@ -1,0 +1,9 @@
+.game-container {
+  background: #333333;
+  border-radius: 12px;
+  margin: 1rem;
+}
+
+.exit-button {
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,21 @@
+.toggle-language-container {
+  display: flex;
+  justify-content: end;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.languages {
+  position: fixed;
+  top: 55px;
+  right: 40px;
+  z-index: 10;
+  list-style-type: none;
+  width: fit-content;
+}
+
+.language:active {
+  transform: scale(0.9);
+}

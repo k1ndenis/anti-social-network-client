@@ -1,0 +1,22 @@
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background: #333333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.weather-icon {
+  width: 10%
+}
+
+.loading-gif {
+  width: 20px;
+}
