@@ -87,6 +87,7 @@ export const useTicTacToe = (): useTicTacToeReturn => {
       setWinner('');
       setIsDraw(false);
       setIsStarted(true);
+      setTurn('X');
     }
   }
 }

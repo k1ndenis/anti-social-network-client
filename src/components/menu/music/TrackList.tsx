@@ -4,6 +4,7 @@ import type { Track } from "./types/track";
 import "./TrackList.css"
 
 interface TrackListProps {
+  loading: boolean;
   tracks: Track[];
   currentSearchingValue: string;
   currentTrackId: string | null;
@@ -15,6 +16,7 @@ interface TrackListProps {
 }
 
 export const TrackList = ({
+  loading,
   tracks,
   currentSearchingValue,
   currentTrackId,
@@ -27,6 +29,12 @@ export const TrackList = ({
   const { processedTracks, sorting, setSorting } = useTrackProcessor(
     tracks,
     currentSearchingValue
+  )
+
+  if (loading) return (
+    <ul className="tracklist">
+      <li>{language == 'ru' ? "Загрузка..." : "Loading..."}</li>
+    </ul>
   )
 
   if (tracks.length === 0) return (

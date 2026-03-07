@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { get, set } from "idb-keyval"
 import { CurrentTrack } from "./CurrentTrack";
-import dataTracks from "../../../data/tracks.json";
 import { SearchingInput } from "./SearchingInput";
 import { AudioUploader } from "./AudioUploader";
 import { TrackList } from "./TrackList";
@@ -13,7 +12,8 @@ interface MyMusicProps {
 }
 
 export const MyMusic = ({ language }: MyMusicProps) => {
-  const [tracks, setTracks] = useState<Track[]>(dataTracks);
+  const [loading, setLoading] = useState(true);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
   const [currentSearchingValue, setCurrentSearchingValue] = useState<string>("");
@@ -28,6 +28,18 @@ export const MyMusic = ({ language }: MyMusicProps) => {
     };
     loadTracks();
   }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/music")
+      .then(res => res.json())
+      .then(data => {
+        setTracks(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error loading tracks", err);
+      });
+  }, [])
 
   const onAddTrack = async (newTrack: Track): Promise<void> => {
     const updatedTracks = [...tracks];
@@ -76,6 +88,7 @@ export const MyMusic = ({ language }: MyMusicProps) => {
       language={language}
     />
     <TrackList
+      loading={loading}
       tracks={tracks}
       currentSearchingValue={currentSearchingValue}
       currentTrackId={currentTrackId}
