@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { get, set } from "idb-keyval";
-import { CurrentTrack } from "./CurrentTrack";
 import { SearchingInput } from "./SearchingInput";
 import { AudioUploader } from "./AudioUploader";
 import { TrackList } from "./TrackList";
@@ -8,14 +7,16 @@ import type { Track } from "./types/track";
 import "./MyMusic.css"
 
 interface MyMusicProps {
-  language: 'ru' | 'en'
+  language: 'ru' | 'en';
+  isPlaying: boolean
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
+  currentTrack: Track | null;
+  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>
 }
 
-export const MyMusic = ({ language }: MyMusicProps) => {
+export const MyMusic = ({ language, isPlaying, setIsPlaying, currentTrack, setCurrentTrack }: MyMusicProps) => {
   const [loading, setLoading] = useState(true);
   const [tracks, setTracks] = useState<Track[]>([]);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
   const [currentSearchingValue, setCurrentSearchingValue] = useState<string>("");
   const [uploader, setUploader] = useState<boolean>(false);
 
@@ -95,15 +96,6 @@ export const MyMusic = ({ language }: MyMusicProps) => {
 
   return (
   <div className="music-container">
-    <div className="current-track-container">
-      <CurrentTrack 
-        currentTrackId={currentTrackId}
-        tracks={tracks}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-        language={language}
-      />
-    </div>
     <SearchingInput
       currentValue={currentSearchingValue}
       setCurrentValue={setCurrentSearchingValue}
@@ -113,8 +105,8 @@ export const MyMusic = ({ language }: MyMusicProps) => {
       loading={loading}
       tracks={tracks}
       currentSearchingValue={currentSearchingValue}
-      currentTrackId={currentTrackId}
-      setCurrentTrackId={setCurrentTrackId}
+      currentTrack={currentTrack}
+      setCurrentTrack={setCurrentTrack}
       isPlaying={isPlaying}
       setIsPlaying={setIsPlaying}
       onDeleteTrack={onDeleteTrack}

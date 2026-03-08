@@ -7,8 +7,8 @@ interface TrackListProps {
   loading: boolean;
   tracks: Track[];
   currentSearchingValue: string;
-  currentTrackId: string | null;
-  setCurrentTrackId: React.Dispatch<React.SetStateAction<string | null>>;
+  currentTrack: Track | null;
+  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   onDeleteTrack: (id: string) => void;
@@ -19,8 +19,8 @@ export const TrackList = ({
   loading,
   tracks,
   currentSearchingValue,
-  currentTrackId,
-  setCurrentTrackId,
+  currentTrack,
+  setCurrentTrack,
   isPlaying,
   setIsPlaying,
   onDeleteTrack,
@@ -49,27 +49,27 @@ export const TrackList = ({
               <li 
                 className="track-container"
                 key={track.id}
-                onClick={currentTrackId === track.id
+                onClick={currentTrack?.id === track.id
                     ? () => {
-                      setCurrentTrackId(null);
+                      setCurrentTrack(null);
                       setIsPlaying(false);
                     } 
-                    : () => setCurrentTrackId(track.id)}
+                    : () => setCurrentTrack(track)}
               >
                 <div className="track-row">
                   <button 
                     className="tracklist-buttons"
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (currentTrackId === track.id) {
+                      if (currentTrack?.id === track.id) {
                         setIsPlaying(!isPlaying);
                       } else {
-                        setCurrentTrackId(track.id);
+                        setCurrentTrack(track);
                         setIsPlaying(true);
                       }
                     }}
                   >
-                    {isPlaying && currentTrackId === track.id ? "⏸" : "▶"}
+                    {isPlaying && currentTrack?.id === track.id ? "⏸" : "▶"}
                   </button>
                   <div className="track-info">
                     {track.author} - {track.title}

@@ -2,15 +2,15 @@
   display: flex;
   justify-content: end;
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   z-index: 10;
-  opacity: 0.75;
+  opacity: 0.5;
 }
 
 .languages {
   position: fixed;
-  top: 55px;
+  bottom: 55px;
   right: 40px;
   z-index: 10;
   list-style-type: none;

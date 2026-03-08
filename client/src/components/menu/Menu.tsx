@@ -5,6 +5,8 @@ import { MyVideos } from "./videos/MyVideos";
 import { MyWeather } from "./weather/MyWeather";
 import { MyPictures } from "./pictures/MyPictures";
 import { MyGames } from "./games/MyGames";
+import { Track } from "./music/types/track";
+import { CurrentTrack } from "./music/CurrentTrack";
 
 interface MenuProps {
   handleLogout: () => void
@@ -13,6 +15,9 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout, language }: MenuProps) => {
   const [menuItem, setMenuItem] = useState<string>("");
+
+  const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const menuList = (
     <>
@@ -47,7 +52,18 @@ export const Menu = ({ handleLogout, language }: MenuProps) => {
 
   return ( 
     <>
-    <div className="menu">
+    {currentTrack && (
+      <div className="current-track-container">
+        <CurrentTrack 
+          currentTrack={currentTrack}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          language={language}
+          setCurrentTrack={setCurrentTrack}
+        />
+      </div>
+    )}
+    <div className="menu" style={currentTrack ? {paddingTop: "140px"} : {}}>
       {menuItem ? (
         <>
           <button
@@ -55,7 +71,14 @@ export const Menu = ({ handleLogout, language }: MenuProps) => {
           >
             {language === 'ru' ? "В меню" : "Back to Menu"}
           </button>
-          {menuItem === "Music" && <MyMusic language={language} />}
+          {menuItem === "Music" && 
+            <MyMusic
+              language={language}
+              currentTrack={currentTrack}
+              setCurrentTrack={setCurrentTrack}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+            />}
           {menuItem === "Pictures" && <MyPictures language={language} />}
           {menuItem === "Videos" && <MyVideos />}
           {menuItem === "Weather" && <MyWeather language={language} />}
@@ -69,6 +92,7 @@ export const Menu = ({ handleLogout, language }: MenuProps) => {
       ) : menuList}
     </div>
     <button
+      className="logout-button"
       onClick={handleLogout}
     >
       {language === 'ru' ? "Выйти" : "Log Out"}

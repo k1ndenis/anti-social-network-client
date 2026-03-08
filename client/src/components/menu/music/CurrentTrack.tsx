@@ -3,33 +3,21 @@ import "./CurrentTrack.css"
 import { AudioTrack } from "./AudioTrack";
 
 interface CurrentTrackProps {
-  tracks: Track[];
-  currentTrackId: string | null;
+  currentTrack: Track | null;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  language: 'ru' | 'en'
+  language: 'ru' | 'en';
+  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>
 }
 
 export const CurrentTrack = ({
-  tracks,
-  currentTrackId,
+  currentTrack,
   isPlaying,
   setIsPlaying,
-  language
+  language,
+  setCurrentTrack
 }: CurrentTrackProps) => {
-  const currentTrack = tracks.find(track => track.id === currentTrackId);
-  if (!currentTrackId) {
-    return (
-      <>
-        <div className="current-track">
-          <div className="scroll-wrapper-container">
-            <span>{language === 'ru' ? "Выберите трек" : "Choose track"}</span>
-          </div>
-        </div>
-      </>
-    )
-  }
-
+  
   if (!currentTrack) {
     return (
       <div className="current-track">
@@ -69,6 +57,12 @@ export const CurrentTrack = ({
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
         />
+        <button
+          className="hide-music-player-button"
+          onClick={() => setCurrentTrack(null)}
+        >
+          x
+        </button>
       </div>
     </>
   )
