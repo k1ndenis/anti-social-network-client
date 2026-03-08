@@ -20,9 +20,12 @@ export const createPicture = (req: Request, res: Response) => {
     if (!err && data) {
       try {
         pictures = JSON.parse(data || '[]');
-      } catch (e) { pictures = [] };
+      } catch (e) {
+        pictures = []
+      };
     }
 
+    pictures = pictures.filter(p => p.id !== newPicture.id);
     pictures.unshift(newPicture);
 
     fs.writeFile(filePath, JSON.stringify(pictures, null, 2), (writeErr) => {
@@ -43,7 +46,9 @@ export const deletePicture = (req: Request, res: Response) => {
     let pictures: Picture[] = [];
     try {
       pictures = JSON.parse(data);
-    } catch (e) { pictures = [] };
+    } catch (e) {
+      pictures = []
+    };
 
     const updatedPictures = pictures.filter((picture: Picture) => picture.id !== id);
 

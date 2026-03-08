@@ -20,9 +20,12 @@ export const createTrack = (req: Request, res: Response) => {
     if (!err && data) {
       try {
         tracks = JSON.parse(data);
-      } catch (e) { tracks = [] };
+      } catch (e) {
+        tracks = []
+      };
     }
 
+    tracks = tracks.filter(p => p.id !== newTrack.id);
     tracks.unshift(newTrack);
 
     fs.writeFile(filePath, JSON.stringify(tracks, null, 2), (writeErr) => {
@@ -43,7 +46,9 @@ export const deleteTrack = (req: Request, res: Response) => {
     let tracks: Track[] = [];
     try {
       tracks = JSON.parse(data || '[]');
-    } catch (e) { tracks = []; }
+    } catch (e) {
+      tracks = [];
+    }
 
     const updatedTracks = tracks.filter((track: Track) => track.id !== id);
 

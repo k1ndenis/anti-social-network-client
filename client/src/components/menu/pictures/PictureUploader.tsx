@@ -26,7 +26,8 @@ export const PictureUploader = ({ onAddPicture }: PictureUploaderProps) => {
           })
 
           if (response.ok) {
-            onAddPicture(newPicture);
+            const savedPicture = await response.json();
+            onAddPicture(savedPicture);
           } else {
             console.error("Failed to upload picture");
           }
