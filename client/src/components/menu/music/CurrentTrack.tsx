@@ -1,5 +1,6 @@
 import type { Track } from "./types/track"
 import "./CurrentTrack.css"
+import { AudioTrack } from "./AudioTrack";
 
 interface CurrentTrackProps {
   tracks: Track[];
@@ -16,7 +17,7 @@ export const CurrentTrack = ({
   setIsPlaying,
   language
 }: CurrentTrackProps) => {
-
+  const currentTrack = tracks.find(track => track.id === currentTrackId);
   if (!currentTrackId) {
     return (
       <>
@@ -28,8 +29,6 @@ export const CurrentTrack = ({
       </>
     )
   }
-
-  const currentTrack = tracks.find(track => track.id === currentTrackId);
 
   if (!currentTrack) {
     return (
@@ -65,11 +64,10 @@ export const CurrentTrack = ({
             <span>{currentTrack.author} - {currentTrack.title}</span>
           </div>
         )}
-        <audio src={currentTrack.url} 
-          controls 
-          autoPlay 
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
+        <AudioTrack
+          track={currentTrack}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
         />
       </div>
     </>

@@ -31,18 +31,6 @@ export const TrackList = ({
     currentSearchingValue
   )
 
-  if (loading) return (
-    <ul className="tracklist">
-      <li>{language == 'ru' ? "Загрузка..." : "Loading..."}</li>
-    </ul>
-  )
-
-  if (tracks.length === 0) return (
-    <ul className="tracklist">
-      <li>{language == 'ru' ? "Список треков пуст" : "Track list is empty"}</li>
-    </ul>
-  )
-
   const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
 
   return (
@@ -52,41 +40,57 @@ export const TrackList = ({
         setSorting={setSorting}
         language={language}
       />
-      <ul className="tracklist">
-        {processedTracks.map((track) => (
-          <li 
-            className="track-container"
-            key={track.id}
-            onClick={currentTrackId === track.id
-                ? () => {
-                  setCurrentTrackId(null);
-                  setIsPlaying(false);
-                } 
-                : () => setCurrentTrackId(track.id)}
-          >
-            <div className="track-row">
-              <button className="tracklist-buttons">
-                {isPlaying && currentTrackId === track.id ? "⏸" : "▶"}
-              </button>
-              <li>
-                {track.author} - {track.title}
-              </li>
-              <button 
-                className="tracklist-buttons"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (confirm(confirmMessage)) {
-                    onDeleteTrack(track.id);
-                  }
-                }}
+      {loading
+        ? <div className="loading-music-container">
+            <img className="loading-gif" src="/images/loading.gif" />
+          </div>
+        : <ul className="tracklist">
+            {processedTracks.map((track) => (
+              <li 
+                className="track-container"
+                key={track.id}
+                onClick={currentTrackId === track.id
+                    ? () => {
+                      setCurrentTrackId(null);
+                      setIsPlaying(false);
+                    } 
+                    : () => setCurrentTrackId(track.id)}
               >
-                x
-              </button>
-            </div>
-          </li>
-        )
-        )}
-      </ul>
+                <div className="track-row">
+                  <button 
+                    className="tracklist-buttons"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (currentTrackId === track.id) {
+                        setIsPlaying(!isPlaying);
+                      } else {
+                        setCurrentTrackId(track.id);
+                        setIsPlaying(true);
+                      }
+                    }}
+                  >
+                    {isPlaying && currentTrackId === track.id ? "⏸" : "▶"}
+                  </button>
+                  <div className="track-info">
+                    {track.author} - {track.title}
+                  </div>
+                  <button 
+                    className="tracklist-buttons"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm(confirmMessage)) {
+                        onDeleteTrack(track.id);
+                      }
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
+              </li>
+            )
+            )}
+          </ul>
+      }
     </>
   )
 }

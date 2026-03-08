@@ -1,3 +1,16 @@
+.loading-music-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background: #333333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .tracklist {
   display: flex;
   flex-direction: column;
@@ -16,9 +29,6 @@
 }
 
 .tracklist li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: rgb(110, 110, 110);
   border-radius: 12px;
   width: 100%; 
@@ -28,6 +38,13 @@
 
 .tracklist li:hover {
   transform: scale(0.99);
+}
+
+.track-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .track-row {
