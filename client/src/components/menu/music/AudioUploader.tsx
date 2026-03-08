@@ -35,21 +35,26 @@ export const AudioUploader = ({ setUploader, onAddTrack, language }: AudioUpload
         title,
         url: reader.result as string
       };
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL;
 
-      const apiUrl = import.meta.env.VITE_API_URL;
+        const response = await fetch(`${apiUrl}/api/music`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newTrack)
+        })
 
-      const response = await fetch(`${apiUrl}/api/music`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTrack)
-      })
-
-      if (response.ok) {
-        onAddTrack(newTrack);
-        setAuthor("");
-        setTitle("")
-        setFile(null);
-        setUploader(false);
+        if (response.ok) {
+          onAddTrack(newTrack);
+          setAuthor("");
+          setTitle("")
+          setFile(null);
+          setUploader(false);
+        } else {
+          console.log("Failed to upload track")
+        }
+      } catch (err) {
+        console.error("Upload error", err);
       }
     };
     reader.readAsDataURL(file);

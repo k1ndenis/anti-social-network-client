@@ -23,44 +23,53 @@ export const MyMusic = ({ language }: MyMusicProps) => {
 
   useEffect(() => {
     const loadTracks = async () => {
-      const savedTracks = await get("tracks");
-      if (savedTracks) {
-        setTracks(savedTracks);
+      try {
+        const res = await fetch(`${apiUrl}/api/music`);
+        const data = await res.json();
+        setTracks(data);
+        await set("tracks", data);
+      } catch (err) {
+        console.error("Error loading tracks", err);
+        const savedTracks = await get("tracks");
+        if (savedTracks) setTracks(savedTracks);
+      } finally {
+        setLoading(false);
       }
     };
     loadTracks();
-  }, []);
-
-  useEffect(() => {
-    fetch(`${apiUrl}/api/music`)
-      .then(res => res.json())
-      .then(data => {
-        setTracks(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error loading tracks", err);
-      });
   }, [apiUrl]);
 
-  const onAddTrack = (newTrack: Track) => {
-    setTracks((prev) => [newTrack, ...prev]);
-    set("tracks", [newTrack, ...tracks]);
+  const onAddTrack = async (newTrack: Track) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/music`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTrack)
+      });
+      const savedTrack = await res.json();
+      setTracks(prev => {
+        const updated = [savedTrack, ...prev];
+        set("tracks", updated);
+        return updated
+      })
+    } catch (err) {
+      console.error("Error adding track", err);
+    }
   }
 
   const onDeleteTrack = async (id: string): Promise<void> => {
-    const apiUrl = import.meta.env.VITE_API_URL;
+    const alertMessage = language === 'ru' ? "Не удалось удалить трек" : "Failed to delete track";
     try {
-      const response = await fetch(`${apiUrl}/api/music/${id}`, {
+      const res = await fetch(`${apiUrl}/api/music/${id}`, {
         method: "DELETE"
       });
 
-      if (response.ok) {
+      if (res.ok) {
         const updatedTracks = tracks.filter(track => track.id !== id);
         setTracks(updatedTracks);
         await set("tracks", updatedTracks);
       } else {
-        alert("Не удалось удалить трек");
+        alert(alertMessage);
       }
     } catch (err) {
       console.error("Delete error", err);

@@ -11,12 +11,28 @@ export const PictureUploader = ({ onAddPicture }: PictureUploaderProps) => {
     if (currentFile) {
       const reader = new FileReader();
 
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const newPicture = {
           id: crypto.randomUUID(),
           url: reader.result as string
         }
-        onAddPicture(newPicture);
+        try {
+          const apiUrl = import.meta.env.VITE_API_URL;
+
+          const response = await fetch(`${apiUrl}/api/pictures`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newPicture)
+          })
+
+          if (response.ok) {
+            onAddPicture(newPicture);
+          } else {
+            console.error("Failed to upload picture");
+          }
+        } catch (err) {
+          console.error("Upload error", err);
+        }
       }
       reader.readAsDataURL(currentFile);
     }

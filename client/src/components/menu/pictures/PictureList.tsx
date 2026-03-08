@@ -3,6 +3,7 @@ import type { Picture } from "./types/picture";
 import "./PictureList.css"
 
 interface PictureListProps {
+  loading: boolean;
   pictures: Picture[];
   onAddPicture: (picture: Picture) => void;
   onDeletePicture: (id: string) => void;
@@ -10,7 +11,7 @@ interface PictureListProps {
   language: 'ru' | 'en'
 }
 
-export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurrentPictureInd, language }: PictureListProps) => {
+export const PictureList = ({ loading, pictures, onAddPicture, onDeletePicture, setCurrentPictureInd, language }: PictureListProps) => {
 
   const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
   
@@ -18,31 +19,36 @@ export const PictureList = ({ pictures, onAddPicture, onDeletePicture, setCurren
 
   return (
     <>
-      <ul className="picture-list-ul">
-        <li>
-          <div className="picture-add-button-container">
-            <PictureUploader
-              onAddPicture={onAddPicture}
-            />
+      {loading
+        ? <div className="loading-pictures-container">
+            <img className="loading-gif" src="/images/loading.gif" />
           </div>
-        </li>
-        {pictures.map((picture, index) => (
-          <li key={picture.id}>
-            <div className="picture-card">
-              <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
-              <button
-                onClick={() => {
-                  if (confirm(confirmMessage)) {
-                    onDeletePicture(picture.id)}
-                  }
-                }
-              >
-                x
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+        : <ul className="picture-list-ul">
+            <li>
+              <div className="picture-add-button-container">
+                <PictureUploader
+                  onAddPicture={onAddPicture}
+                />
+              </div>
+            </li>
+            {pictures.map((picture, index) => (
+              <li key={picture.id}>
+                <div className="picture-card">
+                  <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
+                  <button
+                    onClick={() => {
+                      if (confirm(confirmMessage)) {
+                        onDeletePicture(picture.id)}
+                      }
+                    }
+                  >
+                    x
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+      }
     </>
   )
 }

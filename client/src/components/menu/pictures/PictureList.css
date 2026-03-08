@@ -1,3 +1,16 @@
+.loading-pictures-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background: #333333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .picture-list-ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
