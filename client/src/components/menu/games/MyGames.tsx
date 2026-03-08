@@ -13,34 +13,38 @@ export const MyGames = ({ language }: MyGamesProps) => {
 
   return (
     <>
-      <button
-        onClick={() => setActiveGame("Crossword")}
-      >
-        {language === 'ru' ? "Кроссворд" : "Crossword"}
-      </button>
-      <button
-        onClick={() => setActiveGame("2048")}
-      >
-        2048
-      </button>
-      <button
-        onClick={() => setActiveGame("tictactoe")}
-      >
-        {language === 'ru' ? "Крестики-нолики" : "Tic-Tac-Toe"}
-      </button>
-      <div className="game-container">
-        {activeGame === "Crossword" && <Crossword />}
-        {activeGame === "2048" && <The2048 language={language} />}
-        {activeGame === "tictactoe" && <TicTacToe language={language} />}
-        {activeGame && (
-          <button 
-            onClick={() => setActiveGame(null)}
-            className="exit-button"
+    {activeGame
+      ? <div className="game-container">
+          {activeGame === "Crossword" && <Crossword />}
+          {activeGame === "2048" && <The2048 language={language} />}
+          {activeGame === "tictactoe" && <TicTacToe language={language} />}
+          {activeGame && (
+            <button 
+              onClick={() => setActiveGame(null)}
+              className="exit-button"
+            >
+              {language === 'ru' ? "Выйти из игры" : "Quit Game"}
+            </button>
+          )}
+        </div>
+      : <div className="game-cards-container">
+          <div className="game-card"
+            onClick={() => setActiveGame("Crossword")}
           >
-            {language === 'ru' ? "Выйти из игры" : "Quit Game"}
-          </button>
-        )}
-      </div>
+            {language === 'ru' ? "Кроссворд" : "Crossword"}
+          </div>
+          <div className="game-card"
+            onClick={() => setActiveGame("2048")}
+          >
+            2048
+          </div>
+          <div className="game-card"
+            onClick={() => setActiveGame("tictactoe")}
+          >
+            {language === 'ru' ? "Крестики-нолики" : "Tic-Tac-Toe"}
+          </div>
+        </div>
+      }
     </>
   )
 }

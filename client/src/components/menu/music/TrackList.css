@@ -23,11 +23,11 @@
   border-radius: 12px;
   width: 100%; 
   box-sizing: border-box;
-  padding: 12px;
+  padding: 4px;
 }
 
 .tracklist li:hover {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .track-row {
@@ -47,7 +47,7 @@
 }
 
 .tracklist-buttons:hover {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 @media (max-width: 720px) {

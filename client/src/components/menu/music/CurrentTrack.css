@@ -26,6 +26,8 @@
 }
 
 .current-track audio {
+  width: 100%;
+  background: #333;
   border-radius: 12px;
 }
 
@@ -43,7 +45,7 @@
 }
 
 .scroll-wrapper span {
-  padding: 0 30px;
+  padding: 0 150px;
 }
 
 @keyframes scrolling {
