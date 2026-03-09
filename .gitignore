@@ -1,23 +1,38 @@
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 
+# Node modules
 node_modules/
 **/node_modules/
 
+# Build output
+build/          # React сборка
 dist/
 **/dist/
-dist-ssr
-*.local
-.tsbuildinfo
-**/tsconfig.tsbuildinfo
+dist-ssr/
 
+# Environment files
 .env
 .env.*
-**/ .env
-! .env.example
+**/.env
+! .env.example   # пример env, который можно коммитить
 
+# Firebase Admin SDK secret
+server/firebase/serviceAccountKey.json
+
+# IDE / OS files
 .vscode/
 .idea/
 .DS_Store
+
+# TypeScript build info
+*.tsbuildinfo
+**/tsconfig.tsbuildinfo
+
+# Local config
+*.local
+
+# Firebase hosting cache
+.firebase/

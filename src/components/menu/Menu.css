@@ -1,0 +1,33 @@
+.menu > * {
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  gap: 0.5rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 1080px) {
+  .menu {
+    width: 80vw;
+  }
+}
+
+.loading-gif {
+  width: 20px;
+}
+
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.hidden-music-player {
+  display: none;
+}
