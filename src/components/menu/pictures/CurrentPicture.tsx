@@ -11,11 +11,11 @@ interface CurrentPictureProps {
 export const CurrentPicture = ({ pictures, currentPictureInd, setCurrentPictureInd }: CurrentPictureProps) => {
 
   const togglePicture = (direction: string) => {
-    if (direction === "past" && currentPictureInd) {
+    if (direction === "past" && currentPictureInd !== null) {
       const pastInd = currentPictureInd - 1;
       if (pastInd >= 0) setCurrentPictureInd(pastInd);
     }
-    if (direction === "next" && currentPictureInd) {
+    if (direction === "next" && currentPictureInd !== null) {
       const nextInd = currentPictureInd + 1;
       if (nextInd < pictures.length) setCurrentPictureInd(nextInd);
     }
