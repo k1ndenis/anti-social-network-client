@@ -7,12 +7,15 @@ import { MyPictures } from "./pictures/MyPictures";
 import { MyGames } from "./games/MyGames";
 import { Track } from "./music/types/track";
 import { CurrentTrack } from "./music/CurrentTrack";
+import { UserProfile } from "./user/UserProfile";
+import { User } from "../auth/types/user";
 
 interface MenuProps {
-  language: 'ru' | 'en'
+  language: 'ru' | 'en';
+  loggedUser: User | null
 }
 
-export const Menu = ({ language }: MenuProps) => {
+export const Menu = ({ language, loggedUser }: MenuProps) => {
   const [menuItem, setMenuItem] = useState<string>("");
 
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
@@ -20,6 +23,12 @@ export const Menu = ({ language }: MenuProps) => {
 
   const menuList = (
     <>
+      {loggedUser && 
+      <button
+        onClick={() => setMenuItem("User")}
+      >
+        {language === 'ru' ? "Моя страница" : "My profile"}
+      </button>}
       <button
         onClick={() => setMenuItem("Music")}
       >
@@ -78,6 +87,7 @@ export const Menu = ({ language }: MenuProps) => {
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
             />}
+          {menuItem === "User" && <UserProfile language={language} loggedUser={loggedUser} />}
           {menuItem === "Pictures" && <MyPictures language={language} />}
           {menuItem === "Videos" && <MyVideos />}
           {menuItem === "Weather" && <MyWeather language={language} />}

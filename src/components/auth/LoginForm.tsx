@@ -23,7 +23,7 @@ export const LoginForm = ({ handleLogin, setIsLogining, language }: LoginFormPro
   };
 
   return (
-    <>
+    <div className="auth-form">
       <form className="auth-form-container" onSubmit={onSubmit}>
         <h2>{language === "ru" ? "Вход" : "Login"}</h2>
         <input
@@ -49,6 +49,6 @@ export const LoginForm = ({ handleLogin, setIsLogining, language }: LoginFormPro
       <button onClick={() => setIsLogining(false)}>
         {language === "ru" ? "Назад" : "Back"}
       </button>
-    </>
+    </div>
   );
 };

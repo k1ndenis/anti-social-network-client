@@ -7,6 +7,12 @@
   width: fit-content;
 }
 
+.auth-form {
+  background-color: rgba(53, 52, 52, 0.5);
+  border-radius: 12px;
+  padding: 10px;
+}
+
 .auth-form-container {
   background-color: #333333;
   border-radius: 10px;

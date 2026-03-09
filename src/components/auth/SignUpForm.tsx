@@ -28,7 +28,7 @@ export const SignUpForm = ({ handleSignUp, setLoggedUser, setIsReg, language }: 
   };
 
   return (
-    <>
+    <div className="auth-form">
       <form className="auth-form-container" onSubmit={onSubmit}>
         <h2>{language === "ru" ? "Регистрация" : "Sign-up"}</h2>
         <input
@@ -59,6 +59,6 @@ export const SignUpForm = ({ handleSignUp, setLoggedUser, setIsReg, language }: 
       <button onClick={() => setIsReg(false)}>
         {language === "ru" ? "Назад" : "Back"}
       </button>
-    </>
+    </div>
   );
 };

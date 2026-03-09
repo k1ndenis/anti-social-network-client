@@ -15,10 +15,11 @@ import "./AuthPage.css";
 
 interface AuthPageProps {
   language: "ru" | "en";
+  loggedUser: User | null;
+  setLoggedUser: React.Dispatch<React.SetStateAction<User | null>>
 }
 
-export const AuthPage = ({ language }: AuthPageProps) => {
-  const [loggedUser, setLoggedUser] = useState<User | null>(null);
+export const AuthPage = ({ language, loggedUser, setLoggedUser }: AuthPageProps) => {
   const [isLogining, setIsLogining] = useState(false);
   const [isReg, setIsReg] = useState(false);
 
