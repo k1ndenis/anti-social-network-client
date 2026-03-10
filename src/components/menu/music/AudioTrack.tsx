@@ -51,6 +51,8 @@ export const AudioTrack = ({ track, isPlaying, setIsPlaying }: AudioTrackProps) 
     setProgress(newTime / audioRef.current.duration);
   }
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   return (
     <div className='audio-track-container'>
       <button onClick={() => setIsPlaying(!isPlaying)}>
@@ -74,7 +76,7 @@ export const AudioTrack = ({ track, isPlaying, setIsPlaying }: AudioTrackProps) 
         className='volume-slider'
       />
 
-      <audio ref={audioRef} src={track.url} />
+      <audio ref={audioRef} src={apiUrl + track.url} />
     </div>
   )
 }
