@@ -3,9 +3,3 @@
   padding: 2rem;
   text-align: center;
 }
-
-.auth-page {
-  position: absolute;
-  top: 1rem;      /* отступ сверху */
-  right: 1rem; 
-}

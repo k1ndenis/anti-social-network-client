@@ -11,13 +11,11 @@ function App() {
 
 
   return (
-    <div className='app-container'>
+    <>
       <ToggleLanguage language={language} setLanguage={setLanguage} />
-      <div className='auth-page'>
-        <AuthPage language={language} loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
-      </div>
+      <AuthPage language={language} loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
       <Menu language={language} loggedUser={loggedUser} />
-    </div>
+    </>
   )
 }
 

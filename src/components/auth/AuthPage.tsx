@@ -66,29 +66,29 @@ const handleLogout = async () => {
 
   if (!isLogining && !isReg) {
     return (
-      <>
+      <div className="auth-container">
         {loggedUser
           ? 
-            <>
-              {loggedUser.username}
+            <div className="logged-user">
+              <strong>{loggedUser.username}</strong>
               <button
                 className="logout-button"
                 onClick={handleLogout}
               >
                 {language === 'ru' ? "Выйти" : "Log Out"}
               </button>
-            </>
+            </div>
           :
-            <div className="auth-container">
+            <>
               <button onClick={() => setIsLogining(true)}>
                 {language === "ru" ? "Войти" : "Login"}
               </button>
               <button onClick={() => setIsReg(true)}>
                 {language === "ru" ? "Зарегистрироваться" : "Sign Up"}
               </button>
-            </div>
+            </>
         }
-      </>
+      </div>
     );
   }
 

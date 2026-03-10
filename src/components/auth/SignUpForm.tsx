@@ -28,8 +28,8 @@ export const SignUpForm = ({ handleSignUp, setLoggedUser, setIsReg, language }: 
   };
 
   return (
-    <div className="auth-form">
-      <form className="auth-form-container" onSubmit={onSubmit}>
+    <div className="auth-form-container">
+      <form className="auth-form" onSubmit={onSubmit}>
         <h2>{language === "ru" ? "Регистрация" : "Sign-up"}</h2>
         <input
           className="auth-input"
