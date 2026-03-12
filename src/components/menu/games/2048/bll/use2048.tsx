@@ -14,8 +14,10 @@ export const use2048 = (): Use2048Return => {
   const gridRef = useRef(grid);
   const scoreRef = useRef(currentScore);
 
-  gridRef.current = grid;
-  scoreRef.current = currentScore;
+  useEffect(() => {
+    gridRef.current = grid;
+    scoreRef.current = currentScore;
+  }, [grid, currentScore]);
 
   useEffect(() => {
     const loadBestScore = async (): Promise<void> => {
