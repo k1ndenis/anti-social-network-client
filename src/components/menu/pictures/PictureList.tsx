@@ -1,6 +1,7 @@
 import { PictureUploader } from "./PictureUploader"
 import type { Picture } from "./types/picture";
 import "./PictureList.css"
+import { LikeButton } from "../../likes/LikeButton";
 
 interface PictureListProps {
   loading: boolean;
@@ -32,20 +33,23 @@ export const PictureList = ({ loading, pictures, onAddPicture, onDeletePicture, 
               </div>
             </li>
             {pictures.map((picture, index) => (
-              <li key={picture.id}>
-                <div className="picture-card">
-                  <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
-                  <button
-                    onClick={() => {
-                      if (confirm(confirmMessage)) {
-                        onDeletePicture(picture.id)}
+              <div>
+                <li key={picture.id}>
+                  <div className="picture-card">
+                    <img src={picture.url} onClick={() => setCurrentPictureInd(index)} />
+                    <button
+                      onClick={() => {
+                        if (confirm(confirmMessage)) {
+                          onDeletePicture(picture.id)}
+                        }
                       }
-                    }
-                  >
-                    x
-                  </button>
-                </div>
-              </li>
+                    >
+                      x
+                    </button>
+                  </div>
+                </li>
+                <LikeButton language={language} pictureId={picture.id} />
+              </div>
             ))}
           </ul>
       }
