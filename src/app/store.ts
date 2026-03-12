@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import likesReducer from './reducers/likesSlice'
+import commentsReducer from './reducers/commentsSlice'
 
 const rootReducer = combineReducers({
-  likes: likesReducer
+  likes: likesReducer,
+  comments: commentsReducer
 })
 
 export const setupStore = () => {

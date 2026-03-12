@@ -1,7 +1,8 @@
 import { PictureUploader } from "./PictureUploader"
 import type { Picture } from "./types/picture";
 import "./PictureList.css"
-import { LikeButton } from "../../likes/LikeButton";
+import { LikeButton } from "../../ui/LikeButton/LikeButton";
+import { Comment } from "../../ui/Comment/Comment";
 
 interface PictureListProps {
   loading: boolean;
@@ -49,6 +50,7 @@ export const PictureList = ({ loading, pictures, onAddPicture, onDeletePicture, 
                   </div>
                 </li>
                 <LikeButton language={language} pictureId={picture.id} />
+                <Comment language={language} pictureId={picture.id} />
               </div>
             ))}
           </ul>

@@ -12,7 +12,7 @@ const likesSlice = createSlice({
   reducers: {
     like: (state, action: PayloadAction<string>) => {
       const id = action.payload;
-      state[id] = state[id] === 0 ? 1 : 0;
+      state[id] = !state[id] ? 1 : 0;
     }
   }
 })

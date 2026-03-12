@@ -1,5 +1,5 @@
-import { like } from "../../app/reducers/likesSlice"
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { like } from "../../../app/reducers/likesSlice"
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 
 interface LikeButtonProps {
   language: 'ru' | 'en';

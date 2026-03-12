@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { AuthPage } from './components/auth/AuthPage'
-import { ToggleLanguage } from './components/ToggleLanguage/ToggleLanguage';
+import { ToggleLanguage } from './components/ui/ToggleLanguage/ToggleLanguage';
 import { Menu } from './components/menu/Menu';
 import { User } from './components/auth/types/user';
 
