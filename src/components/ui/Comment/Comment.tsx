@@ -11,6 +11,7 @@ interface CommentProps {
 
 export const Comment = ({ language, pictureId }: CommentProps) => {
   const [commentValue, setCommentValue] = useState<string>("");
+  const [viewComments, setViewComments] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const comments = useAppSelector(state => state.comments[pictureId] || []);
@@ -19,6 +20,11 @@ export const Comment = ({ language, pictureId }: CommentProps) => {
     if (!commentValue.trim()) return;
     dispatch(addComment({ pictureId, text: commentValue }))
     setCommentValue("");
+    setViewComments(true);
+  }
+
+  const keyDownHandle = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') handleSend();
   }
 
   return (
@@ -27,16 +33,32 @@ export const Comment = ({ language, pictureId }: CommentProps) => {
         type="text"
         value={commentValue}
         onChange={(e) => setCommentValue(e.target.value)}
+        onKeyDown={keyDownHandle}
         placeholder={language === 'ru' ? "Введите комментарий" : "Write a comment"}
       />
       <button onClick={handleSend}>
         {language === 'ru' ? "Отправить" : "Send"}
       </button>
-      <ul className="comments">
-      {comments.map(comment => (
-        <li className="comment" key={comment.id}>💬 {comment.text}</li>
-      ))}
-      </ul>
+      {!viewComments
+        ? (
+          <div onClick={() => setViewComments(true)}>
+            {comments[0]
+              && (
+                <>
+                  💬 {comments[0].text}
+                </>
+              )
+            }
+          </div>
+        )
+        : (
+          <ul className="comments" onClick={() => setViewComments(false)}>
+            {comments.map(comment => (
+              <li className="comment" key={comment.id}>💬 {comment.text}</li>
+            ))}
+          </ul>
+        )
+      }
     </div>
   )
 }
