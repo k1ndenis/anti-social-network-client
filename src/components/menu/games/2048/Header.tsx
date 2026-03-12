@@ -24,7 +24,11 @@ export const Header = ({ currentScore, bestScore, startGame, language }: HeaderP
           language={language}
         />
         <button
-          onClick={startGame}
+          onClick={() => {
+            const confirmMessage = language === 'ru' ? "Вы уверенны?" : "Are you sure?";
+            const conf: boolean = confirm(confirmMessage);
+            if (conf) startGame();
+          }}
         >
           {language === 'ru' ? "Новая игра" : "New Game"}
         </button>
