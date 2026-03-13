@@ -19,9 +19,14 @@ const commentsSlice = createSlice({
       const { pictureId, text } = action.payload;
       if (!state[pictureId]) state[pictureId] = [];
       state[pictureId].push({ id: Date.now().toString(), text })
+    },
+    deleteComment: (state, action: PayloadAction<{ pictureId: string, commentId: string}>) => {
+      const { pictureId, commentId } = action.payload;
+      if (!state[pictureId]) return;
+      state[pictureId] = state[pictureId].filter(picture => picture.id !== commentId);
     }
   }
 })
 
-export const { addComment } = commentsSlice.actions;
+export const { addComment, deleteComment } = commentsSlice.actions;
 export default commentsSlice.reducer;

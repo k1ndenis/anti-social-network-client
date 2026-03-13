@@ -1,5 +1,6 @@
 import { like } from "../../../app/reducers/likesSlice"
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import './LikeButton.css'
 
 interface LikeButtonProps {
   language: 'ru' | 'en';
@@ -11,11 +12,13 @@ export const LikeButton = ({ language, pictureId }: LikeButtonProps) => {
   const dispatch = useAppDispatch();
 
   return (
-    <div>
-      <p>❤️ {likes}</p>
-      <button onClick={() => dispatch(like(pictureId))}>
+    <div className="like-container">
+      
+      <button className="like-button" onClick={() => dispatch(like(pictureId))}>
+        <span>❤️</span>
         {language === 'ru' ? "Нравится" : "Like"}
       </button>
+      <p className="like-count">❤️ {likes}</p>
     </div>
   )
 }

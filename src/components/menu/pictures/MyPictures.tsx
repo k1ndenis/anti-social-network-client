@@ -74,6 +74,7 @@ export const MyPictures = ({ language }: MyPicturesProps) => {
     <>
       {currentPictureInd !== null ? 
         <CurrentPicture
+          language={language}
           pictures={pictures}
           currentPictureInd={currentPictureInd}
           setCurrentPictureInd={setCurrentPictureInd}

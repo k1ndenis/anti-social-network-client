@@ -1,9 +1,120 @@
-.comments {
+.comments-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #333333;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  gap: 12px;
+}
+
+.comments {
   list-style: none;
   padding: 0;
-  margin: 0 auto;   
+  margin: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #777777;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: background 0.2s ease;
+}
+
+.comment-item:hover {
+  background: #838383;
+}
+
+.comment-text {
+  flex: 1;
+  margin-right: 8px;
+  word-break: break-word;
+}
+
+.comment-delete-button {
+  border: none;
+  background: #535353;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-delete-button:hover {
+  background: #353535;
+}
+
+.comment-delete-button:active {
+  transform: scale(0.9);
+}
+
+.comments-container > div:first-child {
+  cursor: pointer;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.comment-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-input-container input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d6dbe1;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.comment-input-container input:focus {
+  border-color: #4c8bf5;
+  box-shadow: 0 0 0 2px rgba(76,139,245,0.15);
+}
+
+.comment-input-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: none;
+  background: #4c8bf5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.comment-input-container button:hover {
+  background: #3a76d8;
+}
+
+.comment-input-container button:active {
+  transform: scale(0.95);
+}
+
+.comments::-webkit-scrollbar {
+  width: 6px;
+}
+
+.comments::-webkit-scrollbar-thumb {
+  background: #d0d6de;
+  border-radius: 6px;
 }

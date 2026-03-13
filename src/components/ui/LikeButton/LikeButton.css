@@ -1,0 +1,46 @@
+.like-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333333;
+  border-radius: 12px;
+  margin-top: 12px;
+  padding: 0 10px;
+}
+
+.like-count {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: 
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.2s ease;
+}
+
+.like-button:hover {
+  background: #e63c5d;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.like-button:active {
+  transform: scale(0.95);
+}
+
+.like-button span {
+  font-size: 16px;
+}

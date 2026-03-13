@@ -1,3 +1,16 @@
+.current-picture-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.current-picture-comments {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .current-picture {
   position: relative;
   border-radius: 12px;
