@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 interface Comment {
+  pictureId: string;
   id: string;
   text: string;
   createdAt: string;
-  pictureId: string;
+  authorId: string;
+  authorName: string;
 }
 
 interface CommentsState {
@@ -13,9 +15,11 @@ interface CommentsState {
 
 interface SendCommentPayload {
   pictureId: string;
+  id: string;
   text: string;
   createdAt: string;
-  id: string
+  authorId: string;
+  authorName: string;
 }
 
 const initialState: CommentsState = {};
@@ -34,11 +38,11 @@ export const fetchComments = createAsyncThunk<CommentsState>(
 
 export const sendCommentToServer = createAsyncThunk<Comment, SendCommentPayload>(
   "comments/sendCommentToServer",
-    async ({ pictureId, text, createdAt, id }:  SendCommentPayload) => {
+    async ({ pictureId, text, createdAt, id, authorId, authorName }:  SendCommentPayload) => {
     const response = await fetch(`${apiUrl}/api/comments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pictureId, text, createdAt, id })
+      body: JSON.stringify({ pictureId, text, createdAt, id, authorId, authorName })
     })
     if (!response.ok) {
       throw new Error("Failed to send comment")
@@ -83,9 +87,9 @@ const commentsSlice = createSlice({
         Object.assign(state, action.payload);
       })
       .addCase(sendCommentToServer.fulfilled, (state, action) => {
-        const { pictureId, text, createdAt, id } = action.payload;
+        const { pictureId, text, createdAt, id, authorId, authorName } = action.payload;
         if (!state[pictureId]) state[pictureId] = [];
-        state[pictureId].push({ pictureId, text, createdAt, id });
+        state[pictureId].push({ pictureId, text, createdAt, id, authorId, authorName });
       })
       .addCase(deleteCommentFromServer.fulfilled, (state, action) => {
         const id = action.payload;

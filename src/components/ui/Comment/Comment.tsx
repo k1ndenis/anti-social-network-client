@@ -13,16 +13,24 @@ export const Comment = ({ language, pictureId }: CommentProps) => {
   const [commentValue, setCommentValue] = useState<string>("");
   const dispatch = useAppDispatch();
   const comments = useAppSelector(state => state.comments[pictureId] || []);
+  const currentUser = useAppSelector(state => state.user.user);
 
   useEffect(() => {
     dispatch(fetchComments());
   }, [dispatch]);
 
   const handleSend = () => {
-    if (!commentValue.trim()) return;
+    if (!commentValue.trim() || !currentUser) return;
     const tempId = crypto.randomUUID();
     // dispatch(addCommentLocal({ pictureId, text: commentValue, createdAt: Math.floor(Date.now() / 1000).toString(), id: tempId }))
-    dispatch(sendCommentToServer({ pictureId, text: commentValue, createdAt: Math.floor(Date.now() / 1000).toString(), id: tempId }));
+    dispatch(sendCommentToServer({ 
+      pictureId,
+      text: commentValue,
+      createdAt: Math.floor(Date.now() / 1000).toString(),
+      id: tempId,
+      authorId: currentUser.id,
+      authorName: currentUser.username
+    }));
     setCommentValue("");
   }
 
@@ -43,10 +51,19 @@ export const Comment = ({ language, pictureId }: CommentProps) => {
     <div className="comments-container">
       <ul className="comments">
         {comments.map(comment => (
-          <li className="comment-item" key={comment.id}>
-            <span className="comment-text">{comment.text}</span>
-            <span className="comment-date">{formatDate(comment.createdAt)}</span>
-            <button className="comment-delete-button" onClick={() => dispatch(deleteCommentFromServer(comment.id))}>x</button>
+          <li className={`comment-item ${currentUser?.id === comment.authorId ? 'my-comment' : ''}`} key={comment.id}>
+            <div className="comment-main">
+              <div className="comment-header">
+                <strong className="comment-author-name">{comment.authorName}</strong>
+                <span className="comment-date">{formatDate(comment.createdAt)}</span>
+              </div>
+              <span className="comment-text">{comment.text}</span>
+            </div>
+            {currentUser?.id === comment.authorId && (
+              <button className="comment-delete-button" onClick={() => dispatch(deleteCommentFromServer(comment.id))}>
+                ×
+              </button>
+            )}
           </li>
         ))}
       </ul>
