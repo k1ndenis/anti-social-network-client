@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { useDispatch } from "react-redux";
-import { addComment, deleteComment } from "../../../app/reducers/commentsSlice";
-import { useAppSelector } from "../../../hooks/redux";
+import { useEffect, useState } from "react"
+import { sendCommentToServer, deleteCommentFromServer } from "../../../app/reducers/commentsSlice";
+import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
+import { fetchComments } from "../../../app/reducers/commentsSlice";
 import './Comment.css'
 
 interface CommentProps {
@@ -11,13 +11,18 @@ interface CommentProps {
 
 export const Comment = ({ language, pictureId }: CommentProps) => {
   const [commentValue, setCommentValue] = useState<string>("");
-  const dispatch = useDispatch();
-
+  const dispatch = useAppDispatch();
   const comments = useAppSelector(state => state.comments[pictureId] || []);
+
+  useEffect(() => {
+    dispatch(fetchComments());
+  }, [dispatch]);
 
   const handleSend = () => {
     if (!commentValue.trim()) return;
-    dispatch(addComment({ pictureId, text: commentValue }))
+    const tempId = crypto.randomUUID();
+    // dispatch(addCommentLocal({ pictureId, text: commentValue, createdAt: Math.floor(Date.now() / 1000).toString(), id: tempId }))
+    dispatch(sendCommentToServer({ pictureId, text: commentValue, createdAt: Math.floor(Date.now() / 1000).toString(), id: tempId }));
     setCommentValue("");
   }
 
@@ -25,14 +30,24 @@ export const Comment = ({ language, pictureId }: CommentProps) => {
     if (e.key === 'Enter') handleSend();
   }
 
+  const formatDate = (timestamp: string) => {
+    const date = new Date(+timestamp * 1000);
+    const formatted = date.toLocaleString('ru-RU', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    return formatted
+  }
+
   return (
     <div className="comments-container">
       <ul className="comments">
         {comments.map(comment => (
-          <div className="comment-item">
-            <li className="comment-text" key={comment.id}>💬 {comment.text}</li>
-            <button className="comment-delete-button" onClick={() => dispatch(deleteComment({ pictureId, commentId: comment.id }))}>x</button>
-          </div>
+          <li className="comment-item" key={comment.id}>
+            <span className="comment-text">{comment.text}</span>
+            <span className="comment-date">{formatDate(comment.createdAt)}</span>
+            <button className="comment-delete-button" onClick={() => dispatch(deleteCommentFromServer(comment.id))}>x</button>
+          </li>
         ))}
       </ul>
       <div className="comment-input-container">

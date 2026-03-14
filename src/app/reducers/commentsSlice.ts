@@ -1,32 +1,102 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 interface Comment {
   id: string;
   text: string;
+  createdAt: string;
+  pictureId: string;
 }
 
-interface commentsState {
+interface CommentsState {
   [pictureId: string]: Comment[];
 }
 
-const initialState: commentsState = {}
+interface SendCommentPayload {
+  pictureId: string;
+  text: string;
+  createdAt: string;
+  id: string
+}
+
+const initialState: CommentsState = {};
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+export const fetchComments = createAsyncThunk<CommentsState>(
+  "comments/fetchComments",
+  async () => {
+    const res = await fetch(`${apiUrl}/api/comments`);
+    if (!res.ok) throw new Error("Failed to fetch comments");
+    const data = await res.json();
+    return data as CommentsState
+  }
+)
+
+export const sendCommentToServer = createAsyncThunk<Comment, SendCommentPayload>(
+  "comments/sendCommentToServer",
+    async ({ pictureId, text, createdAt, id }:  SendCommentPayload) => {
+    const response = await fetch(`${apiUrl}/api/comments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pictureId, text, createdAt, id })
+    })
+    if (!response.ok) {
+      throw new Error("Failed to send comment")
+    }
+    return (await response.json()) as Comment
+  }
+)
+
+export const deleteCommentFromServer = createAsyncThunk<string, string>(
+  "comments/deleteCommentFromServer",
+  async (id) => {
+    const response = await fetch(`${apiUrl}/api/comments/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id })
+    })
+    if (!response.ok) {
+      throw new Error("Failed to delete comment");
+    }
+    return id;
+  }
+)
 
 const commentsSlice = createSlice({
   name: "comments",
   initialState,
   reducers: {
-    addComment: (state, action: PayloadAction<{ pictureId: string; text: string}>) => {
-      const { pictureId, text } = action.payload;
-      if (!state[pictureId]) state[pictureId] = [];
-      state[pictureId].push({ id: Date.now().toString(), text })
-    },
-    deleteComment: (state, action: PayloadAction<{ pictureId: string, commentId: string}>) => {
-      const { pictureId, commentId } = action.payload;
-      if (!state[pictureId]) return;
-      state[pictureId] = state[pictureId].filter(picture => picture.id !== commentId);
-    }
+    // addCommentLocal: (state, action: PayloadAction<{ pictureId: string; text: string, createdAt: string, id: string }>) => {
+    //   const { pictureId, text, createdAt, id } = action.payload;
+    //   if (!state[pictureId]) state[pictureId] = [];
+    //   state[pictureId].push({ pictureId, text, createdAt, id });
+    // },
+    // deleteComment: (state, action: PayloadAction<{ pictureId: string, commentId: string}>) => {
+    //   const { pictureId, commentId } = action.payload;
+    //   if (!state[pictureId]) return;
+    //   state[pictureId] = state[pictureId]?.filter(comment => comment.id !== commentId);
+    // }
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchComments.fulfilled, (state, action) => {
+        Object.assign(state, action.payload);
+      })
+      .addCase(sendCommentToServer.fulfilled, (state, action) => {
+        const { pictureId, text, createdAt, id } = action.payload;
+        if (!state[pictureId]) state[pictureId] = [];
+        state[pictureId].push({ pictureId, text, createdAt, id });
+      })
+      .addCase(deleteCommentFromServer.fulfilled, (state, action) => {
+        const id = action.payload;
+        for (const picId in state) {
+          if (Array.isArray(state[picId])) {
+            state[picId] = state[picId].filter(comment => comment.id !== id);
+          }
+        }
+      });
   }
 })
 
-export const { addComment, deleteComment } = commentsSlice.actions;
+// export const { addCommentLocal, deleteComment } = commentsSlice.actions;
 export default commentsSlice.reducer;
