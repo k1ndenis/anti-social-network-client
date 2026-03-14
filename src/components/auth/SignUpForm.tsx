@@ -1,25 +1,27 @@
 import { useState, type SetStateAction } from "react";
-import type { User } from "./types/user";
+import type { User } from "../types/user";
 import "./AuthPage.css";
 import type { AuthError } from "firebase/auth";
+import { useAppDispatch } from "../../hooks/redux";
+import { setUser } from "../../app/reducers/userSlice";
 
 type SignUpFormProps = {
   handleSignUp: (email: string, password: string, username?: string) => Promise<User>;
-  setLoggedUser: React.Dispatch<SetStateAction<User | null>>;
   setIsReg: React.Dispatch<SetStateAction<boolean>>;
   language: "ru" | "en";
 };
 
-export const SignUpForm = ({ handleSignUp, setLoggedUser, setIsReg, language }: SignUpFormProps) => {
+export const SignUpForm = ({ handleSignUp, setIsReg, language }: SignUpFormProps) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const newUser = await handleSignUp(email, password, username || undefined);
-      setLoggedUser(newUser);
+      dispatch(setUser(newUser));
       setIsReg(false);
     } catch (err) {
       const error = err as AuthError;

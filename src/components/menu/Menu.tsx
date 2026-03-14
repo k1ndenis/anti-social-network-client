@@ -8,18 +8,17 @@ import { MyGames } from "./games/MyGames";
 import { Track } from "./music/types/track";
 import { CurrentTrack } from "./music/CurrentTrack";
 import { UserProfile } from "./user/UserProfile";
-import { User } from "../auth/types/user";
+import { useAppSelector } from "../../hooks/redux";
 
 interface MenuProps {
   language: 'ru' | 'en';
-  loggedUser: User | null
 }
 
-export const Menu = ({ language, loggedUser }: MenuProps) => {
+export const Menu = ({ language }: MenuProps) => {
   const [menuItem, setMenuItem] = useState<string>("");
-
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const loggedUser = useAppSelector((state) => state.user.user)
 
   const menuList = (
     <>

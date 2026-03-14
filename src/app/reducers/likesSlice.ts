@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface likesState {
+interface LikesState {
   [pictureId: string]: number
 }
 
-const initialState: likesState = {}
+const initialState: LikesState = {}
 
 const likesSlice = createSlice({
   name: "likes",

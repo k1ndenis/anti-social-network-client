@@ -1,4 +1,4 @@
-import { User } from "../../auth/types/user";
+import { User } from "../../types/user";
 
 interface UserProfileProps {
   language: 'ru' | 'en';

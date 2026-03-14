@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SignUpForm } from "./SignUpForm";
 import { LoginForm } from "./LoginForm";
-import type { User } from "./types/user";
+import type { User } from "../types/user";
 import { auth } from "./utils/firebase/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -12,16 +12,18 @@ import {
   AuthError
 } from "firebase/auth";
 import "./AuthPage.css";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setUser } from "../../app/reducers/userSlice";
 
 interface AuthPageProps {
   language: "ru" | "en";
-  loggedUser: User | null;
-  setLoggedUser: React.Dispatch<React.SetStateAction<User | null>>
 }
 
-export const AuthPage = ({ language, loggedUser, setLoggedUser }: AuthPageProps) => {
+export const AuthPage = ({ language }: AuthPageProps) => {
   const [isLogining, setIsLogining] = useState(false);
   const [isReg, setIsReg] = useState(false);
+  const dispatch = useAppDispatch()
+  const loggedUser = useAppSelector((state) => state.user.user)
 
   const mapFirebaseUser = (user: FirebaseUser): User => ({
     id: user.uid,
@@ -32,7 +34,7 @@ export const AuthPage = ({ language, loggedUser, setLoggedUser }: AuthPageProps)
   const handleLogin = async (email: string, password: string) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setLoggedUser(mapFirebaseUser(userCredential.user));
+      dispatch(setUser(mapFirebaseUser(userCredential.user)));
       setIsLogining(false);
     } catch (err) {
       const error = err as AuthError;
@@ -54,14 +56,14 @@ export const AuthPage = ({ language, loggedUser, setLoggedUser }: AuthPageProps)
     email: firebaseUser.email || ""
   };
 
-  setLoggedUser(newUser);
+  dispatch(setUser(newUser));
   setIsReg(false);
   return newUser;
 };
 
 const handleLogout = async () => {
   await signOut(auth);
-  setLoggedUser(null);
+  dispatch(setUser(null));
 };
 
   if (!isLogining && !isReg) {
@@ -93,7 +95,7 @@ const handleLogout = async () => {
   }
 
   if (isLogining) return <LoginForm handleLogin={handleLogin} setIsLogining={setIsLogining} language={language} />;
-  if (isReg) return <SignUpForm handleSignUp={handleSignUp} setLoggedUser={setLoggedUser} setIsReg={setIsReg} language={language} />;
+  if (isReg) return <SignUpForm handleSignUp={handleSignUp} setIsReg={setIsReg} language={language} />;
 
   return null;
 };
