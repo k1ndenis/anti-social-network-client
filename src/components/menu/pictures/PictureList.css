@@ -13,8 +13,8 @@
 
 .picture-list-ul {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: clamp(1rem, 3vw, 2.5rem); 
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: clamp(1rem, 2vw, 2.5rem); 
   padding: 20px;
   background: #333333;
   border-radius: 12px;
