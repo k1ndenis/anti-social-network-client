@@ -12,7 +12,7 @@ export const LikeButton = ({ language, pictureId }: LikeButtonProps) => {
   const likes = useAppSelector(state => state.likes[pictureId] || []);
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(state => state.user.user);
-  const userLiked = likes.find(like => like.userId === currentUser?.id);
+  const userLiked = likes.find((like) => like.userId === currentUser?.id);
 
   useEffect(() => {
     dispatch(fetchLikes());

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { AuthPage } from './components/auth/AuthPage'
 import { ToggleLanguage } from './components/ui/ToggleLanguage/ToggleLanguage';
 import { Menu } from './components/menu/Menu';
 import { auth } from './components/auth/utils/firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch } from './hooks/redux';
 import { setUser } from './app/reducers/userSlice';
+import { SiteMenu } from './components/ui/SiteMenu/SiteMenu';
 
 function App() {
   const [language, setLanguage] = useState<'ru' | 'en'>('ru');
@@ -29,8 +29,8 @@ function App() {
 
   return (
     <>
+      <SiteMenu language={language} />
       <ToggleLanguage language={language} setLanguage={setLanguage} />
-      <AuthPage language={language} />
       <Menu language={language} />
     </>
   )

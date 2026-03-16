@@ -17,6 +17,8 @@ import { setUser } from "../../app/reducers/userSlice";
 
 interface AuthPageProps {
   language: "ru" | "en";
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const AuthPage = ({ language }: AuthPageProps) => {

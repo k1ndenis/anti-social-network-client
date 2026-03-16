@@ -1,0 +1,52 @@
+.site-menu-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px); /* лёгкое размытие фона */
+  z-index: 998;
+  transition: opacity 0.25s ease;
+}
+
+.site-menu-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 5px;
+  width: fit-content;
+  position: absolute;
+  top: 1rem;
+  right: 1rem; 
+}
+
+.hamburger {
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.site-menu {
+  position: fixed;
+  top: 0;
+  left: -220px;
+  width: 220px;
+  height: 100%;
+  background: white;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+  padding: 20px;
+  transition: left 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.site-menu-open {
+  left: 0;
+}
+
+.site-menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}

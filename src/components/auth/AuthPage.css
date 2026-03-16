@@ -1,13 +1,16 @@
 .auth-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
-  gap: 5px;
-  width: fit-content;
-  position: absolute;
-  top: 1rem;
-  right: 1rem; 
+  background-color: rgba(53, 52, 52, 0.75);
+  border-radius: 12px;
+  padding: 8vw;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  gap: 10px;
 }
 
 .logged-user {
@@ -86,4 +89,11 @@
   display: flex;
   justify-content: center;
   margin-top: 8px
+}
+
+@media (min-width: 720px) {
+  .auth-container {
+    font-size: 2vw;
+    padding: 4vw;
+  }
 }
