@@ -29,3 +29,14 @@
 .header-right-2048 button:active {
   transform: scale(0.98);
 }
+
+@media (max-width: 720px) {
+  .header-2048 {
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .header-right-2048 {
+    font-size: 4vw;
+  }
+}
