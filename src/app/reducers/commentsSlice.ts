@@ -32,22 +32,22 @@ export const fetchComments = createAsyncThunk<CommentsState>(
     const res = await fetch(`${apiUrl}/api/comments`);
     if (!res.ok) throw new Error("Failed to fetch comments");
     const data = await res.json();
-    return data as CommentsState
+    return data;
   }
 )
 
 export const sendCommentToServer = createAsyncThunk<Comment, SendCommentPayload>(
   "comments/sendCommentToServer",
-    async ({ pictureId, text, createdAt, id, authorId, authorName }:  SendCommentPayload) => {
+  async ({ pictureId, text, createdAt, id, authorId, authorName }:  SendCommentPayload) => {
     const response = await fetch(`${apiUrl}/api/comments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ pictureId, text, createdAt, id, authorId, authorName })
     })
     if (!response.ok) {
-      throw new Error("Failed to send comment")
+      throw new Error("Failed to send comment");
     }
-    return (await response.json()) as Comment
+    return (await response.json()) as Comment;
   }
 )
 
