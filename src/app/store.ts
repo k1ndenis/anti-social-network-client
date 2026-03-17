@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer from './reducers/userSlice'
 import likesReducer from './reducers/likesSlice'
 import commentsReducer from './reducers/commentsSlice'
+import picturesReducer from './reducers/picturesSlice'
 
 const rootReducer = combineReducers({
   user: userReducer,
   likes: likesReducer,
-  comments: commentsReducer
+  comments: commentsReducer,
+  pictures: picturesReducer
 })
 
 export const setupStore = () => {

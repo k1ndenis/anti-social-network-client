@@ -53,7 +53,7 @@ const likesSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchLikes.fulfilled, (state, action) => {
+      .addCase(fetchLikes.fulfilled, (_, action) => {
         return action.payload;
       })
       .addCase(sendLikeToServer.fulfilled, (state, action) => {

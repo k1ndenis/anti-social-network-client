@@ -57,7 +57,6 @@ export const deleteCommentFromServer = createAsyncThunk<string, string>(
     const response = await fetch(`${apiUrl}/api/comments/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id })
     })
     if (!response.ok) {
       throw new Error("Failed to delete comment");
