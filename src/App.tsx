@@ -19,7 +19,7 @@ function App() {
           id: firebaseUser.uid,
           username: firebaseUser.displayName || "unknown",
           email: firebaseUser.email || "",
-          likedPictures: [],
+          likedPicturesIds: [],
           listening: null
         }))
       } else {

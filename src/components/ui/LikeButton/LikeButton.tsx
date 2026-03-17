@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fetchLikes, sendLikeToServer } from "../../../app/reducers/likesSlice"
+import { fetchAllLikes, sendLikeToServer } from "../../../app/reducers/likesSlice"
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import './LikeButton.css'
 import { updateLikedPictures } from "../../../app/reducers/userSlice";
@@ -16,7 +16,7 @@ export const LikeButton = ({ language, pictureId }: LikeButtonProps) => {
   const userLiked = likes.find((like) => like.userId === currentUser?.id);
 
   useEffect(() => {
-    dispatch(fetchLikes());
+    dispatch(fetchAllLikes());
   },[dispatch]);
 
   const handleLike = () => {

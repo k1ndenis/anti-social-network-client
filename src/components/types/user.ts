@@ -2,6 +2,6 @@ export type User = {
   id: string;
   username: string;
   email: string;
-  likedPictures: string[];
+  likedPicturesIds: string[];
   listening: string | null;
 }

@@ -31,7 +31,7 @@ export const AuthPage = ({ language }: AuthPageProps) => {
     id: user.uid,
     username: user.displayName || user.email || "",
     email: user.email || "",
-    likedPictures: [],
+    likedPicturesIds: [],
     listening: null
   });
 
@@ -58,7 +58,7 @@ export const AuthPage = ({ language }: AuthPageProps) => {
     id: firebaseUser.uid,
     username: firebaseUser.displayName || firebaseUser.email || "",
     email: firebaseUser.email || "",
-    likedPictures: [],
+    likedPicturesIds: [],
     listening: null
   };
 

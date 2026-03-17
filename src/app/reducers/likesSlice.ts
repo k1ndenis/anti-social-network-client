@@ -22,13 +22,29 @@ const initialState: LikesState = {}
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const fetchLikes = createAsyncThunk<LikesState>(
-  "likes/fetchLikes",
+export const fetchAllLikes = createAsyncThunk<LikesState>(
+  "likes/fetchAllLikes",
   async () => {
     const res = await fetch(`${apiUrl}/api/likes`);
     if (!res.ok) throw new Error("Failed to fetch likes");
     const data = await res.json();
     return data;
+  }
+)
+
+export const fetchLikesForUser = createAsyncThunk<LikesState, string>(
+  "likes/fetchLikesForUser",
+  async (userId: string) => {
+    const res = await fetch(`${apiUrl}/api/likes?userId=${userId}`);
+    if (!res.ok) throw new Error("Failed to fetch likes");
+    const data = await res.json();
+
+    const likedByPicture: LikesState = {};
+    data.forEach((like: Like) => {
+      if (!likedByPicture[like.pictureId]) likedByPicture[like.pictureId] = [];
+      likedByPicture[like.pictureId].push(like);
+    });
+    return likedByPicture;
   }
 )
 
@@ -53,8 +69,11 @@ const likesSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchLikes.fulfilled, (_, action) => {
+      .addCase(fetchAllLikes.fulfilled, (_, action) => {
         return action.payload;
+      })
+      .addCase(fetchLikesForUser.fulfilled, (_, action) => {
+        return action.payload
       })
       .addCase(sendLikeToServer.fulfilled, (state, action) => {
         const { pictureId, id, userId, authorName } = action.payload;
