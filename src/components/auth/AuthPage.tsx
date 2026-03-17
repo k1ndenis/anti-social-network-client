@@ -30,7 +30,9 @@ export const AuthPage = ({ language }: AuthPageProps) => {
   const mapFirebaseUser = (user: FirebaseUser): User => ({
     id: user.uid,
     username: user.displayName || user.email || "",
-    email: user.email || ""
+    email: user.email || "",
+    likedPictures: [],
+    listening: null
   });
 
   const handleLogin = async (email: string, password: string) => {
@@ -55,7 +57,9 @@ export const AuthPage = ({ language }: AuthPageProps) => {
   const newUser: User = {
     id: firebaseUser.uid,
     username: firebaseUser.displayName || firebaseUser.email || "",
-    email: firebaseUser.email || ""
+    email: firebaseUser.email || "",
+    likedPictures: [],
+    listening: null
   };
 
   dispatch(setUser(newUser));

@@ -29,7 +29,7 @@ export const TrackList = ({
   const { processedTracks, sorting, setSorting } = useTrackProcessor(
     tracks,
     currentSearchingValue
-  )
+  );
 
   const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
 
@@ -54,7 +54,10 @@ export const TrackList = ({
                       setCurrentTrack(null);
                       setIsPlaying(false);
                     } 
-                    : () => setCurrentTrack(track)}
+                    : () => {
+                      setCurrentTrack(track);
+                    }
+                  }
               >
                 <div className="track-row">
                   <button 

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { fetchLikes, sendLikeToServer } from "../../../app/reducers/likesSlice"
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import './LikeButton.css'
+import { updateLikedPictures } from "../../../app/reducers/userSlice";
 
 interface LikeButtonProps {
   language: 'ru' | 'en';
@@ -19,7 +20,6 @@ export const LikeButton = ({ language, pictureId }: LikeButtonProps) => {
   },[dispatch]);
 
   const handleLike = () => {
-
     if (!currentUser) return;
     dispatch(sendLikeToServer({
       pictureId,
@@ -27,6 +27,7 @@ export const LikeButton = ({ language, pictureId }: LikeButtonProps) => {
       userId: currentUser.id,
       authorName: currentUser.username
     }));
+    dispatch(updateLikedPictures(pictureId));
   }
 
   return (

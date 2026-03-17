@@ -1,15 +1,23 @@
-import { User } from "../../types/user";
+import { useAppSelector } from "../../../hooks/redux";
 
 interface UserProfileProps {
-  language: 'ru' | 'en';
-  loggedUser: User | null;
+  language: 'ru' | 'en'
 }
 
-export const UserProfile = ({ loggedUser }: UserProfileProps) => {
+export const UserProfile = ({ language }: UserProfileProps) => {
+  const currentUser = useAppSelector(state => state.user.user);
+  const isListening = useAppSelector(state => state.user.user?.listening);
+  const likedPictures = useAppSelector(state => state.user.user?.likedPictures);
 
   return (
-    <>
-      {loggedUser?.username}
-    </>
+    <div>
+      <div>{language === 'ru' ? "Пользователь" : "User"}: {currentUser?.username}</div>
+      {isListening && <div>{language === 'ru' ? "Слушает" : "Listening"}: {currentUser?.listening}</div>}
+      {likedPictures && (
+        <div>
+          {currentUser?.likedPictures.join("")}
+        </div>
+        )}
+    </div>
   )
 }

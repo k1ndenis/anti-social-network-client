@@ -18,7 +18,9 @@ function App() {
         dispatch(setUser({
           id: firebaseUser.uid,
           username: firebaseUser.displayName || "unknown",
-          email: firebaseUser.email || ""
+          email: firebaseUser.email || "",
+          likedPictures: [],
+          listening: null
         }))
       } else {
         dispatch(setUser(null));

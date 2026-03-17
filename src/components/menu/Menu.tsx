@@ -38,11 +38,11 @@ export const Menu = ({ language }: MenuProps) => {
       >
         {language === 'ru' ? "Картинки" : "Pictures"}
       </button>
-      <button
+      {/* <button
         onClick={() => setMenuItem("Videos")}
       >
         {language === 'ru' ? "Видео" : "Videos"}
-      </button>
+      </button> */}
       <button
         onClick={() => setMenuItem("Weather")}
       >
@@ -86,7 +86,7 @@ export const Menu = ({ language }: MenuProps) => {
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
             />}
-          {menuItem === "User" && <UserProfile language={language} loggedUser={loggedUser} />}
+          {menuItem === "User" && <UserProfile language={language} />}
           {menuItem === "Pictures" && <MyPictures language={language} />}
           {menuItem === "Videos" && <MyVideos />}
           {menuItem === "Weather" && <MyWeather language={language} />}

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Track } from './types/track'
 import "./AudioTrack.css"
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { setIsListening } from '../../../app/reducers/userSlice';
 
 interface AudioTrackProps {
   track: Track;
@@ -12,15 +14,21 @@ export const AudioTrack = ({ track, isPlaying, setIsPlaying }: AudioTrackProps) 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState<number>(0);
   const [volume, setVolume] = useState<number>(1);
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(state => state.user.user);
 
   useEffect(() => {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.play().catch(err => console.error("Play error", err));
+      if (!currentUser) return;
+      dispatch(setIsListening(`${track.author} - ${track.title}`));
     } else {
       audioRef.current.pause();
+      if (!currentUser) return;
+      dispatch(setIsListening(null));
     }
-  }, [isPlaying, track]);
+  }, [isPlaying, track, currentUser, dispatch]);
 
   useEffect(() => {
     const audio = audioRef.current;

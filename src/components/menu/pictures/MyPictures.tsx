@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { get, set } from "idb-keyval"
 import { PictureList } from "./PictureList";
 import { CurrentPicture } from "./CurrentPicture";
 import type { Picture } from "./types/picture";
+import { addPicture, deletePicture, loadPictures } from "./bll/picturesService";
 
 interface MyPicturesProps {
   language: 'ru' | 'en'
@@ -13,60 +13,28 @@ export const MyPictures = ({ language }: MyPicturesProps) => {
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [currentPictureInd, setCurrentPictureInd] = useState<number | null>(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-
   useEffect(() => {
-    const loadPictures = async (): Promise<void> => {
-      try {
-        const res = await fetch(`${apiUrl}/api/pictures`);
-        const data = await res.json();
-        setPictures(data);
-        await set("pictures", data);
-      } catch (err) {
-        console.error("Error loading pictures", err);
-        const savedPictures = await get("pictures");
-        if (savedPictures) setPictures(savedPictures);
-      } finally {
-        setLoading(false);
-      }
+    const fetchData = async () => {
+      setLoading(true);
+      const loadedPictures = await loadPictures();
+      setPictures(loadedPictures);
+      setLoading(false);
     };
-    loadPictures();
-  }, [apiUrl]);
+    fetchData();
+  }, []);
 
-  const onAddPicture = async (newPicture: Picture): Promise<void> => {
-    try {
-      const res = await fetch(`${apiUrl}/api/pictures`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPicture)
-      });
-      const savedPicture = await res.json();
-      setPictures(prev => {
-        const updated = [savedPicture, ...prev];
-        set("pictures", updated);
-        return updated
-      })
-    } catch (err) {
-      console.error("Error adding picture", err);
-    }
-  }
+  const handleAddPicture = async (newPicture: Picture) => {
+    const saved = await addPicture(newPicture);
+    if (saved) setPictures([saved, ...pictures]);
+  };
 
-  const onDeletePicture = async (id: string): Promise<void> => {
-    const alertMessage = language === 'ru' ? "Не удалось удалить изображение" : "Failed to delete picture";
-    try {
-      const res = await fetch(`${apiUrl}/api/pictures/${id}`, {
-        method: "DELETE"
-      });
-
-      if (res.ok) {
-        const updatedPictures = pictures.filter(picture => picture.id !== id);
-        setPictures(updatedPictures);
-        await set("pictures", updatedPictures);
-      } else {
-        alert(alertMessage);
-      }
-    } catch (err) {
-      console.error("Delete error", err);
+  const handleDeletePicture = async (id: string) => {
+    const success = await deletePicture(id);
+    if (success) {
+      setPictures(prev => prev.filter(pic => pic.id !== id));
+    } else {
+      const alertMessage = language === 'ru' ? "Не удалось удалить изображение" : "Failed to delete picture";
+      alert(alertMessage);
     }
   }
 
@@ -82,8 +50,8 @@ export const MyPictures = ({ language }: MyPicturesProps) => {
         <PictureList
           loading={loading}
           pictures={pictures}
-          onAddPicture={onAddPicture}
-          onDeletePicture={onDeletePicture}
+          onAddPicture={handleAddPicture}
+          onDeletePicture={handleDeletePicture}
           setCurrentPictureInd={setCurrentPictureInd}
           language={language}
         />
