@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/redux"
 import { updateUserBio } from "../../../../app/reducers/userSlice";
 
-export const UserBioInport = () => {
+export const UserBioEditingForm = () => {
   const language = useAppSelector(state => state.language);
   const [currentBio, setCurrentBio] = useState<string>("");
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppSelector } from "../../../../hooks/redux"
-import { UserBioInport } from "./UserBioInput";
+import { UserBioEditingForm } from "./UserBioEditingForm";
 
 export const UserBio = () => {
   const bio = useAppSelector(state => state.user.user?.bio);
@@ -13,7 +13,7 @@ export const UserBio = () => {
           <button onClick={() => setShowInput(true)}>Изменить</button>
         </div>
         )}
-      {showinput && <UserBioInport /> }
+      {showinput && <UserBioEditingForm /> }
     </>
   )
 }

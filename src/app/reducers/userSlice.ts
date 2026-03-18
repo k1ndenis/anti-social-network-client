@@ -40,9 +40,13 @@ const userSlice = createSlice({
     updateUserBio: (state, action: PayloadAction<string>) => {
       if (!state.user) return;
       state.user.bio = action.payload;
+    },
+    updateUserAvatar: (state, action: PayloadAction<string>) => {
+      if (!state.user) return;
+      state.user.avatar = action.payload;
     }
   }
 });
 
-export const { setUser, clearUser, setIsListening, updateLikedPictures, updateUserBio } = userSlice.actions;
+export const { setUser, clearUser, setIsListening, updateLikedPictures, updateUserBio, updateUserAvatar } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../../../hooks/redux"
+import { UserAvatarUploader } from "./UserAvatarUploader";
 
 export const UserAvatar = () => {
   const avatar = useAppSelector(state => state.user.user?.avatar);
@@ -6,6 +7,7 @@ export const UserAvatar = () => {
   return (
     <>
       <img src={avatar} />
+      <UserAvatarUploader />
     </>
   )
 }
