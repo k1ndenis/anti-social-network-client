@@ -3,21 +3,19 @@ import './MyGames.css';
 import { Crossword } from "./crossword/Crossword";
 import { The2048 } from "./2048/The2048";
 import { TicTacToe } from "./tic-tac-toe/TicTacToe";
+import { useAppSelector } from "../../../hooks/redux";
 
-interface MyGamesProps {
-  language: 'ru' | 'en'
-}
-
-export const MyGames = ({ language }: MyGamesProps) => {
+export const MyGames = () => {
   const [activeGame, setActiveGame] = useState<string | null>(null);
+  const language = useAppSelector(state => state.language);
 
   return (
     <>
     {activeGame
       ? <div className="game-container">
           {activeGame === "Crossword" && <Crossword />}
-          {activeGame === "2048" && <The2048 language={language} />}
-          {activeGame === "tictactoe" && <TicTacToe language={language} />}
+          {activeGame === "2048" && <The2048 />}
+          {activeGame === "tictactoe" && <TicTacToe />}
           {activeGame && (
             <button 
               onClick={() => setActiveGame(null)}

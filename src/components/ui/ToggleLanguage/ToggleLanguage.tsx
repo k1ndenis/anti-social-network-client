@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import './ToggleLanguage.css'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { setLanguage } from '../../../app/reducers/languageSlice';
 
-interface ToggleLanguageProps {
-  language: 'ru' | 'en';
-  setLanguage: React.Dispatch<React.SetStateAction<'ru' | 'en'>>
-}
-
-export const ToggleLanguage = ({ language, setLanguage }: ToggleLanguageProps) => {
+export const ToggleLanguage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const language = useAppSelector(state => state.language)
+  const dispatch = useAppDispatch();
 
   return (
     <div className='toggle-language-container'>
@@ -15,7 +14,7 @@ export const ToggleLanguage = ({ language, setLanguage }: ToggleLanguageProps) =
       {isOpen && <ul className='languages'>
         <li className='language'
           onClick={() => {
-            setLanguage('ru');
+            dispatch(setLanguage('ru'))
             setIsOpen(false);
           }}
         >
@@ -23,7 +22,7 @@ export const ToggleLanguage = ({ language, setLanguage }: ToggleLanguageProps) =
         </li>
         <li className='language'
           onClick={() => {
-            setLanguage('en');
+            dispatch(setLanguage('en'))
             setIsOpen(false);
           }}
         >

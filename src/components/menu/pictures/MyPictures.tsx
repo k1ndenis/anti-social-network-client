@@ -5,11 +5,7 @@ import type { Picture } from "./types/picture";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { deletePictureFromServer, fetchPictures, sendPictureToServer } from "../../../app/reducers/picturesSlice";
 
-interface MyPicturesProps {
-  language: 'ru' | 'en'
-}
-
-export const MyPictures = ({ language }: MyPicturesProps) => {
+export const MyPictures = () => {
   const [loading, setLoading] = useState(true);
   const [currentPictureInd, setCurrentPictureInd] = useState<number | null>(null);
   const pictures = useAppSelector(state => state.pictures.pictures)
@@ -36,7 +32,6 @@ export const MyPictures = ({ language }: MyPicturesProps) => {
     <>
       {currentPictureInd !== null ? 
         <CurrentPicture
-          language={language}
           pictures={pictures}
           currentPictureInd={currentPictureInd}
           setCurrentPictureInd={setCurrentPictureInd}
@@ -47,7 +42,6 @@ export const MyPictures = ({ language }: MyPicturesProps) => {
           onAddPicture={handleAddPicture}
           onDeletePicture={handleDeletePicture}
           setCurrentPictureInd={setCurrentPictureInd}
-          language={language}
         />
       }
     </>

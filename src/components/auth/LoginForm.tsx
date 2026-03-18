@@ -1,16 +1,17 @@
 import { useState } from "react";
 import "./AuthPage.css";
 import type { AuthError } from "firebase/auth";
+import { useAppSelector } from "../../hooks/redux";
 
 type LoginFormProps = {
   handleLogin: (email: string, password: string) => Promise<void>;
   setIsLogining: React.Dispatch<React.SetStateAction<boolean>>;
-  language: "ru" | "en";
 };
 
-export const LoginForm = ({ handleLogin, setIsLogining, language }: LoginFormProps) => {
+export const LoginForm = ({ handleLogin, setIsLogining }: LoginFormProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const language = useAppSelector(state => state.language);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

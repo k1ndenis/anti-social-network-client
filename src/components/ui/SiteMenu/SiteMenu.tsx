@@ -2,11 +2,7 @@ import { useState } from "react"
 import { AuthPage } from "../../auth/AuthPage";
 import './SiteMenu.css'
 
-interface SiteMenuProps {
-  language: 'ru' | 'en';
-}
-
-export const SiteMenu = ({ language }: SiteMenuProps) => {
+export const SiteMenu = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -20,7 +16,7 @@ export const SiteMenu = ({ language }: SiteMenuProps) => {
         </button>
         {open && 
           <nav>
-            <AuthPage language={language} open={open} setOpen={setOpen} />
+            <AuthPage />
           </nav>
         }
       </div>

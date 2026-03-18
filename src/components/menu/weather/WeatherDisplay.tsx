@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../../hooks/redux";
 import type { WeatherData } from "./MyWeather";
 import "./WeatherDisplay.css"
 
@@ -5,10 +6,10 @@ interface WeatherDisplayProps {
   data: WeatherData | null;
   loading: boolean;
   error: boolean;
-  language: 'ru' | 'en'
 }
 
-export const WeatherDisplay = ({ data, loading, error, language }: WeatherDisplayProps) => {
+export const WeatherDisplay = ({ data, loading, error }: WeatherDisplayProps) => {
+  const language = useAppSelector(stae => stae.language);
 
   if (loading) {
     return (

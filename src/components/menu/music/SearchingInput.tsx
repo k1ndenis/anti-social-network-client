@@ -1,12 +1,13 @@
+import { useAppSelector } from "../../../hooks/redux";
 import "./SearchingInput.css"
 
 interface SearchingInputProps {
   currentValue: string;
   setCurrentValue: React.Dispatch<React.SetStateAction<string>>,
-  language: 'ru' | 'en'
 }
 
-export const SearchingInput = ({ currentValue, setCurrentValue, language }: SearchingInputProps) => {
+export const SearchingInput = ({ currentValue, setCurrentValue }: SearchingInputProps) => {
+  const language = useAppSelector(state => state.language);
 
   return (
     <input

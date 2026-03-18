@@ -5,15 +5,15 @@ import { fetchComments } from "../../../app/reducers/commentsSlice";
 import './Comment.css'
 
 interface CommentProps {
-  language: 'ru' | 'en';
   pictureId: string;
 }
 
-export const Comment = ({ language, pictureId }: CommentProps) => {
+export const Comment = ({ pictureId }: CommentProps) => {
   const [commentValue, setCommentValue] = useState<string>("");
   const dispatch = useAppDispatch();
   const comments = useAppSelector(state => state.comments[pictureId] || []);
   const currentUser = useAppSelector(state => state.user.user);
+  const language = useAppSelector(state => state.language);
 
   useEffect(() => {
     dispatch(fetchComments());

@@ -1,13 +1,14 @@
+import { useAppSelector } from "../../../hooks/redux";
 import "./CityInpit.css"
 
 interface CityInpitProps {
   fetchData: () => void;
   city: string;
   setCity: React.Dispatch<React.SetStateAction<string>>;
-  language: 'ru' | 'en'
 }
 
-export const CityInput = ({ fetchData, city, setCity, language }: CityInpitProps) => {
+export const CityInput = ({ fetchData, city, setCity }: CityInpitProps) => {
+  const language = useAppSelector(state => state.language);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") fetchData();

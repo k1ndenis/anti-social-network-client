@@ -1,13 +1,11 @@
+import { useAppSelector } from "../../../../hooks/redux";
 import { useTicTacToe } from "./bll/useTicTacToe";
 import { StatusDisplay } from "./StatusDisplay";
 import './TicTacToe.css';
 
-interface TicTacToeProps {
-  language: 'ru' | 'en'
-}
-
-export const TicTacToe = ({ language }: TicTacToeProps) => {
+export const TicTacToe = () => {
   const { grid, handleCellClick, isStarted, turn, winner, startGame, isDraw } = useTicTacToe();
+  const language = useAppSelector(state => state.language);
 
   return (
     <>
@@ -18,7 +16,6 @@ export const TicTacToe = ({ language }: TicTacToeProps) => {
           turn={turn}
           winner={winner}
           isDraw={isDraw}
-          language={language}
         />
       </div>
       <div className="grid-tic">

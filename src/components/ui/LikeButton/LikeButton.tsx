@@ -5,15 +5,15 @@ import './LikeButton.css'
 import { updateLikedPictures } from "../../../app/reducers/userSlice";
 
 interface LikeButtonProps {
-  language: 'ru' | 'en';
   pictureId: string
 }
 
-export const LikeButton = ({ language, pictureId }: LikeButtonProps) => {
+export const LikeButton = ({ pictureId }: LikeButtonProps) => {
   const likes = useAppSelector(state => state.likes[pictureId] || []);
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(state => state.user.user);
   const userLiked = likes.find((like) => like.userId === currentUser?.id);
+  const language = useAppSelector(state => state.language);
 
   useEffect(() => {
     dispatch(fetchAllLikes());

@@ -10,15 +10,12 @@ import { CurrentTrack } from "./music/CurrentTrack";
 import { UserProfile } from "./user/UserProfile";
 import { useAppSelector } from "../../hooks/redux";
 
-interface MenuProps {
-  language: 'ru' | 'en';
-}
-
-export const Menu = ({ language }: MenuProps) => {
+export const Menu = () => {
   const [menuItem, setMenuItem] = useState<string>("");
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const loggedUser = useAppSelector((state) => state.user.user)
+  const loggedUser = useAppSelector((state) => state.user.user);
+  const language = useAppSelector(state => state.language);
 
   const menuList = (
     <>
@@ -65,7 +62,6 @@ export const Menu = ({ language }: MenuProps) => {
           currentTrack={currentTrack}
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
-          language={language}
           setCurrentTrack={setCurrentTrack}
         />
       </div>
@@ -80,17 +76,16 @@ export const Menu = ({ language }: MenuProps) => {
           </button>
           {menuItem === "Music" && 
             <MyMusic
-              language={language}
               currentTrack={currentTrack}
               setCurrentTrack={setCurrentTrack}
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
             />}
-          {menuItem === "User" && <UserProfile language={language} />}
-          {menuItem === "Pictures" && <MyPictures language={language} />}
+          {menuItem === "User" && <UserProfile />}
+          {menuItem === "Pictures" && <MyPictures />}
           {menuItem === "Videos" && <MyVideos />}
-          {menuItem === "Weather" && <MyWeather language={language} />}
-          {menuItem === "Games" && <MyGames language={language} />}
+          {menuItem === "Weather" && <MyWeather />}
+          {menuItem === "Games" && <MyGames />}
           <button
             onClick={() => setMenuItem("")}
           >

@@ -1,6 +1,7 @@
 import { PictureUploader } from "./PictureUploader"
 import type { Picture } from "./types/picture";
 import "./PictureList.css"
+import { useAppSelector } from "../../../hooks/redux";
 
 interface PictureListProps {
   loading: boolean;
@@ -8,10 +9,10 @@ interface PictureListProps {
   onAddPicture: (picture: Picture) => void;
   onDeletePicture: (id: string) => void;
   setCurrentPictureInd: React.Dispatch<React.SetStateAction<number | null>>;
-  language: 'ru' | 'en'
 }
 
-export const PictureList = ({ loading, pictures, onAddPicture, onDeletePicture, setCurrentPictureInd, language }: PictureListProps) => {
+export const PictureList = ({ loading, pictures, onAddPicture, onDeletePicture, setCurrentPictureInd }: PictureListProps) => {
+  const language = useAppSelector(state => state.language);
 
   const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
   

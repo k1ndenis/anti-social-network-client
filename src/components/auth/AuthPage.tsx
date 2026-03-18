@@ -15,17 +15,12 @@ import "./AuthPage.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setUser } from "../../app/reducers/userSlice";
 
-interface AuthPageProps {
-  language: "ru" | "en";
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export const AuthPage = ({ language }: AuthPageProps) => {
+export const AuthPage = () => {
   const [isLogining, setIsLogining] = useState(false);
   const [isReg, setIsReg] = useState(false);
-  const dispatch = useAppDispatch()
-  const loggedUser = useAppSelector((state) => state.user.user)
+  const dispatch = useAppDispatch();
+  const loggedUser = useAppSelector(state => state.user.user);
+  const language = useAppSelector(state => state.language);
 
   const mapFirebaseUser = (user: FirebaseUser): User => ({
     id: user.uid,
@@ -100,8 +95,8 @@ const handleLogout = async () => {
     );
   }
 
-  if (isLogining) return <LoginForm handleLogin={handleLogin} setIsLogining={setIsLogining} language={language} />;
-  if (isReg) return <SignUpForm handleSignUp={handleSignUp} setIsReg={setIsReg} language={language} />;
+  if (isLogining) return <LoginForm handleLogin={handleLogin} setIsLogining={setIsLogining} />;
+  if (isReg) return <SignUpForm handleSignUp={handleSignUp} setIsReg={setIsReg} />;
 
   return null;
 };

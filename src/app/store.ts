@@ -3,12 +3,14 @@ import userReducer from './reducers/userSlice'
 import likesReducer from './reducers/likesSlice'
 import commentsReducer from './reducers/commentsSlice'
 import picturesReducer from './reducers/picturesSlice'
+import languageReducer from './reducers/languageSlice'
 
 const rootReducer = combineReducers({
   user: userReducer,
   likes: likesReducer,
   comments: commentsReducer,
-  pictures: picturesReducer
+  pictures: picturesReducer,
+  language: languageReducer
 })
 
 export const setupStore = () => {

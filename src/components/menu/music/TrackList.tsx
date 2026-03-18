@@ -2,6 +2,7 @@ import { SortingButtons } from "./SortingButtons";
 import { useTrackProcessor } from "./bll/useTrackProcessor";
 import type { Track } from "./types/track";
 import "./TrackList.css"
+import { useAppSelector } from "../../../hooks/redux";
 
 interface TrackListProps {
   loading: boolean;
@@ -12,7 +13,6 @@ interface TrackListProps {
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   onDeleteTrack: (id: string) => void;
-  language: 'ru' | 'en'
 }
 
 export const TrackList = ({
@@ -24,12 +24,12 @@ export const TrackList = ({
   isPlaying,
   setIsPlaying,
   onDeleteTrack,
-  language
 }: TrackListProps) => {
   const { processedTracks, sorting, setSorting } = useTrackProcessor(
     tracks,
     currentSearchingValue
   );
+  const language = useAppSelector(state => state.language);
 
   const confirmMessage = language == 'ru' ? "Подтвердите действие" : "Confirm action";
 
@@ -38,7 +38,6 @@ export const TrackList = ({
       <SortingButtons
         sorting={sorting}
         setSorting={setSorting}
-        language={language}
       />
       {loading
         ? <div className="loading-music-container">

@@ -1,10 +1,10 @@
+import { useAppSelector } from "../../../hooks/redux";
 import { SORT_MODES } from "./bll/useTrackProcessor";
 import "./SortingButtons.css"
 
 interface SortingButtonsProps {
   sorting: number;
   setSorting: React.Dispatch<React.SetStateAction<number>>;
-  language: 'ru' | 'en'
 }
 
 const { 
@@ -14,7 +14,8 @@ const {
   TITLE_DESC
 } = SORT_MODES;
 
-export const SortingButtons = ({ sorting, setSorting, language }: SortingButtonsProps) => {
+export const SortingButtons = ({ sorting, setSorting }: SortingButtonsProps) => {
+  const language = useAppSelector(state => state.language);
 
   return (
     <div className="music-sorting-buttons">

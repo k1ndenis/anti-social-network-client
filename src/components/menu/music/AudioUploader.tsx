@@ -1,18 +1,19 @@
 import { useState } from "react";
 import "./AudioUploader.css"
 import { Track } from "./types/track";
+import { useAppSelector } from "../../../hooks/redux";
 
 interface AudioUploaderProps {
   setUploader: React.Dispatch<React.SetStateAction<boolean>>;
   onAddTrack: (newTrack: Track) => void;
-  language: 'ru' | 'en'
 }
 
-export const AudioUploader = ({ setUploader, onAddTrack, language }: AudioUploaderProps) => {
+export const AudioUploader = ({ setUploader, onAddTrack }: AudioUploaderProps) => {
 
   const [author, setAuthor] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const language = useAppSelector(state => state.language);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentFile = e.target.files?.[0]

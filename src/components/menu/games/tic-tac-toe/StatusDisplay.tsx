@@ -1,3 +1,4 @@
+import { useAppSelector } from '../../../../hooks/redux';
 import './StatusDisplay.css'
 
 interface StatusDisplayProps {
@@ -5,10 +6,10 @@ interface StatusDisplayProps {
   turn: 'X' | '0';
   winner: string;
   isDraw: boolean;
-  language: 'ru' | 'en'
 }
 
-export const StatusDisplay = ({ isStarted, turn, winner, isDraw, language }: StatusDisplayProps) => {
+export const StatusDisplay = ({ isStarted, turn, winner, isDraw }: StatusDisplayProps) => {
+  const language = useAppSelector(state => state.language);
 
   return (
     <div className="tic-status-display">

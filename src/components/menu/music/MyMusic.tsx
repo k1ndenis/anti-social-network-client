@@ -5,20 +5,21 @@ import { AudioUploader } from "./AudioUploader";
 import { TrackList } from "./TrackList";
 import type { Track } from "./types/track";
 import "./MyMusic.css"
+import { useAppSelector } from "../../../hooks/redux";
 
 interface MyMusicProps {
-  language: 'ru' | 'en';
   isPlaying: boolean
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
   currentTrack: Track | null;
   setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>
 }
 
-export const MyMusic = ({ language, isPlaying, setIsPlaying, currentTrack, setCurrentTrack }: MyMusicProps) => {
+export const MyMusic = ({ isPlaying, setIsPlaying, currentTrack, setCurrentTrack }: MyMusicProps) => {
   const [loading, setLoading] = useState(true);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [currentSearchingValue, setCurrentSearchingValue] = useState<string>("");
   const [uploader, setUploader] = useState<boolean>(false);
+  const language = useAppSelector(state => state.language);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -83,7 +84,6 @@ export const MyMusic = ({ language, isPlaying, setIsPlaying, currentTrack, setCu
         <AudioUploader
           setUploader={setUploader}
           onAddTrack={onAddTrack}
-          language={language}
         />
       ) : (
         <button
@@ -99,7 +99,6 @@ export const MyMusic = ({ language, isPlaying, setIsPlaying, currentTrack, setCu
     <SearchingInput
       currentValue={currentSearchingValue}
       setCurrentValue={setCurrentSearchingValue}
-      language={language}
     />
     <TrackList
       loading={loading}
@@ -110,7 +109,6 @@ export const MyMusic = ({ language, isPlaying, setIsPlaying, currentTrack, setCu
       isPlaying={isPlaying}
       setIsPlaying={setIsPlaying}
       onDeleteTrack={onDeleteTrack}
-      language={language}
     />
     {getAudioUploader}
   </div>

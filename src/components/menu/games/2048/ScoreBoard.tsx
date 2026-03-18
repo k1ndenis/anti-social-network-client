@@ -1,12 +1,13 @@
+import { useAppSelector } from '../../../../hooks/redux';
 import './ScoreBoard.css'
 
 interface ScoreBoardProps {
   currentScore: number;
   bestScore: number;
-  language: 'ru' | 'en'
 }
 
-export const ScoreBoard = ({ currentScore, bestScore, language }: ScoreBoardProps) => {
+export const ScoreBoard = ({ currentScore, bestScore }: ScoreBoardProps) => {
+  const language = useAppSelector(state => state.language);
 
   return (
     <div className="score-board">

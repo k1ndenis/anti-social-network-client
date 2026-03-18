@@ -1,12 +1,12 @@
 import type { Track } from "./types/track"
 import "./CurrentTrack.css"
 import { AudioTrack } from "./AudioTrack";
+import { useAppSelector } from "../../../hooks/redux";
 
 interface CurrentTrackProps {
   currentTrack: Track | null;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  language: 'ru' | 'en';
   setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>
 }
 
@@ -14,9 +14,9 @@ export const CurrentTrack = ({
   currentTrack,
   isPlaying,
   setIsPlaying,
-  language,
   setCurrentTrack
 }: CurrentTrackProps) => {
+  const language = useAppSelector(state => state.language);
   
   if (!currentTrack) {
     return (

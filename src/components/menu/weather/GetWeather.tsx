@@ -7,7 +7,6 @@ interface GetWeatherProps {
   setData: (json: WeatherData | null) => void;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setError: React.Dispatch<React.SetStateAction<boolean>>;
-  language: 'ru' | 'en'
 }
 
 export const GetWeather = ({
@@ -15,8 +14,7 @@ export const GetWeather = ({
   setCity,
   setData,
   setLoading,
-  setError,
-  language
+  setError
 }: GetWeatherProps) => {
 
   const API_KEY = "9fe668fe853fc4dd8a6fe164ff909381";
@@ -55,7 +53,6 @@ export const GetWeather = ({
         fetchData={fetchData}
         city={city}
         setCity={setCity}
-        language={language}
       />
     </>
   )

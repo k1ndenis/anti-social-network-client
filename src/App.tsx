@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import { ToggleLanguage } from './components/ui/ToggleLanguage/ToggleLanguage';
 import { Menu } from './components/menu/Menu';
@@ -9,7 +9,6 @@ import { setUser } from './app/reducers/userSlice';
 import { SiteMenu } from './components/ui/SiteMenu/SiteMenu';
 
 function App() {
-  const [language, setLanguage] = useState<'ru' | 'en'>('ru');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -31,9 +30,9 @@ function App() {
 
   return (
     <>
-      <SiteMenu language={language} />
-      <ToggleLanguage language={language} setLanguage={setLanguage} />
-      <Menu language={language} />
+      <SiteMenu />
+      <ToggleLanguage />
+      <Menu />
     </>
   )
 }

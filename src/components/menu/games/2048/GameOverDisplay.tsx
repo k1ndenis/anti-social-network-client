@@ -1,15 +1,16 @@
 import type { SetStateAction } from 'react';
 import './GaneOverDisplay.css'
+import { useAppSelector } from '../../../../hooks/redux';
 
 interface GameOverDisplayProps {
   gameOver: boolean;
   gameWin: boolean;
   setGameWin: React.Dispatch<SetStateAction<boolean>>;
   startGame: () => void;
-  language: 'ru' | 'en'
 }
 
-export const GameOverDisplay = ({ gameOver, gameWin, setGameWin, startGame, language }: GameOverDisplayProps) => {
+export const GameOverDisplay = ({ gameOver, gameWin, setGameWin, startGame }: GameOverDisplayProps) => {
+  const language = useAppSelector(state => state.language);
 
   return (
     <>

@@ -2,19 +2,14 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { fetchLikesForUser } from "../../../app/reducers/likesSlice";
 
-interface UserProfileProps {
-  language: 'ru' | 'en'
-}
-
-export const UserProfile = ({ language }: UserProfileProps) => {
+export const UserProfile = () => {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(state => state.user.user);
   const isListening = useAppSelector(state => state.user.user?.listening);
   const likes = useAppSelector(state => state.likes);
   const pictures = useAppSelector(state => state.pictures.pictures)
   const likedPictures = pictures.filter(pic => likes[pic.id]?.find(like => like.userId === currentUser?.id));
-  
-
+  const language = useAppSelector(state => state.language);
 
   useEffect(() => {
     if (currentUser) {

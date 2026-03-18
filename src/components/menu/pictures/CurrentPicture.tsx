@@ -5,13 +5,12 @@ import { LikeButton } from '../../ui/LikeButton/LikeButton';
 import { Comment } from '../../ui/Comment/Comment';
 
 interface CurrentPictureProps {
-  language: 'ru' | 'en';
   pictures: Picture[];
   currentPictureInd: number | null;
   setCurrentPictureInd: React.Dispatch<React.SetStateAction<number | null>>
 }
 
-export const CurrentPicture = ({ language, pictures, currentPictureInd, setCurrentPictureInd }: CurrentPictureProps) => {
+export const CurrentPicture = ({  pictures, currentPictureInd, setCurrentPictureInd }: CurrentPictureProps) => {
   let currentPictureId: string = "";
   if (currentPictureInd !== null) currentPictureId = pictures[currentPictureInd].id;
 
@@ -49,8 +48,8 @@ export const CurrentPicture = ({ language, pictures, currentPictureInd, setCurre
           →
         </button>
       </div>
-      <LikeButton language={language} pictureId={currentPictureId} />
-      <Comment language={language} pictureId={currentPictureId} />
+      <LikeButton pictureId={currentPictureId} />
+      <Comment pictureId={currentPictureId} />
     </div>
   )
 }

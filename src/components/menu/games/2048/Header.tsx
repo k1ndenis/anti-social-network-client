@@ -1,14 +1,15 @@
 import { ScoreBoard } from "./ScoreBoard"
 import './Header.css'
+import { useAppSelector } from "../../../../hooks/redux";
 
 interface HeaderProps {
   currentScore: number;
   bestScore: number;
   startGame: () => void;
-  language: 'ru' | 'en'
 }
 
-export const Header = ({ currentScore, bestScore, startGame, language }: HeaderProps) => {
+export const Header = ({ currentScore, bestScore, startGame }: HeaderProps) => {
+  const language = useAppSelector(state => state.language);
 
   return (
     <div className="header-2048">
@@ -21,7 +22,6 @@ export const Header = ({ currentScore, bestScore, startGame, language }: HeaderP
         <ScoreBoard
           currentScore={currentScore}
           bestScore={bestScore}
-          language={language}
         />
         <button
           onClick={() => {
