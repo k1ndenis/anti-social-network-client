@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import './App.css'
 import { ToggleLanguage } from './components/ui/ToggleLanguage/ToggleLanguage';
-import { Menu } from './components/menu/Menu';
-import { auth } from './components/auth/utils/firebase/firebase';
+import { Menu } from './components/ui/menu/Menu';
+import { auth } from './components/ui/auth/utils/firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch } from './hooks/redux';
 import { setUser } from './app/reducers/userSlice';

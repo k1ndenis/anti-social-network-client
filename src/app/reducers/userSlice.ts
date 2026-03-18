@@ -29,12 +29,12 @@ const userSlice = createSlice({
     },
     updateLikedPictures: (state, action: PayloadAction<string>) => {
       if (!state.user) return;
-      if (!state.user.likedPictures) state.user.likedPictures = [];
+      if (!state.user.likedPicturesIds) state.user.likedPicturesIds = [];
       const pictureId = action.payload;
-      if (state.user.likedPictures.includes(pictureId)) {
-        state.user.likedPictures = state.user.likedPictures.filter(id => id !== pictureId);
+      if (state.user.likedPicturesIds.includes(pictureId)) {
+        state.user.likedPicturesIds = state.user.likedPicturesIds.filter(id => id !== pictureId);
       } else {
-        state.user.likedPictures = [pictureId, ...state.user.likedPictures];
+        state.user.likedPicturesIds = [pictureId, ...state.user.likedPicturesIds];
       }
     }
   }

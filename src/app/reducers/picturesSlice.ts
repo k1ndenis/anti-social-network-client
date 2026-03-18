@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface Picture {
   id: string;
@@ -23,9 +23,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export const fetchPictures = createAsyncThunk<Picture[]>(
   "pictures/fetchPictures",
   async () => {
-    const res = await fetch(`${apiUrl}/api/pictures`);
-    if (!res.ok) throw new Error("Failed to fetch pictures");
-    const data: Picture[] = await res.json();
+    const response = await fetch(`${apiUrl}/api/pictures`);
+    if (!response.ok) throw new Error("Failed to fetch pictures");
+    const data: Picture[] = await response.json();
     return data;
   }
 );
@@ -61,13 +61,7 @@ const picturesSlice = createSlice({
   name: "pictures",
   initialState,
   reducers: {
-    addPicture: (state, action: PayloadAction<Picture>) => {
-      state.pictures.push(action.payload);
-    },
-    deletePicture: (state, action: PayloadAction<string>) => {
-      state.pictures = state.pictures.filter(pic => pic.id !== action.payload);
-    }
-  },
+},
   extraReducers: builder => {
     builder
       .addCase(fetchPictures.fulfilled, (state, action) => {

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { AuthPage } from "../../auth/AuthPage";
+import { AuthPage } from "../auth/AuthPage";
 import './SiteMenu.css'
 
 export const SiteMenu = () => {
