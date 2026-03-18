@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
 import { fetchLikesForUser } from "../../../../app/reducers/likesSlice";
+import { UserBio } from "./UserBio";
+import { UserAvatar } from "./UserAvatar";
 
 export const UserProfile = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +31,8 @@ export const UserProfile = () => {
           ))}
         </div>
       )}
+      <UserBio />
+      <UserAvatar />
     </div>
   )
 }

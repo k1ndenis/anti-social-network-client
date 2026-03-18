@@ -36,9 +36,13 @@ const userSlice = createSlice({
       } else {
         state.user.likedPicturesIds = [pictureId, ...state.user.likedPicturesIds];
       }
+    },
+    updateUserBio: (state, action: PayloadAction<string>) => {
+      if (!state.user) return;
+      state.user.bio = action.payload;
     }
   }
 });
 
-export const { setUser, clearUser, setIsListening, updateLikedPictures } = userSlice.actions;
+export const { setUser, clearUser, setIsListening, updateLikedPictures, updateUserBio } = userSlice.actions;
 export default userSlice.reducer;

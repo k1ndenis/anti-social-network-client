@@ -27,7 +27,11 @@ export const AuthPage = () => {
     username: user.displayName || user.email || "",
     email: user.email || "",
     likedPicturesIds: [],
-    listening: null
+    listening: null,
+    avatar: './images/avatar.png',
+    bio: "",
+    followers: [],
+    following: []
   });
 
   const handleLogin = async (email: string, password: string) => {
@@ -54,7 +58,11 @@ export const AuthPage = () => {
     username: firebaseUser.displayName || firebaseUser.email || "",
     email: firebaseUser.email || "",
     likedPicturesIds: [],
-    listening: null
+    listening: null,
+    avatar: './images/avatar.png',
+    bio: "",
+    followers: [],
+    following: []
   };
 
   dispatch(setUser(newUser));
