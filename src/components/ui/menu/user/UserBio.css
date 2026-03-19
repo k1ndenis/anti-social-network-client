@@ -1,0 +1,99 @@
+.user-bio {
+  max-width: 420px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #7c7c7c;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+
+.user-bio:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.user-bio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.user-bio-header span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-bio-header button {
+  font-size: 13px;
+  background: none;
+  border: none;
+  color: #cecece;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.user-bio-header button:hover {
+  background: rgb(243, 241, 241, 0.1);
+  color: #cecece;
+}
+
+.user-bio-text {
+  color: #555;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.user-bio-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  resize: none;
+}
+
+.user-bio-form textarea:focus {
+  border-color: #dfdfdf;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.705);
+}
+
+.user-bio-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.user-bio-actions button {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-bio-actions button[type="submit"] {
+  background: #3b82f6;
+  color: white;
+}
+
+.user-bio-actions button[type="submit"]:hover {
+  background: #2563eb;
+}
+
+.user-bio-actions button[type="button"] {
+  background: #f3f4f6;
+  color: #444;
+}
+
+.user-bio-actions button[type="button"]:hover {
+  background: #e5e7eb;
+}

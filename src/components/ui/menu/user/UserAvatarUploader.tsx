@@ -9,10 +9,10 @@ export const UserAvatarUploader = () => {
     if (currentFile) {
       const reader = new FileReader();
 
-      reader.onloadend = async () => {
-        const updatedAvatar = reader.result as string;
-        dispatch(updateUserAvatar(updatedAvatar));
+      reader.onloadend = () => {
+        dispatch(updateUserAvatar(reader.result as string));
       }
+
       reader.readAsDataURL(currentFile);
     }
     e.target.value = "";
@@ -20,14 +20,12 @@ export const UserAvatarUploader = () => {
 
   return (
     <>
-      <label htmlFor="file-upload">
-        <h2>✏️</h2>
+      <label className="avatar-upload">
+        ✏️
         <input
-          id="file-upload"
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          required
         />
       </label>
     </>

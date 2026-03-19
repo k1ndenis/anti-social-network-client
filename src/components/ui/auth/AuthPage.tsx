@@ -28,7 +28,7 @@ export const AuthPage = () => {
     email: user.email || "",
     likedPicturesIds: [],
     listening: null,
-    avatar: './images/avatar.png',
+    avatar: null,
     bio: "",
     followers: [],
     following: []
@@ -59,7 +59,7 @@ export const AuthPage = () => {
     email: firebaseUser.email || "",
     likedPicturesIds: [],
     listening: null,
-    avatar: './images/avatar.png',
+    avatar: null,
     bio: "",
     followers: [],
     following: []

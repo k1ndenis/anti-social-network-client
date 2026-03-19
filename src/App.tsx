@@ -19,7 +19,11 @@ function App() {
           username: firebaseUser.displayName || "unknown",
           email: firebaseUser.email || "",
           likedPicturesIds: [],
-          listening: null
+          listening: null,
+          avatar: null,
+          bio: "",
+          followers: [],
+          following: []
         }))
       } else {
         dispatch(setUser(null));
