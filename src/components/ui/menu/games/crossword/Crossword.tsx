@@ -2,7 +2,7 @@ import { useState } from "react"
 import dataQuestions from "../../../../../data/questions.json"
 import { GridInputs } from "./GridInputs";
 import { CurrentQuestion } from "./CurrentQuestion";
-import type { Question } from "./../../../../types/question";
+import type { Question } from "../../../../../types/question";
 import './Crossword.css'
 
 const questions: Question[] = dataQuestions as Question[];

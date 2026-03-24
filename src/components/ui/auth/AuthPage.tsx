@@ -1,79 +1,62 @@
 import { useState } from "react";
 import { SignUpForm } from "./SignUpForm";
 import { LoginForm } from "./LoginForm";
-import type { User } from "../../types/user";
-import { auth } from "./utils/firebase/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-  signOut,
-  User as FirebaseUser,
-  AuthError
-} from "firebase/auth";
 import "./AuthPage.css";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setUser } from "../../../app/reducers/userSlice";
+import { authService } from "../../../services/authService";
 
 export const AuthPage = () => {
   const [isLogining, setIsLogining] = useState(false);
   const [isReg, setIsReg] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const loggedUser = useAppSelector(state => state.user.user);
   const language = useAppSelector(state => state.language);
 
-  const mapFirebaseUser = (user: FirebaseUser): User => ({
-    id: user.uid,
-    username: user.displayName || user.email || "",
-    email: user.email || "",
-    likedPicturesIds: [],
-    listening: null,
-    avatar: null,
-    bio: "",
-    followers: [],
-    following: []
-  });
-
   const handleLogin = async (email: string, password: string) => {
+    setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(setUser(mapFirebaseUser(userCredential.user)));
+      const { token, user } = await authService.login(email, password);
+      authService.saveAuthData(token, user);
+      dispatch(setUser(user));
       setIsLogining(false);
     } catch (err) {
-      const error = err as AuthError;
+      const error = err as Error;
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSignUp = async (email: string, password: string, username?: string): Promise<User> => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  const firebaseUser = userCredential.user;
-
-  if (username) {
-    await updateProfile(firebaseUser, { displayName: username });
-  }
-
-  const newUser: User = {
-    id: firebaseUser.uid,
-    username: firebaseUser.displayName || firebaseUser.email || "",
-    email: firebaseUser.email || "",
-    likedPicturesIds: [],
-    listening: null,
-    avatar: null,
-    bio: "",
-    followers: [],
-    following: []
+  const handleSignUp = async (email: string, password: string, username: string) => {
+    setLoading(true);
+    try {
+      const { token, user } = await authService.register(email, password, username);
+      authService.saveAuthData(token, user);
+      dispatch(setUser(user));
+      setIsReg(false);
+      return user;
+    } catch (err) {
+      const error = err as Error;
+      alert(error.message);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  dispatch(setUser(newUser));
-  setIsReg(false);
-  return newUser;
-};
+  const handleLogout = () => {
+    authService.logout();
+    dispatch(setUser(null));
+  };
 
-const handleLogout = async () => {
-  await signOut(auth);
-  dispatch(setUser(null));
-};
+  if (!loggedUser) {
+    const storedUser = authService.getStoredUser();
+    if (storedUser) {
+      dispatch(setUser(storedUser));
+    }
+  }
 
   if (!isLogining && !isReg) {
     return (

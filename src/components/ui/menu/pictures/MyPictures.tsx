@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PictureList } from "./PictureList";
 import { CurrentPicture } from "./CurrentPicture";
-import type { Picture } from "./../../../types/picture";
+import type { Picture } from "../../../../types/picture";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
 import { deletePictureFromServer, fetchPictures, sendPictureToServer } from "../../../../app/reducers/picturesSlice";
 

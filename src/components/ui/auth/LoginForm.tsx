@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./AuthPage.css";
-import type { AuthError } from "firebase/auth";
 import { useAppSelector } from "../../../hooks/redux";
 
 type LoginFormProps = {
@@ -18,7 +17,7 @@ export const LoginForm = ({ handleLogin, setIsLogining }: LoginFormProps) => {
     try {
       await handleLogin(email, password);
     } catch (err) {
-      const error = err as AuthError;
+      const error = err as Error;
       alert(error.message);
     }
   };

@@ -1,5 +1,5 @@
 import { PictureUploader } from "./PictureUploader"
-import type { Picture } from "./../../../types/picture";
+import type { Picture } from "../../../../types/picture";
 import "./PictureList.css"
 import { useAppSelector } from "../../../../hooks/redux";
 

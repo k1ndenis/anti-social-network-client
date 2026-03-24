@@ -1,5 +1,5 @@
 
-import type { Picture } from './../../../types/picture';
+import type { Picture } from '../../../../types/picture';
 import './CurrentPicture.css'
 import { LikeButton } from '../../../ui/LikeButton/LikeButton';
 import { Comment } from '../../../ui/Comment/Comment';

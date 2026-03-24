@@ -1,4 +1,4 @@
-import type { Picture } from "./../../../types/picture"
+import type { Picture } from "../../../../types/picture"
 
 interface PictureUploaderProps {
   onAddPicture: (picture: Picture) => void

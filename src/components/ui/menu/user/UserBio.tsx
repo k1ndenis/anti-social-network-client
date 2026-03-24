@@ -11,7 +11,7 @@ export const UserBio = () => {
   return (
     <div className="user-bio">
       <div className="user-bio-header">
-        <span>О себе</span>
+        <span>{language === 'ru' ? "О себе" : "About me"}</span>
         {!isEditing && (
           <button onClick={() => setIsEditing(true)}>
             {bio

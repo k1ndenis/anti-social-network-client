@@ -1,5 +1,5 @@
 import { ToggleQuestion } from "./ToggleQuestion"
-import type { Question } from './../../../../types/question'
+import type { Question } from '../../../../../types/question'
 import './CurrentQuestion.css'
 
 interface CurrentQuestionProps {

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { Track } from "../../../../types/track";
+import type { Track } from "../../../../../types/track";
 
 export const SORT_MODES = {
   AUTHOR_ASC: 1,

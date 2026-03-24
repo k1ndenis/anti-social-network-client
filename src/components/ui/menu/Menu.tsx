@@ -5,7 +5,7 @@ import { MyVideos } from "./videos/MyVideos";
 import { MyWeather } from "./weather/MyWeather";
 import { MyPictures } from "./pictures/MyPictures";
 import { MyGames } from "./games/MyGames";
-import { Track } from "../../types/track";
+import { Track } from "../../../types/track";
 import { CurrentTrack } from "./music/CurrentTrack";
 import { UserProfile } from "./user/UserProfile";
 import { useAppSelector } from "../../../hooks/redux";

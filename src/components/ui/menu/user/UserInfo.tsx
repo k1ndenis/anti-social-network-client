@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../../../hooks/redux"
-import { User } from "../../../types/user";
+import { User } from "../../../../types/user";
 
 interface UserInfoProps {
   user: User | null

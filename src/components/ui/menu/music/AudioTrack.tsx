@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Track } from './../../../types/track'
+import { Track } from '../../../../types/track'
 import "./AudioTrack.css"
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setIsListening } from '../../../../app/reducers/userSlice';

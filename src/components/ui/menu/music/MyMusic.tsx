@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SearchingInput } from "./SearchingInput";
 import { AudioUploader } from "./AudioUploader";
 import { TrackList } from "./TrackList";
-import type { Track } from "./../../../types/track";
+import type { Track } from "../../../../types/track";
 import "./MyMusic.css"
 import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
 import { deleteTrackFromServer, fetchTracks, sendTrackToServer } from "../../../../app/reducers/tracksSlice";

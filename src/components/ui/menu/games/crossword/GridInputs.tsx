@@ -1,5 +1,5 @@
 import React, {  useEffect, useRef, useState } from "react"
-import type { Question } from './../../../../types/question'
+import type { Question } from '../../../../../types/question'
 import './GridInputs.css'
 
 interface GridInputsProps {

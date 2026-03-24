@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./AudioUploader.css"
-import { Track } from "./../../../types/track";
+import { Track } from "../../../../types/track";
 import { useAppSelector } from "../../../../hooks/redux";
 
 interface AudioUploaderProps {

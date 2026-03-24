@@ -1,4 +1,4 @@
-import type { Track } from "./../../../types/track"
+import type { Track } from "../../../../types/track"
 import "./CurrentTrack.css"
 import { AudioTrack } from "./AudioTrack";
 import { useAppSelector } from "../../../../hooks/redux";

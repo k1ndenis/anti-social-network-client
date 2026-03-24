@@ -1,6 +1,6 @@
 import { SortingButtons } from "./SortingButtons";
 import { useTrackProcessor } from "./bll/useTrackProcessor";
-import type { Track } from "./../../../types/track";
+import type { Track } from "../../../../types/track";
 import "./TrackList.css"
 import { useAppSelector } from "../../../../hooks/redux";
 
